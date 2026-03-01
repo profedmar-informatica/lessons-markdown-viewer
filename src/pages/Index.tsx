@@ -63,7 +63,7 @@ const Index: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-canvas-light">
       <Sidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
+      <main className="flex-1 p-8 overflow-y-auto bg-background"> {/* Adicionado bg-background aqui */}
         <div className="max-w-4xl mx-auto">
           {loading ? (
             <div className="space-y-4">
