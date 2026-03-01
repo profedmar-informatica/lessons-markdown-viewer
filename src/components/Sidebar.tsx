@@ -84,11 +84,20 @@ const Sidebar = () => {
           continue; // Ignora arquivos que não correspondem ao padrão 001-999-titulo.md
         }
 
-        const lessonNumber = match[1]; // Ex: "001"
-        const lessonTitleSlug = match[2]; // Ex: "introducao"
-        const fileName = `${lessonNumber}-${lessonTitleSlug}`; // Reconstroi o nome do arquivo sem a extensão
+        const lessonNumberStr = match[1]; // Ex: "001", "010", "100"
+        const lessonNum = parseInt(lessonNumberStr, 10); // Ex: 1, 10, 100
+        let formattedLessonNumber: string;
 
-        const displayTitle = `${lessonNumber} - ${lessonTitleSlug
+        if (lessonNum >= 1 && lessonNum <= 9) {
+          formattedLessonNumber = `0${lessonNum}`; // "01", "02", ..., "09"
+        } else {
+          formattedLessonNumber = String(lessonNum); // "10", "11", ..., "99", "100", ...
+        }
+
+        const lessonTitleSlug = match[2]; // Ex: "introducao"
+        const fileName = `${lessonNumberStr}-${lessonTitleSlug}`; // Reconstroi o nome do arquivo sem a extensão
+
+        const displayTitle = `${formattedLessonNumber} - ${lessonTitleSlug
           .replace(/-/g, ' ')
           .split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))

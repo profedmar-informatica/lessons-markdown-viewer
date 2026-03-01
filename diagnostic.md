@@ -245,6 +245,10 @@ Este sistema implementa uma nova lógica para a organização e exibição do co
 *   **Lógica de Exclusão de Pastas Vazias:**
     *   Durante o carregamento do conteúdo, se uma pasta de disciplina dentro de `/content/` não contiver *nenhum* arquivo que passe no filtro da Regex (`001-999`), essa disciplina inteira será removida do menu lateral. Isso garante que apenas categorias com conteúdo relevante sejam exibidas.
 
+*   **Formatação de Números de Lição no Menu:**
+    *   Os números das lições são exibidos com um zero à esquerda para dígitos únicos (ex: "01", "02", ..., "09").
+    *   Para números de 10 em diante, apenas o número é exibido (ex: "10", "11", ..., "100").
+
 ## Diagnóstico e Recomendações (Revisado)
 
 O erro "Dependencies lock file is not found" foi abordado com uma estratégia mais robusta para o `pnpm` no GitHub Actions. O problema de 404 no GitHub Pages foi corrigido ajustando o `base` do Vite e o `basename` do React Router.
@@ -270,3 +274,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Configurado `basename` e `base` path para compatibilidade com GitHub Pages, e adicionada a cópia de `index.html` para `404.html` no workflow de deploy.
 - **2024-07-30:** Corrigidos erros de compilação do TypeScript em `src/App.tsx` ao reescrever `src/pages/Index.tsx` como um componente React válido.
 - **2024-07-30:** Refatorada a lógica de exibição de conteúdo para incluir a regra da capa, filtragem de lições por Regex (001-999), exibição hierárquica no menu e ocultação de disciplinas vazias. Corrigido o caminho do logo.
+- **2024-07-30:** Ajustada a formatação dos números das lições no menu lateral para exibir '01' a '09' e '10' em diante.
