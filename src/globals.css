@@ -50,20 +50,19 @@
   }
 
   .dark {
-    /* Mantendo o tema escuro existente por enquanto */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 222 10% 10%; /* #1E1E1E */
+    --foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
 
-    --card: 222.2 84% 4.9%;
+    --card: 222 10% 10%; /* #1E1E1E */
     --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
+    --popover: 222 10% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 210 40% 98%; /* White for primary elements in dark mode */
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217.2 32.6% 17.5%; /* Default shadcn secondary, might need adjustment */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -75,17 +74,23 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
+    --border: 222 10% 17%; /* #333333 */
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Variáveis específicas da Sidebar para Dark Mode (VS Code-like) */
+    --sidebar-background: 222 10% 13%; /* #252526 */
+    --sidebar-foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
+    --sidebar-primary: 210 40% 98%; /* White for primary elements */
+    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+    --sidebar-accent: 222 10% 20%; /* #37373D for active/hover */
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 10% 17%; /* #333333 */
+    --sidebar-ring: 212.7 26.8% 83.9%;
+
+    /* Cores de texto personalizadas para o conteúdo Markdown */
+    --text-primary-content: 210 40% 98%; /* #D4D4D4 */
+    --text-heading-content: 0 0% 100%; /* White */
   }
 }
 

@@ -62,7 +62,7 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Cores personalizadas para o tema 'Soft Lavender Productivity'
+        // Cores personalizadas para o tema 'Soft Lavender Productivity' (Light Mode)
         'lavender-soft': 'hsl(240 70% 70%)', // Principal tom de lavanda
         'lavender-light': 'hsl(240 70% 90%)', // Lavanda mais claro para fundos de hover/ativo
         'lavender-dark': 'hsl(240 70% 40%)', // Lavanda mais escuro para texto em fundos claros
@@ -78,6 +78,15 @@ export default {
         'callout-warning-bg': 'hsl(48 96% 95%)',
         'callout-exercise-border': 'hsl(240 70% 70%)', // Lavender-soft
         'callout-exercise-bg': 'hsl(240 70% 95%)',
+
+        // Cores para o tema Dark (VS Code-like)
+        'vscode-bg-global': '#1E1E1E',
+        'vscode-bg-sidebar': '#252526',
+        'vscode-border-sidebar': '#333333',
+        'vscode-text-lesson': '#D4D4D4',
+        'vscode-text-heading': '#FFFFFF', // White for headings
+        'vscode-menu-active-hover': '#37373D',
+        'vscode-text-blue': '#9CDCFE', // For specific blue text if needed
       },
       borderRadius: {
         lg: "12px", // Arredondamento generoso

@@ -15,15 +15,15 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
     <div className={cn(
       "prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-[794px] mx-auto p-12 rounded-lg",
       "bg-[#FDFDFD] border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]", // Light mode styles
-      "dark:bg-[#1E1E1E] dark:border-[#333333] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]", // Dark mode styles
-      "[&_p]:text-slate-900 dark:[&_p]:text-slate-200",
-      "[&_li]:text-slate-900 dark:[&_li]:text-slate-200",
-      "[&_h1]:text-slate-900 dark:[&_h1]:text-slate-200",
-      "[&_h2]:text-slate-900 dark:[&_h2]:text-slate-200",
-      "[&_h3]:text-slate-900 dark:[&_h3]:text-slate-200",
-      "[&_h4]:text-slate-900 dark:[&_h4]:text-slate-200",
-      "[&_h5]:text-slate-900 dark:[&_h5]:text-slate-200",
-      "[&_h6]:text-slate-900 dark:[&_h6]:text-slate-200"
+      "dark:bg-vscode-bg-global dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]", // Dark mode styles
+      "[&_p]:text-slate-900 dark:[&_p]:text-vscode-text-lesson",
+      "[&_li]:text-slate-900 dark:[&_li]:text-vscode-text-lesson",
+      "[&_h1]:text-slate-900 dark:[&_h1]:text-vscode-text-heading",
+      "[&_h2]:text-slate-900 dark:[&_h2]:text-vscode-text-heading",
+      "[&_h3]:text-slate-900 dark:[&_h3]:text-vscode-text-heading",
+      "[&_h4]:text-slate-900 dark:[&_h4]:text-vscode-text-heading",
+      "[&_h5]:text-slate-900 dark:[&_h5]:text-vscode-text-heading",
+      "[&_h6]:text-slate-900 dark:[&_h6]:text-vscode-text-heading"
     )}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}

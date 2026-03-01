@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileSidebarToggle from './MobileSidebarToggle';
 import { MadeWithDyad } from './made-with-dyad';
-import { ThemeToggle } from './ThemeToggle'; // Importar ThemeToggle
+import { ThemeSwitch } from './ThemeSwitch'; // Importar ThemeSwitch
 
 interface Lesson {
   path: string;
@@ -32,8 +32,9 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
       <Link
         to="/"
         onClick={onClose}
-        className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
-          location.pathname === '/' ? 'bg-lavender-light text-lavender-dark font-medium' : ''
+        className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors duration-200
+          dark:text-vscode-text-lesson dark:hover:bg-vscode-menu-active-hover dark:hover:text-white ${
+          location.pathname === '/' ? 'bg-lavender-light text-lavender-dark font-medium dark:bg-vscode-menu-active-hover dark:text-white' : ''
         }`}
       >
         <Home className="h-5 w-5" />
@@ -41,15 +42,16 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
       </Link>
       {categories.map((category) => (
         <div key={category.name} className="pt-2">
-          <h2 className="text-sm font-medium text-gray-medium px-4 mb-2">{category.displayTitle}</h2>
+          <h2 className="text-sm font-medium text-gray-medium px-4 mb-2 dark:text-gray-400">{category.displayTitle}</h2>
           {category.lessons.map((lesson) => (
             <Link
               key={lesson.path}
               to={lesson.path}
               onClick={onClose}
-              className={`flex items-center gap-3 rounded-md px-4 py-2 text-xs text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
+              className={`flex items-center gap-3 rounded-md px-4 py-2 text-xs text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors duration-200
+                dark:text-vscode-text-lesson dark:hover:bg-vscode-menu-active-hover dark:hover:text-white ${
                 currentCategory === category.name && currentLesson === lesson.name
-                  ? 'bg-lavender-light text-lavender-dark font-medium'
+                  ? 'bg-lavender-light text-lavender-dark font-medium dark:bg-vscode-menu-active-hover dark:text-white'
                   : ''
               }`}
             >
@@ -136,9 +138,9 @@ const Sidebar = () => {
   }, []);
 
   const sidebarHeader = (
-    <div className="flex items-center justify-between h-16 border-b border-border-light mb-4 px-4"> {/* Ajustado para incluir o toggle */}
-      <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-11 object-contain" />
-      <ThemeToggle /> {/* Adicionar o ThemeToggle aqui */}
+    <div className="flex flex-col items-center justify-center h-auto border-b border-border-light pb-4 mb-4 px-4 dark:border-vscode-border-sidebar"> {/* Adjusted for vertical stacking */}
+      <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-11 object-contain mb-2" /> {/* Added margin-bottom */}
+      <ThemeSwitch /> {/* Adicionar o ThemeSwitch aqui, centralizado */}
     </div>
   );
 
@@ -147,7 +149,7 @@ const Sidebar = () => {
       <>
         <MobileSidebarToggle onClick={() => setSheetOpen(true)} />
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-          <SheetContent side="left" className="p-0 w-64 bg-panel-white border-r-border-light flex flex-col">
+          <SheetContent side="left" className="p-0 w-64 bg-panel-white border-r-border-light flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar">
             {sidebarHeader}
             <SidebarContent
               categories={categories}
@@ -155,7 +157,7 @@ const Sidebar = () => {
               currentLesson={currentLesson}
               onClose={() => setSheetOpen(false)}
             />
-            <div className="mt-auto p-4 border-t border-border-light">
+            <div className="mt-auto p-4 border-t border-border-light dark:border-vscode-border-sidebar">
               <MadeWithDyad />
             </div>
           </SheetContent>
@@ -165,14 +167,14 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-sm rounded-r-lg flex flex-col">
+    <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-sm rounded-r-lg flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar dark:shadow-none">
       {sidebarHeader}
       <SidebarContent
         categories={categories}
         currentCategory={currentCategory}
         currentLesson={currentLesson}
       />
-      <div className="mt-auto p-4 border-t border-border-light">
+      <div className="mt-auto p-4 border-t border-border-light dark:border-vscode-border-sidebar">
         <MadeWithDyad />
       </div>
     </aside>

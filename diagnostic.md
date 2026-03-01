@@ -16,7 +16,7 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 │   │   ├── MarkdownViewer.tsx
 │   │   ├── MobileSidebarToggle.tsx
 │   │   ├── Sidebar.tsx
-│   │   ├── ThemeToggle.tsx
+│   │   ├── ThemeSwitch.tsx
 │   │   ├── theme-provider.tsx
 │   │   └── ... (outros componentes UI)
 │   ├── content/
@@ -268,6 +268,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 8.  **Correção do Componente Index:** O arquivo `src/pages/Index.tsx` foi reescrito para ser um componente React válido, resolvendo os erros de compilação e implementando a lógica da capa.
 9.  **Refatoração da Sidebar:** O componente `src/components/Sidebar.tsx` foi atualizado para filtrar lições usando a Regex `^(\d{3})-(.*)\.md$`, exibir títulos formatados como "001 - Título da Lição", e remover categorias que não contêm lições válidas. O caminho do logo também foi corrigido.
 10. **Correção de Carregamento de Markdown em Produção:** O `src/pages/Index.tsx` foi atualizado para usar `import.meta.glob` com `eager: true, as: 'raw'` para carregar o conteúdo Markdown, garantindo que os arquivos sejam incluídos no bundle e acessíveis em produção sem problemas de caminho.
+11. **Implementação de Dark Mode:** Suporte a Dark Mode implementado usando `next-themes` e `shadcn/ui`.
 
 **Próximos Passos:**
 
@@ -281,3 +282,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Ajustada a formatação dos números das lições no menu lateral para exibir '01' a '09' e '10' em diante.
 - **2024-07-30:** Corrigido o caminho de busca dos arquivos Markdown para compatibilidade com o ambiente de produção (GitHub Pages).
 - **2024-07-30:** Implementado suporte a Dark Mode com preservação do estilo skeuomorphic (Folha de Ardósia).
+- **2024-07-30:** Ajustado botão de alternância de tema para posição centralizada sob o logo e aplicada paleta Dark VS Code globalmente.

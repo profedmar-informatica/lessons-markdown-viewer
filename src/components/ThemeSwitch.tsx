@@ -1,0 +1,28 @@
+"use client"
+
+import * as React from "react"
+import { useTheme } from "next-themes"
+import { Switch } from "@/components/ui/switch"
+import { Moon, Sun } from "lucide-react"
+
+export function ThemeSwitch() {
+  const { theme, setTheme } = useTheme()
+  const isDarkMode = theme === 'dark';
+
+  const toggleTheme = () => {
+    setTheme(isDarkMode ? "light" : "dark");
+  };
+
+  return (
+    <div className="flex items-center space-x-2 justify-center py-2 transition-colors duration-200">
+      <Sun className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+      <Switch
+        id="theme-switch"
+        checked={isDarkMode}
+        onCheckedChange={toggleTheme}
+        aria-label="Toggle dark mode"
+      />
+      <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+    </div>
+  )
+}
