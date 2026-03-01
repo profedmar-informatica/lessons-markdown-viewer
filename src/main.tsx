@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./globals.css";
-import 'highlight.js/lib/styles/github-light.css'; // Caminho corrigido para o estilo highlight.js
+import 'highlight.js/styles/github.css'; // Caminho corrigido para o estilo padrão do GitHub
 
 createRoot(document.getElementById("root")!).render(<App />);
