@@ -276,9 +276,10 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Diminuída a escala do toggle button para 15% do tamanho original.
     *   Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
     *   Adicionado padding de 20px ao ThemeSwitch.
-    *   **Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.**
+    *   Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.
     *   Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
     *   Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
+    *   **Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.**
 
 **Próximos Passos:**
 
@@ -302,3 +303,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.
 - **2024-07-30:** Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
 - **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
+- **2024-07-30:** Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.

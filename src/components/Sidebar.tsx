@@ -169,7 +169,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-sm rounded-r-lg flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar dark:shadow-none">
+    <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-r-lg flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
       {sidebarHeader}
       <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}
         <ThemeSwitch scale={0.5} /> {/* Reduzir a escala para 50% */}
