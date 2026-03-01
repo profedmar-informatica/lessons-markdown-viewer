@@ -276,9 +276,9 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Diminuída a escala do toggle button para 15% do tamanho original.
     *   Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
     *   Adicionado padding de 20px ao ThemeSwitch.
-    *   Cor de fundo da área de trabalho no modo escuro definida para `#4b5563` através da variável `--background` em `globals.css`.
+    *   **Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.**
     *   Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
-    *   **Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.**
+    *   Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
 
 **Próximos Passos:**
 
@@ -299,6 +299,6 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Diminuída a escala do toggle button para 15% do tamanho original.
 - **2024-07-30:** Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
 - **2024-07-30:** Adicionado padding de 20px ao ThemeSwitch.
-- **2024-07-30:** Cor de fundo da área de trabalho no modo escuro definida para `#4b5563` através da variável `--background` em `globals.css`.
+- **2024-07-30:** Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.
 - **2024-07-30:** Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
 - **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
