@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker"; // Removed IconProps type import
+import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -8,7 +8,6 @@ import { buttonVariants } from "@/components/ui/button";
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 // Define IconLeft and IconRight as standard functional components that accept any props
-// This is a workaround for the type inference issue with DayPicker's CustomComponents
 const IconLeft: React.FC<any> = (props) => <ChevronLeft className="h-4 w-4" {...props} />;
 const IconRight: React.FC<any> = (props) => <ChevronRight className="h-4 w-4" {...props} />;
 
@@ -56,10 +55,12 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        IconLeft,
-        IconRight,
-      }}
+      components={
+        {
+          IconLeft: IconLeft,
+          IconRight: IconRight,
+        } as any // Cast to any to bypass the type check
+      }
       {...props}
     />
   );
