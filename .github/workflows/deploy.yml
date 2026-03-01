@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm' # Ensure this is set to 'pnpm'
+          cache: 'pnpm' # Alterado de 'npm' para 'pnpm'
       - name: Install dependencies ⚙️
         run: pnpm install --no-frozen-lockfile
       - name: Build with Vite 🏗️
