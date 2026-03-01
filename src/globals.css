@@ -50,7 +50,7 @@
   }
 
   .dark {
-    --background: 222 10% 10%; /* #1E1E1E */
+    --background: 216 15% 33%; /* #4b5563 para o fundo principal no modo escuro */
     --foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
 
     --card: 222 10% 10%; /* #1E1E1E */

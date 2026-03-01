@@ -275,7 +275,8 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Reduzido o espaçamento ao redor do toggle para zerar o padding e a margin vertical.
     *   Diminuída a escala do toggle button para 15% do tamanho original.
     *   Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
-    *   **Adicionado padding de 20px ao ThemeSwitch.**
+    *   Adicionado padding de 20px ao ThemeSwitch.
+    *   **Cor de fundo da área de trabalho no modo escuro definida para `#4b5563`.**
 
 **Próximos Passos:**
 
@@ -296,3 +297,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Diminuída a escala do toggle button para 15% do tamanho original.
 - **2024-07-30:** Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
 - **2024-07-30:** Adicionado padding de 20px ao ThemeSwitch.
+- **2024-07-30:** Cor de fundo da área de trabalho no modo escuro definida para `#4b5563`.
