@@ -48,8 +48,8 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "build": "cp design/base_code.svg public/base_code.svg && vite build",
+    "build:dev": "cp design/base_code.svg public/base_code.svg && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -91,7 +91,7 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
     "highlight.js": "^11.11.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
-    "next-themes": "^0.3.0",
+    "next-themes": "^0.4.6",
     "react": "^19.2.3",
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.2.3",
@@ -282,6 +282,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
 13. **Correção de `@import` no CSS:** Movidas as declarações `@import` do `highlight.js` para o topo de `src/globals.css` para resolver o erro de ordem do PostCSS.
 14. **Correção de `import.meta.glob`:** Atualizado `import.meta.glob` em `src/pages/Index.tsx` para usar `query: '?raw', import: 'default'` em vez de `as: 'raw'` para resolver o aviso de depreciação.
+15. **Verificação da Cópia do Logotipo:** Confirmado que o script `build` em `package.json` já inclui o comando `cp design/base_code.svg public/base_code.svg`, garantindo que o logotipo seja copiado para o diretório `public` durante o processo de build.
 
 **Próximos Passos:**
 
@@ -307,3 +308,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
 - **2024-07-30:** Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
 - **2024-07-30:** Corrigida a ordem das declarações `@import` em `src/globals.css` e atualizado o uso de `import.meta.glob` em `src/pages/Index.tsx`.
+- **2024-07-30:** Verificado e confirmado que o logotipo `base_code.svg` já é copiado de `design/` para `public/` durante o build.
