@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Home, BookOpen } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
+import MobileSidebarToggle from './MobileSidebarToggle';
 
 interface Lesson {
   path: string;
@@ -14,36 +17,78 @@ interface Category {
   lessons: Lesson[];
 }
 
+const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: string; currentLesson?: string; onClose?: () => void }> = ({
+  categories,
+  currentCategory,
+  currentLesson,
+  onClose,
+}) => {
+  const location = useLocation();
+
+  return (
+    <nav className="flex-1 overflow-y-auto space-y-2">
+      <Link
+        to="/"
+        onClick={onClose}
+        className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
+          location.pathname === '/' ? 'bg-lavender-light text-lavender-dark font-medium' : ''
+        }`}
+      >
+        <Home className="h-5 w-5" />
+        Início
+      </Link>
+      {categories.map((category) => (
+        <div key={category.name} className="pt-2">
+          <h2 className="text-sm font-medium text-gray-medium px-4 mb-2">{category.displayTitle}</h2>
+          {category.lessons.map((lesson) => (
+            <Link
+              key={lesson.path}
+              to={lesson.path}
+              onClick={onClose}
+              className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
+                currentCategory === category.name && currentLesson === lesson.name
+                  ? 'bg-lavender-light text-lavender-dark font-medium'
+                  : ''
+              }`}
+            >
+              <BookOpen className="h-5 w-5" />
+              {lesson.displayTitle}
+            </Link>
+          ))}
+        </div>
+      ))}
+    </nav>
+  );
+};
+
 const Sidebar = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const location = useLocation();
   const { category: currentCategory, lesson: currentLesson } = useParams<{ category?: string; lesson?: string }>();
+  const isMobile = useIsMobile();
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   useEffect(() => {
     const loadContent = async () => {
-      // Importa todos os arquivos .md de forma bruta
       const modules = import.meta.glob('../content/**/*.md', { eager: true, query: '?raw', import: 'default' });
       const loadedCategories: { [key: string]: Category } = {};
 
       for (const path in modules) {
-        // Ex: ../content/logica/000-como-usar.md
         const parts = path.split('/');
-        const categoryName = parts[parts.length - 2]; // 'logica'
-        const fileNameWithExt = parts[parts.length - 1]; // '000-como-usar.md'
-        const fileName = fileNameWithExt.replace(/\.md$/, ''); // '000-como-usar'
+        const categoryName = parts[parts.length - 2];
+        const fileNameWithExt = parts[parts.length - 1];
+        const fileName = fileNameWithExt.replace(/\.md$/, '');
 
-        // Remove o prefixo numérico e substitui hífens por espaços para o título de exibição
         const displayTitle = fileName
-          .replace(/^\d{3}-/, '') // Remove '000-'
-          .replace(/-/g, ' ') // Substitui hífens por espaços
+          .replace(/^\d{3}-/, '')
+          .replace(/-/g, ' ')
           .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza cada palavra
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
 
         if (!loadedCategories[categoryName]) {
           loadedCategories[categoryName] = {
             name: categoryName,
-            displayTitle: categoryName.charAt(0).toUpperCase() + categoryName.slice(1), // Capitaliza a categoria
+            displayTitle: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
             lessons: [],
           };
         }
@@ -55,12 +100,10 @@ const Sidebar = () => {
         });
       }
 
-      // Ordena as aulas dentro de cada categoria pelo nome do arquivo (que inclui o prefixo numérico)
       Object.values(loadedCategories).forEach(cat => {
         cat.lessons.sort((a, b) => a.name.localeCompare(b.name));
       });
 
-      // Ordena as categorias alfabeticamente
       const sortedCategories = Object.values(loadedCategories).sort((a, b) => a.name.localeCompare(b.name));
       setCategories(sortedCategories);
     };
@@ -68,41 +111,39 @@ const Sidebar = () => {
     loadContent();
   }, []);
 
+  const sidebarHeader = (
+    <div className="flex items-center justify-center h-16 border-b border-border-light mb-4">
+      <h1 className="text-xl font-semibold text-charcoal-dark">Aulas Dyad</h1>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        <MobileSidebarToggle onClick={() => setSheetOpen(true)} />
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <SheetContent side="left" className="p-0 w-64 bg-panel-white border-r-border-light flex flex-col">
+            {sidebarHeader}
+            <SidebarContent
+              categories={categories}
+              currentCategory={currentCategory}
+              currentLesson={currentLesson}
+              onClose={() => setSheetOpen(false)}
+            />
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+  }
+
   return (
     <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-sm rounded-r-lg flex flex-col">
-      <div className="flex items-center justify-center h-16 border-b border-border-light mb-4">
-        <h1 className="text-xl font-semibold text-charcoal-dark">Aulas Dyad</h1>
-      </div>
-      <nav className="flex-1 overflow-y-auto space-y-2">
-        <Link
-          to="/"
-          className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
-            location.pathname === '/' ? 'bg-lavender-light text-lavender-dark font-medium' : ''
-          }`}
-        >
-          <Home className="h-5 w-5" />
-          Início
-        </Link>
-        {categories.map((category) => (
-          <div key={category.name} className="pt-2">
-            <h2 className="text-sm font-medium text-gray-medium px-4 mb-2">{category.displayTitle}</h2>
-            {category.lessons.map((lesson) => (
-              <Link
-                key={lesson.path}
-                to={lesson.path}
-                className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
-                  currentCategory === category.name && currentLesson === lesson.name
-                    ? 'bg-lavender-light text-lavender-dark font-medium'
-                    : ''
-                }`}
-              >
-                <BookOpen className="h-5 w-5" />
-                {lesson.displayTitle}
-              </Link>
-            ))}
-          </div>
-        ))}
-      </nav>
+      {sidebarHeader}
+      <SidebarContent
+        categories={categories}
+        currentCategory={currentCategory}
+        currentLesson={currentLesson}
+      />
     </aside>
   );
 };

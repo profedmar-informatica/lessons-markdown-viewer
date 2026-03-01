@@ -12,6 +12,7 @@ const Index = () => {
     const loadMarkdown = async () => {
       if (category && lesson) {
         try {
+          // Importa o conteúdo do arquivo Markdown dinamicamente
           const module = await import(`../content/${category}/${lesson}.md?raw`);
           setMarkdownContent(module.default);
         } catch (error) {
@@ -26,9 +27,9 @@ const Index = () => {
   }, [category, lesson]);
 
   return (
-    <div className="min-h-screen flex bg-canvas-light">
+    <div className="min-h-screen flex flex-col md:flex-row bg-canvas-light">
       <Sidebar />
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-4 md:p-8 overflow-auto">
         <MarkdownViewer content={markdownContent} />
       </main>
       <MadeWithDyad />

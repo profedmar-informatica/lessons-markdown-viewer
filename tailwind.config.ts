@@ -71,6 +71,13 @@ export default {
         'canvas-light': 'hsl(0 0% 98%)', // Fundo muito claro para o canvas/palco
         'panel-white': 'hsl(0 0% 100%)', // Branco puro para painéis/cards
         'border-light': 'hsl(214.3 31.8% 91.4%)', // Cinza muito claro para divisores
+        // Cores para Callouts
+        'callout-tip-border': 'hsl(142.1 76.2% 36.3%)', // Verde suave
+        'callout-tip-bg': 'hsl(142.1 76.2% 96.3%)',
+        'callout-warning-border': 'hsl(48 96% 50%)', // Laranja suave
+        'callout-warning-bg': 'hsl(48 96% 95%)',
+        'callout-exercise-border': 'hsl(240 70% 70%)', // Lavender-soft
+        'callout-exercise-bg': 'hsl(240 70% 95%)',
       },
       borderRadius: {
         lg: "12px", // Arredondamento generoso
@@ -101,5 +108,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
