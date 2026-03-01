@@ -19,7 +19,7 @@ const ResizablePanelGroup = ({
 
 const ResizablePanel = Panel;
 
-interface ResizableHandleProps extends React.ComponentPropsWithoutRef<typeof PanelResizeHandle> {
+interface ResizableHandleProps extends React.ComponentPropsWithRef<typeof PanelResizeHandle> { // Changed to ComponentPropsWithRef
   withHandle?: boolean;
 }
 

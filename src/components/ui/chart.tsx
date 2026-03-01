@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
-import { TooltipPayload, LegendPayload } from "recharts"; // Directly import types
+// Removed direct import of TooltipPayload, LegendPayload as they are not directly exported
 
 import { cn } from "@/lib/utils";
 
@@ -60,6 +60,16 @@ Chart.displayName = "Chart";
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+// Define a local interface for Recharts payload items
+interface RechartsPayloadItem {
+  value: any;
+  name: string;
+  dataKey: string;
+  color?: string;
+  payload: any;
+  // Add other properties from the actual payload item if necessary
+}
+
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
@@ -69,7 +79,7 @@ const ChartTooltipContent = React.forwardRef<
       formatter?: (
         value: number,
         name: string,
-        item: TooltipPayload, // Using directly imported type
+        item: RechartsPayloadItem, // Using local interface
         index: number
       ) => string;
     }
@@ -134,7 +144,7 @@ const ChartTooltipContent = React.forwardRef<
                         ? formatter(
                             item.value as number,
                             item.name as string,
-                            item,
+                            item as RechartsPayloadItem, // Cast to local interface
                             index
                           )
                         : item.value}
@@ -161,7 +171,7 @@ const ChartLegend = React.forwardRef<
       indicatorClassName?: string;
       formatter?: (
         value: string,
-        entry: LegendPayload, // Using directly imported type
+        entry: RechartsPayloadItem, // Using local interface
         index: number
       ) => string;
     }
@@ -173,7 +183,7 @@ const ChartLegend = React.forwardRef<
     const { theme, set: setTheme } = useChart();
     const [activeItems, setActiveItems] = React.useState<string[]>([]);
 
-    const highlightStyle = (entry: LegendPayload) => { // Using directly imported type
+    const highlightStyle = (entry: RechartsPayloadItem) => { // Using local interface
       if (activeItems.length === 0) {
         return;
       }
@@ -228,10 +238,10 @@ const ChartLegend = React.forwardRef<
                 )}
                 style={{
                   backgroundColor: item.color,
-                  ...highlightStyle(item),
+                  ...highlightStyle(item as RechartsPayloadItem), // Cast to local interface
                 }}
               />
-              {formatter ? formatter(item.value as string, item, index) : item.value}
+              {formatter ? formatter(item.value as string, item as RechartsPayloadItem, index) : item.value}
             </div>
           );
         })}
