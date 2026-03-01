@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Highlight.js themes */
 /* Light theme (default) */
 @import 'highlight.js/styles/github.css';
@@ -10,6 +6,10 @@
 html.dark {
   @import 'highlight.js/styles/github-dark.css';
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
