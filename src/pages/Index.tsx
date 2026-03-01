@@ -14,24 +14,30 @@ const Index: React.FC = () => {
     const loadMarkdown = async () => {
       setLoading(true);
       let contentPath = '';
+      let isCoverPage = false;
 
-      if (category && lesson) {
-        // Constrói o caminho para o arquivo Markdown com base nos parâmetros da URL
+      if (!category && !lesson) {
+        contentPath = '../content/capa.md';
+        isCoverPage = true;
+      } else if (category && lesson) {
         contentPath = `../content/${category}/${lesson}.md`;
       } else {
-        // Se nenhum parâmetro for fornecido, carrega um documento padrão
-        contentPath = '../content/logica e programação/000-como-usar.md';
+        // Fallback para o caso de rota malformada, redireciona para a capa
+        contentPath = '../content/capa.md';
+        isCoverPage = true;
       }
 
       try {
-        // Importa o conteúdo do arquivo Markdown como uma string bruta
-        // O comentário /* @vite-ignore */ é usado para instruir o Vite a não analisar estaticamente esta importação dinâmica.
         const module = await import(/* @vite-ignore */ contentPath + '?raw');
         setMarkdownContent(module.default);
       } catch (err) {
         console.error('Falha ao carregar o conteúdo Markdown:', err);
-        toast.error('Não foi possível carregar o conteúdo do documento.');
-        setMarkdownContent(''); // Limpa o conteúdo em caso de erro
+        if (isCoverPage) {
+          setMarkdownContent('# Bem-vindo!\n\nNenhum arquivo `capa.md` encontrado. Por favor, crie um para a página inicial.');
+        } else {
+          toast.error('Não foi possível carregar o conteúdo do documento.');
+          setMarkdownContent('');
+        }
       } finally {
         setLoading(false);
       }

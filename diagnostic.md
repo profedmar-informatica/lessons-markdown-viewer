@@ -228,6 +228,23 @@ As aulas são importadas dinamicamente usando `import.meta.glob`.
 *   Em `src/pages/Index.tsx`, o conteúdo de uma aula específica é carregado dinamicamente com `await import(`../content/${category}/${lesson}.md?raw`)` com base nos parâmetros da URL.
 *   **Atualização:** O `BrowserRouter` em `src/App.tsx` agora inclui `basename="/lessons-markdown-viewer"` para roteamento correto em subdiretórios.
 
+## Sistema de Hierarquia V2
+
+Este sistema implementa uma nova lógica para a organização e exibição do conteúdo Markdown, focando em uma estrutura mais formal e navegável.
+
+*   **Caminho da Capa (Home):**
+    *   A rota raiz (`/`) agora carrega exclusivamente o conteúdo do arquivo `src/content/capa.md`.
+    *   Se `src/content/capa.md` não for encontrado, uma mensagem amigável de "Bem-vindo!" é exibida, informando ao usuário sobre a ausência do arquivo.
+
+*   **Expressão Regular (Regex) para Validação de Lições:**
+    *   A Regex utilizada para filtrar os arquivos Markdown no menu lateral é: `^(\d{3})-(.*)\.md$`
+    *   Esta expressão garante que apenas arquivos cujos nomes começam com três dígitos numéricos (de `001` a `999`), seguidos por um hífen e um título, sejam considerados lições válidas.
+    *   Exemplos válidos: `001-introducao.md`, `123-topico-avancado.md`.
+    *   Exemplos inválidos (e ignorados): `000-inicio.md`, `texto.md`, `capa.md`.
+
+*   **Lógica de Exclusão de Pastas Vazias:**
+    *   Durante o carregamento do conteúdo, se uma pasta de disciplina dentro de `/content/` não contiver *nenhum* arquivo que passe no filtro da Regex (`001-999`), essa disciplina inteira será removida do menu lateral. Isso garante que apenas categorias com conteúdo relevante sejam exibidas.
+
 ## Diagnóstico e Recomendações (Revisado)
 
 O erro "Dependencies lock file is not found" foi abordado com uma estratégia mais robusta para o `pnpm` no GitHub Actions. O problema de 404 no GitHub Pages foi corrigido ajustando o `base` do Vite e o `basename` do React Router.
@@ -241,7 +258,8 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 5.  **Configuração de Base do Vite:** O `base` em `vite.config.ts` foi alterado para `"/lessons-markdown-viewer/"` para corresponder ao subdiretório do GitHub Pages.
 6.  **Configuração de Basename do React Router:** O `BrowserRouter` em `src/App.tsx` agora usa `basename="/lessons-markdown-viewer"` para roteamento correto.
 7.  **Geração de 404.html:** Um passo foi adicionado ao workflow de deploy para copiar `dist/index.html` para `dist/404.html`, permitindo que o GitHub Pages lide com o roteamento de SPA.
-8.  **Correção do Componente Index:** O arquivo `src/pages/Index.tsx` foi reescrito para ser um componente React válido, resolvendo os erros de compilação.
+8.  **Correção do Componente Index:** O arquivo `src/pages/Index.tsx` foi reescrito para ser um componente React válido, resolvendo os erros de compilação e implementando a lógica da capa.
+9.  **Refatoração da Sidebar:** O componente `src/components/Sidebar.tsx` foi atualizado para filtrar lições usando a Regex `^(\d{3})-(.*)\.md$`, exibir títulos formatados como "001 - Título da Lição", e remover categorias que não contêm lições válidas. O caminho do logo também foi corrigido.
 
 **Próximos Passos:**
 
@@ -251,3 +269,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 ## Registro de Alterações
 - **2024-07-30:** Configurado `basename` e `base` path para compatibilidade com GitHub Pages, e adicionada a cópia de `index.html` para `404.html` no workflow de deploy.
 - **2024-07-30:** Corrigidos erros de compilação do TypeScript em `src/App.tsx` ao reescrever `src/pages/Index.tsx` como um componente React válido.
+- **2024-07-30:** Refatorada a lógica de exibição de conteúdo para incluir a regra da capa, filtragem de lições por Regex (001-999), exibição hierárquica no menu e ocultação de disciplinas vazias. Corrigido o caminho do logo.

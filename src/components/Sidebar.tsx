@@ -70,23 +70,29 @@ const Sidebar = () => {
 
   useEffect(() => {
     const loadContent = async () => {
-      // Removed 'query' and 'import' options as they are not standard for import.meta.glob options object.
-      // Vite handles '?raw' as part of the import specifier, not a glob option.
       const modules = import.meta.glob('../content/**/*.md', { eager: true });
       const loadedCategories: { [key: string]: Category } = {};
+      const lessonFileRegex = /^(\d{3})-(.*)\.md$/; // Regex para 001-999-titulo.md
 
       for (const path in modules) {
         const parts = path.split('/');
         const categoryName = parts[parts.length - 2];
         const fileNameWithExt = parts[parts.length - 1];
-        const fileName = fileNameWithExt.replace(/\.md$/, '');
+        
+        const match = fileNameWithExt.match(lessonFileRegex);
+        if (!match) {
+          continue; // Ignora arquivos que não correspondem ao padrão 001-999-titulo.md
+        }
 
-        const displayTitle = fileName
-          .replace(/^\d{3}-/, '')
+        const lessonNumber = match[1]; // Ex: "001"
+        const lessonTitleSlug = match[2]; // Ex: "introducao"
+        const fileName = `${lessonNumber}-${lessonTitleSlug}`; // Reconstroi o nome do arquivo sem a extensão
+
+        const displayTitle = `${lessonNumber} - ${lessonTitleSlug
           .replace(/-/g, ' ')
           .split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
+          .join(' ')}`;
 
         if (!loadedCategories[categoryName]) {
           loadedCategories[categoryName] = {
@@ -103,11 +109,16 @@ const Sidebar = () => {
         });
       }
 
-      Object.values(loadedCategories).forEach(cat => {
+      // Filtra categorias que não possuem nenhuma lição válida
+      const filteredCategories = Object.values(loadedCategories).filter(
+        (cat) => cat.lessons.length > 0
+      );
+
+      filteredCategories.forEach(cat => {
         cat.lessons.sort((a, b) => a.name.localeCompare(b.name));
       });
 
-      const sortedCategories = Object.values(loadedCategories).sort((a, b) => a.name.localeCompare(b.name));
+      const sortedCategories = filteredCategories.sort((a, b) => a.name.localeCompare(b.name));
       setCategories(sortedCategories);
     };
 
@@ -116,7 +127,7 @@ const Sidebar = () => {
 
   const sidebarHeader = (
     <div className="flex items-center justify-center h-16 border-b border-border-light mb-4">
-      <img src="/base_code.svg" alt="base_code Logo" className="h-11 object-contain" />
+      <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-11 object-contain" />
     </div>
   );
 

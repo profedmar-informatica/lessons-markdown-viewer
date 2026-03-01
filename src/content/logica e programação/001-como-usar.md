@@ -1,4 +1,7 @@
-# Como Usar a Escrivaninha de Informática
+# Lógica de Programação
+
+É muito simples navegar e interagir com este visualizador de documentos.
+
 ## 1. Menu Lateral
 
 À esquerda, você verá uma lista de botões. Cada botão corresponde a um arquivo Markdown (`.md`) que está armazenado na pasta `/content` do servidor.
