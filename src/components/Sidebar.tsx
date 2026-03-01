@@ -139,7 +139,7 @@ const Sidebar = () => {
 
   const sidebarHeader = (
     <div className="flex flex-col items-center justify-center h-auto border-b border-border-light pb-4 mb-2 px-4 dark:border-vscode-border-sidebar"> {/* mb-2 para reduzir espaçamento */}
-      <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-14 object-contain mb-2" /> {/* h-14 para aumentar o logo */}
+      <img src="/base_code.svg" alt="base_code Logo" className="h-14 object-contain mb-2" /> {/* h-14 para aumentar o logo */}
     </div>
   );
 
