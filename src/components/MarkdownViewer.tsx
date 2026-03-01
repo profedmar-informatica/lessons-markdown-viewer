@@ -12,7 +12,7 @@ interface MarkdownViewerProps {
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
-    <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-none p-8 bg-panel-white rounded-lg shadow-sm">
+    <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-[794px] mx-auto p-12 bg-[#FDFDFD] border border-[#E0D8C7] rounded-md shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
