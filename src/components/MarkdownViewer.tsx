@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
-import 'highlight.js/styles/github.css'; // Estilo padrão do highlight.js
+import 'highlight.js/styles/github-light.css'; // Alterado para tema claro
 import Callout from './Callout';
 import CopyCodeButton from './CopyCodeButton';
 
@@ -12,7 +12,16 @@ interface MarkdownViewerProps {
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
-    <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-[794px] mx-auto p-12 bg-[#FDFDFD] border border-[#E0D8C7] rounded-md shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]">
+    <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-[794px] mx-auto p-12 bg-[#FDFDFD] border border-[#E0D8C7] rounded-md shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]
+      [&_p]:text-[rgb(var(--text-primary-content))]
+      [&_li]:text-[rgb(var(--text-primary-content))]
+      [&_h1]:text-[rgb(var(--text-heading-content))]
+      [&_h2]:text-[rgb(var(--text-heading-content))]
+      [&_h3]:text-[rgb(var(--text-heading-content))]
+      [&_h4]:text-[rgb(var(--text-heading-content))]
+      [&_h5]:text-[rgb(var(--text-heading-content))]
+      [&_h6]:text-[rgb(var(--text-heading-content))]
+    ">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}

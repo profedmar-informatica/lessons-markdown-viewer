@@ -43,6 +43,10 @@
     --sidebar-accent-foreground: 222.2 84% 4.9%; /* charcoal-dark */
     --sidebar-border: 214.3 31.8% 91.4%; /* border-light */
     --sidebar-ring: 240 70% 70%; /* lavender-soft */
+
+    /* Cores de texto personalizadas para o conteúdo Markdown */
+    --text-primary-content: 45 45 45; /* #2D2D2D */
+    --text-heading-content: 26 26 26; /* #1A1A1A */
   }
 
   .dark {
