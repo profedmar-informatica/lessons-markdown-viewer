@@ -38,6 +38,8 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build with Vite 🏗️
         run: pnpm run build
+      - name: Copy index.html to 404.html 📄
+        run: cp dist/index.html dist/404.html
       - name: Upload artifact 🚀
         uses: actions/upload-pages-artifact@v3
         with:

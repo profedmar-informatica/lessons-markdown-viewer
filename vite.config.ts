@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig(() => ({
-  base: "./", // Adicionado para caminhos relativos no GitHub Pages
+  base: "/lessons-markdown-viewer/", // Alterado para o subdiretório do GitHub Pages
   server: {
     host: "::",
     port: 8080,

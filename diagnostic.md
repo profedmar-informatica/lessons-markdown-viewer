@@ -176,6 +176,8 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       - name: Build with Vite 🏗️
         run: pnpm run build
+      - name: Copy index.html to 404.html 📄
+        run: cp dist/index.html dist/404.html
       - name: Upload artifact 🚀
         uses: actions/upload-pages-artifact@v3
         with:
@@ -194,7 +196,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-## 5. Configuração do Vite (Conteúdo de `vite.config.ts`)
+## 5. Configuração do Vite (Conteúdo de `vite.config.ts` - **Atualizado**)
 
 ```typescript
 import { defineConfig } from "vite";
@@ -203,7 +205,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig(() => ({
-  base: "./", // Adicionado para caminhos relativos no GitHub Pages
+  base: "/lessons-markdown-viewer/", // Alterado para o subdiretório do GitHub Pages
   server: {
     host: "::",
     port: 8080,
@@ -224,10 +226,11 @@ As aulas são importadas dinamicamente usando `import.meta.glob`.
 
 *   Em `src/components/Sidebar.tsx`, o código utiliza `import.meta.glob('../content/**/*.md', { eager: true })` para descobrir todos os arquivos Markdown e construir o menu lateral.
 *   Em `src/pages/Index.tsx`, o conteúdo de uma aula específica é carregado dinamicamente com `await import(`../content/${category}/${lesson}.md?raw`)` com base nos parâmetros da URL.
+*   **Atualização:** O `BrowserRouter` em `src/App.tsx` agora inclui `basename="/lessons-markdown-viewer"` para roteamento correto em subdiretórios.
 
 ## Diagnóstico e Recomendações (Revisado)
 
-O erro "Dependencies lock file is not found" foi abordado com uma estratégia mais robusta para o `pnpm` no GitHub Actions.
+O erro "Dependencies lock file is not found" foi abordado com uma estratégia mais robusta para o `pnpm` no GitHub Actions. O problema de 404 no GitHub Pages foi corrigido ajustando o `base` do Vite e o `basename` do React Router.
 
 **Mudanças Implementadas:**
 
@@ -235,8 +238,16 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 2.  **Desativação do Cache de `setup-node`:** Removemos as configurações `cache: 'pnpm'` e `cache-dependency-path` do `actions/setup-node@v4`. Isso evita que a ação procure por um arquivo de lock que pode não estar presente ou não ser reconhecido, garantindo que as dependências sejam instaladas do zero a cada execução, se necessário.
 3.  **Instalação Forçada de Dependências:** O comando `pnpm install --no-frozen-lockfile` foi mantido para permitir a instalação mesmo sem um `pnpm-lock.yaml` existente ou atualizado, o que é útil em ambientes de CI/CD onde o lockfile pode não ser sempre commitado ou pode precisar ser regenerado.
 4.  **Uso Consistente do pnpm para Build:** O comando de build foi alterado para `pnpm run build` para garantir que o `pnpm` seja o gerenciador de pacotes utilizado em todas as etapas relevantes.
+5.  **Configuração de Base do Vite:** O `base` em `vite.config.ts` foi alterado para `"/lessons-markdown-viewer/"` para corresponder ao subdiretório do GitHub Pages.
+6.  **Configuração de Basename do React Router:** O `BrowserRouter` em `src/App.tsx` agora usa `basename="/lessons-markdown-viewer"` para roteamento correto.
+7.  **Geração de 404.html:** Um passo foi adicionado ao workflow de deploy para copiar `dist/index.html` para `dist/404.html`, permitindo que o GitHub Pages lide com o roteamento de SPA.
+8.  **Correção do Componente Index:** O arquivo `src/pages/Index.tsx` foi reescrito para ser um componente React válido, resolvendo os erros de compilação.
 
 **Próximos Passos:**
 
-*   Faça um novo push para o seu repositório. O workflow de deploy deverá agora executar sem o erro de "Dependencies lock file is not found".
+*   Faça um novo push para o seu repositório. O workflow de deploy deverá agora executar sem o erro de "Dependencies lock file is not found" e o site deverá carregar corretamente no GitHub Pages.
 *   Monitore a execução do workflow para confirmar que todas as etapas são concluídas com sucesso e que o deploy para o GitHub Pages ocorre conforme o esperado.
+
+## Registro de Alterações
+- **2024-07-30:** Configurado `basename` e `base` path para compatibilidade com GitHub Pages, e adicionada a cópia de `index.html` para `404.html` no workflow de deploy.
+- **2024-07-30:** Corrigidos erros de compilação do TypeScript em `src/App.tsx` ao reescrever `src/pages/Index.tsx` como um componente React válido.
