@@ -4,6 +4,7 @@ import { Home, BookOpen } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileSidebarToggle from './MobileSidebarToggle';
+import { MadeWithDyad } from './made-with-dyad'; // Importar o componente
 
 interface Lesson {
   path: string;
@@ -130,6 +131,9 @@ const Sidebar = () => {
               currentLesson={currentLesson}
               onClose={() => setSheetOpen(false)}
             />
+            <div className="mt-auto p-4 border-t border-border-light"> {/* Adiciona borda superior e padding */}
+              <MadeWithDyad />
+            </div>
           </SheetContent>
         </Sheet>
       </>
@@ -144,6 +148,9 @@ const Sidebar = () => {
         currentCategory={currentCategory}
         currentLesson={currentLesson}
       />
+      <div className="mt-auto p-4 border-t border-border-light"> {/* Adiciona borda superior e padding */}
+        <MadeWithDyad />
+      </div>
     </aside>
   );
 };

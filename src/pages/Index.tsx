@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MadeWithDyad } from "@/components/made-with-dyad";
 import Sidebar from '@/components/Sidebar';
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { useParams } from 'react-router-dom';
@@ -32,7 +31,6 @@ const Index = () => {
       <main className="flex-1 p-4 md:p-8 overflow-auto">
         <MarkdownViewer content={markdownContent} />
       </main>
-      <MadeWithDyad />
     </div>
   );
 };
