@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils" // Import cn
 
 interface ThemeSwitchProps {
   className?: string;
+  scale?: number; // Adicionar a prop scale
 }
 
-export function ThemeSwitch({ className }: ThemeSwitchProps) { // Aceita a prop className
+export function ThemeSwitch({ className, scale = 1 }: ThemeSwitchProps) { // Aceita a prop className e scale
   const { theme, setTheme } = useTheme()
   const isDarkMode = theme === 'dark';
 
@@ -19,7 +20,10 @@ export function ThemeSwitch({ className }: ThemeSwitchProps) { // Aceita a prop 
   };
 
   return (
-    <div className={cn("flex items-center space-x-1 justify-center py-2 transition-colors duration-200", className)}> {/* Aplica className e ajusta space-x */}
+    <div 
+      className={cn("flex items-center space-x-1 justify-center py-2 transition-colors duration-200", className)}
+      style={{ transform: `scale(${scale})`, transformOrigin: 'center' }} // Aplicar a escala via estilo inline
+    >
       <Sun className="h-5 w-5 text-gray-500 dark:text-gray-400" />
       <Switch
         id="theme-switch"

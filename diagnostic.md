@@ -274,6 +274,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Diminuído o tamanho do toggle button em 30%.
     *   Reduzido o espaçamento ao redor do toggle para zerar o padding e a margin vertical.
     *   Diminuída a escala do toggle button para 15% do tamanho original.
+    *   **Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.**
 
 **Próximos Passos:**
 
@@ -292,3 +293,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Aumentado o tamanho do logotipo em 20%, diminuído o tamanho do toggle button em 30% e reduzido o espaçamento ao redor do toggle.
 - **2024-07-30:** Reduzido o padding e a margin do contêiner do ThemeSwitch para zerar o espaçamento vertical.
 - **2024-07-30:** Diminuída a escala do toggle button para 15% do tamanho original.
+- **2024-07-30:** Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
