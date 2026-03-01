@@ -14,4 +14,5 @@ export default defineConfig(() => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  assetsInclude: ['**/*.md'], // Garante que arquivos .md sejam tratados como assets
 }));
