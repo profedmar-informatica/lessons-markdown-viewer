@@ -284,3 +284,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Implementado suporte a Dark Mode com preservação do estilo skeuomorphic (Folha de Ardósia).
 - **2024-07-30:** Ajustado botão de alternância de tema para posição centralizada sob o logo e aplicada paleta Dark VS Code globalmente.
 - **2024-07-30:** Ajustado o tamanho do botão de alternância de tema para 60% menor e reposicionado abaixo do logo.
+- **2024-07-30:** Aumentado o tamanho do logotipo em 20%, diminuído o tamanho do toggle button em 30% e reduzido o espaçamento ao redor do toggle.

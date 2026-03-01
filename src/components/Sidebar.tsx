@@ -138,8 +138,8 @@ const Sidebar = () => {
   }, []);
 
   const sidebarHeader = (
-    <div className="flex flex-col items-center justify-center h-auto border-b border-border-light pb-4 mb-4 px-4 dark:border-vscode-border-sidebar">
-      <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-11 object-contain mb-2" />
+    <div className="flex flex-col items-center justify-center h-auto border-b border-border-light pb-4 mb-2 px-4 dark:border-vscode-border-sidebar"> {/* mb-2 para reduzir espaçamento */}
+      <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-14 object-contain mb-2" /> {/* h-14 para aumentar o logo */}
     </div>
   );
 
@@ -150,8 +150,8 @@ const Sidebar = () => {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent side="left" className="p-0 w-64 bg-panel-white border-r-border-light flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar">
             {sidebarHeader}
-            <div className="flex justify-center py-2 mb-4"> {/* Novo div para centralizar o ThemeSwitch */}
-              <ThemeSwitch className="scale-x-40 scale-y-40 origin-center" /> {/* Aplica a escala aqui */}
+            <div className="flex justify-center py-1 mb-2"> {/* py-1 e mb-2 para reduzir espaçamento */}
+              <ThemeSwitch className="scale-x-25 scale-y-25 origin-center" /> {/* scale-x-25 scale-y-25 para diminuir o toggle */}
             </div>
             <SidebarContent
               categories={categories}
@@ -171,8 +171,8 @@ const Sidebar = () => {
   return (
     <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-sm rounded-r-lg flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar dark:shadow-none">
       {sidebarHeader}
-      <div className="flex justify-center py-2 mb-4"> {/* Novo div para centralizar o ThemeSwitch */}
-        <ThemeSwitch className="scale-x-40 scale-y-40 origin-center" /> {/* Aplica a escala aqui */}
+      <div className="flex justify-center py-1 mb-2"> {/* py-1 e mb-2 para reduzir espaçamento */}
+        <ThemeSwitch className="scale-x-25 scale-y-25 origin-center" /> {/* scale-x-25 scale-y-25 para diminuir o toggle */}
       </div>
       <SidebarContent
         categories={categories}
