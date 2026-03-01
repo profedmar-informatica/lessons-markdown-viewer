@@ -114,7 +114,7 @@ const Sidebar = () => {
 
   const sidebarHeader = (
     <div className="flex items-center justify-center h-16 border-b border-border-light mb-4">
-      <h1 className="text-xl font-semibold text-charcoal-dark">Aulas Dyad</h1>
+      <h1 className="text-xl font-semibold text-charcoal-dark">base_code</h1>
     </div>
   );
 
