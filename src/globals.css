@@ -1,9 +1,8 @@
+@import 'highlight.js/styles/github-light.css'; /* Importação do estilo highlight.js movida para o topo */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Importação do estilo highlight.js movida para cá */
-@import 'highlight.js/styles/github-light.css';
 
 @layer base {
   :root {
