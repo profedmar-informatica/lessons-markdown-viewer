@@ -151,7 +151,7 @@ const Sidebar = () => {
           <SheetContent side="left" className="p-0 w-64 bg-panel-white border-r-border-light flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar">
             {sidebarHeader}
             <div className="flex justify-center py-0 mb-0"> {/* py-0 e mb-0 para zerar espaçamento */}
-              <ThemeSwitch className="scale-x-25 scale-y-25 origin-center" /> {/* scale-x-25 scale-y-25 para diminuir o toggle */}
+              <ThemeSwitch className="scale-x-15 scale-y-15 origin-center" /> {/* scale-x-15 scale-y-15 para diminuir o toggle */}
             </div>
             <SidebarContent
               categories={categories}
@@ -172,7 +172,7 @@ const Sidebar = () => {
     <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-sm rounded-r-lg flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar dark:shadow-none">
       {sidebarHeader}
       <div className="flex justify-center py-0 mb-0"> {/* py-0 e mb-0 para zerar espaçamento */}
-        <ThemeSwitch className="scale-x-25 scale-y-25 origin-center" /> {/* scale-x-25 scale-y-25 para diminuir o toggle */}
+        <ThemeSwitch className="scale-x-15 scale-y-15 origin-center" /> {/* scale-x-15 scale-y-15 para diminuir o toggle */}
       </div>
       <SidebarContent
         categories={categories}

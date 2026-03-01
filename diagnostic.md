@@ -269,6 +269,11 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 9.  **Refatoração da Sidebar:** O componente `src/components/Sidebar.tsx` foi atualizado para filtrar lições usando a Regex `^(\d{3})-(.*)\.md$`, exibir títulos formatados como "001 - Título da Lição", e remover categorias que não contêm lições válidas. O caminho do logo também foi corrigido.
 10. **Correção de Carregamento de Markdown em Produção:** O `src/pages/Index.tsx` foi atualizado para usar `import.meta.glob` com `eager: true, as: 'raw'` para carregar o conteúdo Markdown, garantindo que os arquivos sejam incluídos no bundle e acessíveis em produção sem problemas de caminho.
 11. **Implementação de Dark Mode:** Suporte a Dark Mode implementado usando `next-themes` e `shadcn/ui`.
+12. **Ajustes de Layout:**
+    *   Aumentado o tamanho do logotipo em 20%.
+    *   Diminuído o tamanho do toggle button em 30%.
+    *   Reduzido o espaçamento ao redor do toggle para zerar o padding e a margin vertical.
+    *   Diminuída a escala do toggle button para 15% do tamanho original.
 
 **Próximos Passos:**
 
@@ -286,3 +291,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Ajustado o tamanho do botão de alternância de tema para 60% menor e reposicionado abaixo do logo.
 - **2024-07-30:** Aumentado o tamanho do logotipo em 20%, diminuído o tamanho do toggle button em 30% e reduzido o espaçamento ao redor do toggle.
 - **2024-07-30:** Reduzido o padding e a margin do contêiner do ThemeSwitch para zerar o espaçamento vertical.
+- **2024-07-30:** Diminuída a escala do toggle button para 15% do tamanho original.
