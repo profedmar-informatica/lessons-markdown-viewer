@@ -70,7 +70,9 @@ const Sidebar = () => {
 
   useEffect(() => {
     const loadContent = async () => {
-      const modules = import.meta.glob('../content/**/*.md', { eager: true, query: '?raw', import: 'default' });
+      // Removed 'query' and 'import' options as they are not standard for import.meta.glob options object.
+      // Vite handles '?raw' as part of the import specifier, not a glob option.
+      const modules = import.meta.glob('../content/**/*.md', { eager: true });
       const loadedCategories: { [key: string]: Category } = {};
 
       for (const path in modules) {

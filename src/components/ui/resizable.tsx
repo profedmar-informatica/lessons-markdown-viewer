@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GripVertical } from "lucide-react";
-import { PanelHandle as PanelResizeHandle, PanelGroup, Panel } from "react-resizable-panels"; // Corrected import
+import { PanelResizeHandle, PanelGroup, Panel } from "react-resizable-panels";
 
 import { cn } from "@/lib/utils";
 
@@ -19,11 +19,15 @@ const ResizablePanelGroup = ({
 
 const ResizablePanel = Panel;
 
+interface ResizableHandleProps extends React.ComponentPropsWithoutRef<typeof PanelResizeHandle> {
+  withHandle?: boolean;
+}
+
 const ResizableHandle = React.forwardRef<
-  React.ElementRef<typeof PanelResizeHandle>, // Corrected type
-  React.ComponentPropsWithoutRef<typeof PanelResizeHandle> // Corrected type
+  React.ElementRef<typeof PanelResizeHandle>,
+  ResizableHandleProps
 >(({ className, withHandle, ...props }, ref) => (
-  <PanelResizeHandle // Corrected usage
+  <PanelResizeHandle
     ref={ref}
     className={cn(
       "relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:top-1/2 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:hover:h-[5px] hover:after:bg-border-foreground hover:bg-primary",
@@ -38,7 +42,6 @@ const ResizableHandle = React.forwardRef<
     )}
   </PanelResizeHandle>
 ));
-
 ResizableHandle.displayName = "ResizableHandle";
 
 export { ResizablePanelGroup, ResizablePanel, ResizableHandle };

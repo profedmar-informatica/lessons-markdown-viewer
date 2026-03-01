@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
+import { TooltipPayload, LegendPayload } from "recharts"; // Directly import types
 
 import { cn } from "@/lib/utils";
 
@@ -21,17 +22,18 @@ function useChart() {
 type ChartProps = React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer> & {
   config: Record<string, { label?: string; color?: string; icon?: React.ElementType }>;
   children?: React.ReactNode;
+  id?: string; // Added id to ChartProps
 };
 
 const Chart = React.forwardRef<
   HTMLDivElement,
   ChartProps
->(({ config, className, children, id, ...props }, ref) => { // Destructure 'id'
+>(({ config, className, children, id, ...props }, ref) => {
   const [theme, setTheme] = React.useState<Record<string, string>>(() => {
     const baseColor = "hsl(var(--chart-1))";
 
     return Object.entries(config).reduce(
-      (acc, [key, value]) => {
+      (acc, [key, value]: [string, { color?: string }]) => {
         acc[key] = value.color || baseColor;
         return acc;
       },
@@ -44,7 +46,7 @@ const Chart = React.forwardRef<
       <div
         ref={ref}
         className={cn("h-[400px] w-full", className)}
-        {...(typeof id === 'string' ? { id } : {})} // Only pass id if it's a string
+        {...(typeof id === 'string' ? { id } : {})}
         {...props}
       >
         <RechartsPrimitive.ResponsiveContainer {...props}>
@@ -67,7 +69,7 @@ const ChartTooltipContent = React.forwardRef<
       formatter?: (
         value: number,
         name: string,
-        item: RechartsPrimitive.TooltipProps<any, any>['payload'][number], // Corrected type
+        item: TooltipPayload, // Using directly imported type
         index: number
       ) => string;
     }
@@ -159,7 +161,7 @@ const ChartLegend = React.forwardRef<
       indicatorClassName?: string;
       formatter?: (
         value: string,
-        entry: RechartsPrimitive.LegendProps<any, any>['payload'][number], // Corrected type
+        entry: LegendPayload, // Using directly imported type
         index: number
       ) => string;
     }
@@ -171,7 +173,7 @@ const ChartLegend = React.forwardRef<
     const { theme, set: setTheme } = useChart();
     const [activeItems, setActiveItems] = React.useState<string[]>([]);
 
-    const highlightStyle = (entry: RechartsPrimitive.LegendProps<any, any>['payload'][number]) => { // Corrected type
+    const highlightStyle = (entry: LegendPayload) => { // Using directly imported type
       if (activeItems.length === 0) {
         return;
       }
