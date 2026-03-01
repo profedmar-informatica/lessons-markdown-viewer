@@ -131,12 +131,9 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 
 Com base no `pnpm-workspace.yaml` e no comando `pnpm install` no seu workflow, o gerenciador de pacotes utilizado é o `pnpm`. Portanto, o arquivo de lock esperado na raiz do seu repositório é o `pnpm-lock.yaml`.
 
-O erro "Dependencies lock file is not found... Supported file patterns: package-lock.json, npm-shrinkwrap.json, yarn.lock" é crucial. Ele indica que, apesar de termos configurado `cache: 'pnpm'`, a ação `actions/setup-node` não está reconhecendo `pnpm-lock.yaml` como um arquivo de lock válido *no contexto em que está sendo executada*. Isso pode acontecer por algumas razões:
-*   O `pnpm-lock.yaml` não foi gerado ou não foi commitado para o repositório.
-*   A versão da `actions/setup-node` ou do ambiente de execução pode ter um comportamento inesperado.
-*   O caminho onde a ação procura os arquivos de lock não corresponde ao caminho real do `pnpm-lock.yaml`.
+O erro "Dependencies lock file is not found... Supported file patterns: package-lock.json, npm-shrinkwrap.json, yarn.lock" indica que a ação `actions/setup-node` não está encontrando ou reconhecendo o `pnpm-lock.yaml` no contexto em que está sendo executada. Para contornar isso e garantir que o build passe, vamos ajustar a configuração do workflow.
 
-## 4. Configuração de Deploy (Conteúdo de `.github/workflows/deploy.yml`)
+## 4. Configuração de Deploy (Conteúdo de `.github/workflows/deploy.yml` - **Atualizado**)
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -165,15 +162,20 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm' # Alterado de 'npm' para 'pnpm'
+          # cache: 'pnpm' # Removido para desativar o cache de dependências
+          # cache-dependency-path: 'pnpm-lock.yaml' # Removido
       - name: Install dependencies ⚙️
         run: pnpm install --no-frozen-lockfile
       - name: Build with Vite 🏗️
-        run: npm run build
+        run: pnpm run build
       - name: Upload artifact 🚀
         uses: actions/upload-pages-artifact@v3
         with:
@@ -223,71 +225,18 @@ As aulas são importadas dinamicamente usando `import.meta.glob`.
 *   Em `src/components/Sidebar.tsx`, o código utiliza `import.meta.glob('../content/**/*.md', { eager: true })` para descobrir todos os arquivos Markdown e construir o menu lateral.
 *   Em `src/pages/Index.tsx`, o conteúdo de uma aula específica é carregado dinamicamente com `await import(`../content/${category}/${lesson}.md?raw`)` com base nos parâmetros da URL.
 
-## Diagnóstico e Recomendações
+## Diagnóstico e Recomendações (Revisado)
 
-O erro "Dependencies lock file is not found" é o ponto central. Embora tenhamos configurado `cache: 'pnpm'`, a mensagem de erro sugere que a ação não está encontrando o `pnpm-lock.yaml` ou não o está reconhecendo.
+O erro "Dependencies lock file is not found" foi abordado com uma estratégia mais robusta para o `pnpm` no GitHub Actions.
 
-**Passos para a Solução:**
+**Mudanças Implementadas:**
 
-1.  **Confirmação do `pnpm-lock.yaml`:**
-    *   **Ação Necessária:** Certifique-se de que você executou `pnpm install` na raiz do seu projeto *localmente* e que o arquivo `pnpm-lock.yaml` foi gerado.
-    *   **Ação Necessária:** **Commite o `pnpm-lock.yaml`** para o seu repositório Git. Este é o passo mais comum que causa esse erro. Sem ele, o GitHub Actions não tem um arquivo de lock para cachear ou para garantir instalações consistentes.
+1.  **Instalação Explícita do pnpm:** Adicionamos a action `pnpm/action-setup@v4` para garantir que o `pnpm` esteja disponível e na versão especificada (v10) antes de qualquer outra operação de Node.js.
+2.  **Desativação do Cache de `setup-node`:** Removemos as configurações `cache: 'pnpm'` e `cache-dependency-path` do `actions/setup-node@v4`. Isso evita que a ação procure por um arquivo de lock que pode não estar presente ou não ser reconhecido, garantindo que as dependências sejam instaladas do zero a cada execução, se necessário.
+3.  **Instalação Forçada de Dependências:** O comando `pnpm install --no-frozen-lockfile` foi mantido para permitir a instalação mesmo sem um `pnpm-lock.yaml` existente ou atualizado, o que é útil em ambientes de CI/CD onde o lockfile pode não ser sempre commitado ou pode precisar ser regenerado.
+4.  **Uso Consistente do pnpm para Build:** O comando de build foi alterado para `pnpm run build` para garantir que o `pnpm` seja o gerenciador de pacotes utilizado em todas as etapas relevantes.
 
-2.  **Especificar `cache-dependency-path` explicitamente:**
-    Mesmo que o `pnpm-lock.yaml` esteja na raiz, adicionar `cache-dependency-path` pode forçar a ação a procurá-lo no local correto, eliminando qualquer ambiguidade.
+**Próximos Passos:**
 
-    **Ação Necessária:** Modifique o seu `.github/workflows/deploy.yml` para incluir o `cache-dependency-path`:
-
-    <dyad-write path=".github/workflows/deploy.yml" description="Updating the GitHub Actions workflow to explicitly specify pnpm-lock.yaml path.">
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches:
-      - main
-
-# Define permissões para GITHUB_TOKEN para permitir o deploy no GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Permite apenas um deploy concorrente, pulando execuções enfileiradas entre a execução em andamento e a última enfileirada.
-# No entanto, NÃO cancela execuções em andamento, pois queremos permitir que esses deploys de produção sejam concluídos.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  # Job de Build
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml' # Adicionado para especificar o caminho do arquivo de lock
-      - name: Install dependencies ⚙️
-        run: pnpm install --no-frozen-lockfile
-      - name: Build with Vite 🏗️
-        run: npm run build
-      - name: Upload artifact 🚀
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-
-  # Job de Deploy
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages 🚀
-        id: deployment
-        uses: actions/deploy-pages@v4
+*   Faça um novo push para o seu repositório. O workflow de deploy deverá agora executar sem o erro de "Dependencies lock file is not found".
+*   Monitore a execução do workflow para confirmar que todas as etapas são concluídas com sucesso e que o deploy para o GitHub Pages ocorre conforme o esperado.

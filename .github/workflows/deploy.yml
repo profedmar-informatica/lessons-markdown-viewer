@@ -24,15 +24,20 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm' # Alterado de 'npm' para 'pnpm'
+          # cache: 'pnpm' # Removido para desativar o cache de dependências
+          # cache-dependency-path: 'pnpm-lock.yaml' # Removido
       - name: Install dependencies ⚙️
         run: pnpm install --no-frozen-lockfile
       - name: Build with Vite 🏗️
-        run: npm run build
+        run: pnpm run build
       - name: Upload artifact 🚀
         uses: actions/upload-pages-artifact@v3
         with:
