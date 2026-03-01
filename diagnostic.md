@@ -277,7 +277,8 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
     *   Adicionado padding de 20px ao ThemeSwitch.
     *   Cor de fundo da área de trabalho no modo escuro definida para `#4b5563` através da variável `--background` em `globals.css`.
-    *   **Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx` para garantir que a cor de fundo do tema seja utilizada.**
+    *   Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
+    *   **Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.**
 
 **Próximos Passos:**
 
@@ -300,3 +301,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Adicionado padding de 20px ao ThemeSwitch.
 - **2024-07-30:** Cor de fundo da área de trabalho no modo escuro definida para `#4b5563` através da variável `--background` em `globals.css`.
 - **2024-07-30:** Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
+- **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
