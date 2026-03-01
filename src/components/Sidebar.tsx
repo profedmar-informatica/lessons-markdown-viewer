@@ -22,7 +22,7 @@ const Sidebar = () => {
   useEffect(() => {
     const loadContent = async () => {
       // Importa todos os arquivos .md de forma bruta
-      const modules = import.meta.glob('../content/**/*.md', { eager: true, as: 'raw' });
+      const modules = import.meta.glob('../content/**/*.md', { eager: true, query: '?raw', import: 'default' });
       const loadedCategories: { [key: string]: Category } = {};
 
       for (const path in modules) {
