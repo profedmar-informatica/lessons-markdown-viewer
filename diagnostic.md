@@ -16,6 +16,8 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 │   │   ├── MarkdownViewer.tsx
 │   │   ├── MobileSidebarToggle.tsx
 │   │   ├── Sidebar.tsx
+│   │   ├── ThemeToggle.tsx
+│   │   ├── theme-provider.tsx
 │   │   └── ... (outros componentes UI)
 │   ├── content/
 │   │   ├── informática/
@@ -89,6 +91,7 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
     "highlight.js": "^11.11.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
+    "next-themes": "^0.3.0",
     "react": "^19.2.3",
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.2.3",
@@ -277,3 +280,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Refatorada a lógica de exibição de conteúdo para incluir a regra da capa, filtragem de lições por Regex (001-999), exibição hierárquica no menu e ocultação de disciplinas vazias. Corrigido o caminho do logo.
 - **2024-07-30:** Ajustada a formatação dos números das lições no menu lateral para exibir '01' a '09' e '10' em diante.
 - **2024-07-30:** Corrigido o caminho de busca dos arquivos Markdown para compatibilidade com o ambiente de produção (GitHub Pages).
+- **2024-07-30:** Implementado suporte a Dark Mode com preservação do estilo skeuomorphic (Folha de Ardósia).

@@ -98,3 +98,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Highlight.js themes */
+/* Light theme (default) */
+@import 'highlight.js/styles/github.css';
+
+/* Dark theme */
+html.dark {
+  @import 'highlight.js/styles/github-dark.css';
+}

@@ -2,9 +2,9 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
-// import 'highlight.js/styles/github-light.css'; // Removido daqui e movido para globals.css
 import Callout from './Callout';
 import CopyCodeButton from './CopyCodeButton';
+import { cn } from '@/lib/utils'; // Importar cn para classes condicionais
 
 interface MarkdownViewerProps {
   content: string;
@@ -12,16 +12,19 @@ interface MarkdownViewerProps {
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
-    <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-[794px] mx-auto p-12 bg-[#FDFDFD] border border-[#E0D8C7] rounded-md shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]
-      [&_p]:text-[rgb(var(--text-primary-content))]
-      [&_li]:text-[rgb(var(--text-primary-content))]
-      [&_h1]:text-[rgb(var(--text-heading-content))]
-      [&_h2]:text-[rgb(var(--text-heading-content))]
-      [&_h3]:text-[rgb(var(--text-heading-content))]
-      [&_h4]:text-[rgb(var(--text-heading-content))]
-      [&_h5]:text-[rgb(var(--text-heading-content))]
-      [&_h6]:text-[rgb(var(--text-heading-content))]
-    ">
+    <div className={cn(
+      "prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-[794px] mx-auto p-12 rounded-lg",
+      "bg-[#FDFDFD] border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]", // Light mode styles
+      "dark:bg-[#1E1E1E] dark:border-[#333333] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]", // Dark mode styles
+      "[&_p]:text-slate-900 dark:[&_p]:text-slate-200",
+      "[&_li]:text-slate-900 dark:[&_li]:text-slate-200",
+      "[&_h1]:text-slate-900 dark:[&_h1]:text-slate-200",
+      "[&_h2]:text-slate-900 dark:[&_h2]:text-slate-200",
+      "[&_h3]:text-slate-900 dark:[&_h3]:text-slate-200",
+      "[&_h4]:text-slate-900 dark:[&_h4]:text-slate-200",
+      "[&_h5]:text-slate-900 dark:[&_h5]:text-slate-200",
+      "[&_h6]:text-slate-900 dark:[&_h6]:text-slate-200"
+    )}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
@@ -42,9 +45,8 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             let codeContent: string | undefined;
             const firstChild = React.Children.toArray(children)[0];
 
-            // Verifica se o primeiro filho é um elemento React e tenta extrair o conteúdo do código
             if (React.isValidElement(firstChild)) {
-              const props = firstChild.props as { children?: string }; // Faz um cast para um tipo com 'children' opcional
+              const props = firstChild.props as { children?: string };
               if (typeof props.children === 'string') {
                 codeContent = props.children;
               }

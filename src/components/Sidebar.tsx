@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileSidebarToggle from './MobileSidebarToggle';
 import { MadeWithDyad } from './made-with-dyad';
+import { ThemeToggle } from './ThemeToggle'; // Importar ThemeToggle
 
 interface Lesson {
   path: string;
@@ -135,8 +136,9 @@ const Sidebar = () => {
   }, []);
 
   const sidebarHeader = (
-    <div className="flex items-center justify-center h-16 border-b border-border-light mb-4">
+    <div className="flex items-center justify-between h-16 border-b border-border-light mb-4 px-4"> {/* Ajustado para incluir o toggle */}
       <img src="/lessons-markdown-viewer/base_code.svg" alt="base_code Logo" className="h-11 object-contain" />
+      <ThemeToggle /> {/* Adicionar o ThemeToggle aqui */}
     </div>
   );
 
