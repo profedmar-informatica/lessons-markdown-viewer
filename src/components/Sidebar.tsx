@@ -114,7 +114,7 @@ const Sidebar = () => {
 
   const sidebarHeader = (
     <div className="flex items-center justify-center h-16 border-b border-border-light mb-4">
-      <img src="/base_code.svg" alt="base_code Logo" className="h-10 object-contain" />
+      <img src="/base_code.svg" alt="base_code Logo" className="h-11 object-contain" />
     </div>
   );
 
