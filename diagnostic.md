@@ -267,7 +267,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 7.  **Geração de 404.html:** Um passo foi adicionado ao workflow de deploy para copiar `dist/index.html` para `dist/404.html`, permitindo que o GitHub Pages lide com o roteamento de SPA.
 8.  **Correção do Componente Index:** O arquivo `src/pages/Index.tsx` foi reescrito para ser um componente React válido, resolvendo os erros de compilação e implementando a lógica da capa.
 9.  **Refatoração da Sidebar:** O componente `src/components/Sidebar.tsx` foi atualizado para filtrar lições usando a Regex `^(\d{3})-(.*)\.md$`, exibir títulos formatados como "001 - Título da Lição", e remover categorias que não contêm lições válidas. O caminho do logo também foi corrigido.
-10. **Correção de Carregamento de Markdown em Produção:** O `src/pages/Index.tsx` foi atualizado para usar `import.meta.glob` com `eager: true, as: 'raw'` para carregar o conteúdo Markdown, garantindo que os arquivos sejam incluídos no bundle e acessíveis em produção sem problemas de caminho.
+10. **Correção de Carregamento de Markdown em Produção:** O `src/pages/Index.tsx` foi atualizado para usar `import.meta.glob` com `eager: true, query: '?raw', import: 'default'` para carregar o conteúdo Markdown, garantindo que os arquivos sejam incluídos no bundle e acessíveis em produção sem problemas de caminho.
 11. **Implementação de Dark Mode:** Suporte a Dark Mode implementado usando `next-themes` e `shadcn/ui`.
 12. **Ajustes de Layout:**
     *   Aumentado o tamanho do logotipo em 20%.
@@ -279,7 +279,9 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.
     *   Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
     *   Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
-    *   **Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.**
+    *   Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
+13. **Correção de `@import` no CSS:** Movidas as declarações `@import` do `highlight.js` para o topo de `src/globals.css` para resolver o erro de ordem do PostCSS.
+14. **Correção de `import.meta.glob`:** Atualizado `import.meta.glob` em `src/pages/Index.tsx` para usar `query: '?raw', import: 'default'` em vez de `as: 'raw'` para resolver o aviso de depreciação.
 
 **Próximos Passos:**
 
@@ -304,3 +306,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
 - **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
 - **2024-07-30:** Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
+- **2024-07-30:** Corrigida a ordem das declarações `@import` em `src/globals.css` e atualizado o uso de `import.meta.glob` em `src/pages/Index.tsx`.

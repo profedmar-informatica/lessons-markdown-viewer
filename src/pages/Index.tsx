@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 // Use import.meta.glob para carregar todos os arquivos Markdown ansiosamente como strings brutas.
 // Isso garante que o conteúdo esteja disponível no bundle final e não precise ser 'buscado' em tempo de execução.
-const allMarkdownModules = import.meta.glob('../content/**/*.md', { eager: true, as: 'raw' });
+const allMarkdownModules = import.meta.glob('../content/**/*.md', { eager: true, query: '?raw', import: 'default' });
 
 const Index: React.FC = () => {
   const { category, lesson } = useParams<{ category?: string; lesson?: string }>();

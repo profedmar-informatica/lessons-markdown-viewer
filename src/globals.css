@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Highlight.js themes */
+/* Light theme (default) */
+@import 'highlight.js/styles/github.css';
+
+/* Dark theme */
+html.dark {
+  @import 'highlight.js/styles/github-dark.css';
+}
+
 @layer base {
   :root {
     --background: 0 0% 98%; /* canvas-light */
@@ -102,13 +111,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Highlight.js themes */
-/* Light theme (default) */
-@import 'highlight.js/styles/github.css';
-
-/* Dark theme */
-html.dark {
-  @import 'highlight.js/styles/github-dark.css';
 }
