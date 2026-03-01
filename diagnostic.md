@@ -47,7 +47,7 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "cp design/base_code.svg public/base_code.svg && vite",
     "build": "cp design/base_code.svg public/base_code.svg && vite build",
     "build:dev": "cp design/base_code.svg public/base_code.svg && vite build --mode development",
     "lint": "eslint .",
@@ -282,7 +282,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
     *   Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
 13. **Correção de `@import` no CSS:** Movidas as declarações `@import` do `highlight.js` para o topo de `src/globals.css` para resolver o erro de ordem do PostCSS.
 14. **Correção de `import.meta.glob`:** Atualizado `import.meta.glob` em `src/pages/Index.tsx` para usar `query: '?raw', import: 'default'` em vez de `as: 'raw'` para resolver o aviso de depreciação.
-15. **Verificação da Cópia do Logotipo:** Confirmado que o script `build` em `package.json` já inclui o comando `cp design/base_code.svg public/base_code.svg`, garantindo que o logotipo seja copiado para o diretório `public` durante o processo de build.
+15. **Verificação e Correção da Cópia do Logotipo:** O caminho do `src` da imagem em `src/components/Sidebar.tsx` foi corrigido para `/base_code.svg`, permitindo que o Vite lide corretamente com o `base` path. Removido `mkdir -p public` dos scripts de build em `package.json` conforme solicitado.
 
 **Próximos Passos:**
 
@@ -308,4 +308,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
 - **2024-07-30:** Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
 - **2024-07-30:** Corrigida a ordem das declarações `@import` em `src/globals.css` e atualizado o uso de `import.meta.glob` em `src/pages/Index.tsx`.
-- **2024-07-30:** Verificado e confirmado que o logotipo `base_code.svg` já é copiado de `design/` para `public/` durante o build.
+- **2024-07-30:** Verificado e corrigido o processo de cópia do logotipo, garantindo o caminho correto da imagem no `Sidebar.tsx` e removendo `mkdir -p public` dos scripts de build.

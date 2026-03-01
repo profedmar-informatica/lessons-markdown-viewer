@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "mkdir -p public && cp design/base_code.svg public/base_code.svg && vite",
-    "build": "mkdir -p public && cp design/base_code.svg public/base_code.svg && vite build",
-    "build:dev": "mkdir -p public && cp design/base_code.svg public/base_code.svg && vite build --mode development",
+    "dev": "cp design/base_code.svg public/base_code.svg && vite",
+    "build": "cp design/base_code.svg public/base_code.svg && vite build",
+    "build:dev": "cp design/base_code.svg public/base_code.svg && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
   },
