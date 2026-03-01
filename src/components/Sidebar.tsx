@@ -45,7 +45,7 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
               key={lesson.path}
               to={lesson.path}
               onClick={onClose}
-              className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
+              className={`flex items-center gap-3 rounded-md px-4 py-2 text-xs text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors ${
                 currentCategory === category.name && currentLesson === lesson.name
                   ? 'bg-lavender-light text-lavender-dark font-medium'
                   : ''
