@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
-import 'highlight.js/styles/github-light.css'; // Alterado para tema claro
+// import 'highlight.js/styles/github-light.css'; // Removido daqui e movido para globals.css
 import Callout from './Callout';
 import CopyCodeButton from './CopyCodeButton';
 
