@@ -151,7 +151,7 @@ const Sidebar = () => {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent 
             side="left" 
-            className="p-0 w-64 bg-panel-white border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg flex flex-col 
+            className="p-0 w-64 bg-panel-white border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg flex flex-col z-50
                        dark:bg-vscode-bg-sidebar dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
             {sidebarHeader}
@@ -175,7 +175,7 @@ const Sidebar = () => {
 
   return (
     <aside 
-      className="w-64 bg-panel-white p-4 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg flex flex-col 
+      className="w-64 bg-panel-white p-4 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg flex flex-col z-50
                  dark:bg-vscode-bg-sidebar dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
     >
       {sidebarHeader}
