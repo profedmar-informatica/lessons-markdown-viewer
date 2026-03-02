@@ -61,9 +61,9 @@ const Index: React.FC = () => {
   }, [category, lesson, contentMap]); // Recarrega o conteúdo sempre que a categoria ou a lição mudam
 
   return (
-    <div className="flex min-h-screen bg-background p-8"> {/* Adicionado p-8 aqui */}
+    <div className="flex min-h-screen bg-background"> {/* Alterado de bg-canvas-light para bg-background */}
       <Sidebar />
-      <main className="flex-1 overflow-y-auto bg-background"> {/* Removido p-8 daqui para evitar padding duplo */}
+      <main className="flex-1 p-8 overflow-y-auto bg-background"> {/* Adicionado bg-background aqui */}
         <div className="max-w-4xl mx-auto">
           {loading ? (
             <div className="space-y-4">
