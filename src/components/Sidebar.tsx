@@ -43,7 +43,7 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
       </Link>
       {categories.map((category) => (
         <div key={category.name} className="pt-2">
-          <h2 className="text-sm font-medium text-gray-medium px-4 mb-2 dark:text-gray-400">{category.displayTitle}</h2>
+          <h2 className="text-[15px] font-medium text-gray-medium px-4 mb-2 dark:text-gray-400">{category.displayTitle}</h2> {/* Aumentado para 15px */}
           {category.lessons.map((lesson) => (
             <Link
               key={lesson.path}
