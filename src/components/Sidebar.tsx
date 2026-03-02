@@ -56,7 +56,7 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
                   : ''
               }`}
             >
-              <BookOpen className="h-5 w-5" />
+              <BookOpen className="h-3.5 w-3.5" /> {/* Reduzido de h-5 w-5 para h-3.5 w-3.5 */}
               {lesson.displayTitle}
             </Link>
           ))}
