@@ -164,7 +164,7 @@ const Sidebar = () => {
               currentLesson={currentLesson}
               onClose={() => setSheetOpen(false)}
             />
-            <div className="mt-auto h-[60px] border-t border-border-light dark:border-vscode-border-sidebar">
+            <div className="mt-auto h-[60px] py-2 border-t border-border-light dark:border-vscode-border-sidebar">
               <MadeWithDyad />
             </div>
           </SheetContent>
@@ -187,7 +187,7 @@ const Sidebar = () => {
         currentCategory={currentCategory}
         currentLesson={currentLesson}
       />
-      <div className="mt-auto h-[60px] border-t border-border-light dark:border-vscode-border-sidebar">
+      <div className="mt-auto h-[60px] py-2 border-t border-border-light dark:border-vscode-border-sidebar">
         <MadeWithDyad />
       </div>
     </aside>
