@@ -74,7 +74,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     const loadContent = async () => {
-      const modules = import.meta.glob('../content/**/*.md', { eager: true });
+      const modules = import.meta.glob('../content/**/*.md', { eager: true, query: '?raw', import: 'default' });
       const loadedCategories: { [key: string]: Category } = {};
       const lessonFileRegex = /^(\d{3})-(.*)\.md$/; // Regex para 001-999-titulo.md
 
@@ -149,7 +149,11 @@ const Sidebar = () => {
       <>
         <MobileSidebarToggle onClick={() => setSheetOpen(true)} />
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-          <SheetContent side="left" className="p-0 w-64 bg-panel-white border-r-border-light flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar">
+          <SheetContent 
+            side="left" 
+            className="p-0 w-64 bg-panel-white border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-md flex flex-col 
+                       dark:bg-vscode-bg-sidebar dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+          >
             {sidebarHeader}
             <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}
               <ThemeSwitch scale={0.5} /> {/* Reduzir a escala para 50% */}
@@ -170,7 +174,10 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="w-64 bg-panel-white p-4 border-r border-border-light shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-r-lg flex flex-col dark:bg-vscode-bg-sidebar dark:border-r-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+    <aside 
+      className="w-64 bg-panel-white p-4 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-md flex flex-col 
+                 dark:bg-vscode-bg-sidebar dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+    >
       {sidebarHeader}
       <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}
         <ThemeSwitch scale={0.5} /> {/* Reduzir a escala para 50% */}
