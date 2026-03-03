@@ -49,17 +49,37 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             let codeContent: string | undefined;
             const firstChild = React.Children.toArray(children)[0];
 
-            if (React.isValidElement(firstChild)) {
+            // Extract raw code content from the <code> element
+            if (React.isValidElement(firstChild) && firstChild.type === 'code') {
               const props = firstChild.props as { children?: string };
               if (typeof props.children === 'string') {
                 codeContent = props.children;
               }
             }
             
+            // Handle cases where codeContent might be empty or just whitespace
+            const lines = codeContent ? codeContent.split('\n') : [''];
+            // If the last line is empty due to a trailing newline, don't count it as a separate line for numbering
+            const actualLines = lines.length > 1 && lines[lines.length - 1] === '' ? lines.slice(0, -1) : lines;
+            const lineNumbers = Array.from({ length: actualLines.length }, (_, i) => i + 1);
+
             return (
               <div className="relative">
-                <pre className="rounded-lg p-4 pr-12 bg-[#1E1E1E] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
-                  {children}
+                <pre className="rounded-lg p-4 pr-12 bg-[#1E1E1E] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto dark:bg-[#333333]">
+                  <div className="flex">
+                    {/* Line Numbers */}
+                    <div className="flex flex-col text-right pr-4 select-none text-gray-500 dark:text-gray-400 border-r border-gray-700/50 dark:border-gray-500/50 mr-4 text-[0.99em] leading-relaxed">
+                      {lineNumbers.map((num) => (
+                        <span key={num} className="block">
+                          {num}
+                        </span>
+                      ))}
+                    </div>
+                    {/* Code Content */}
+                    <div className="flex-1">
+                      {children} {/* This will render the <code> element with highlighted content */}
+                    </div>
+                  </div>
                 </pre>
                 {codeContent && (
                   <CopyCodeButton code={codeContent} />
