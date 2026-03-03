@@ -46,42 +46,24 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             return <Callout type={type}>{props.children}</Callout>;
           },
           pre: ({ children }) => {
-            let rawCode = '';
-            // Extrai o conteúdo de texto puro do elemento <code> dentro de <pre>
-            React.Children.forEach(children, (child) => {
-              if (React.isValidElement(child) && child.type === 'code') {
-                // Asserção de tipo para informar ao TypeScript que child.props tem a propriedade 'children'
-                rawCode = String((child.props as { children: React.ReactNode }).children);
+            let codeContent: string | undefined;
+            const firstChild = React.Children.toArray(children)[0];
+
+            if (React.isValidElement(firstChild)) {
+              const props = firstChild.props as { children?: string };
+              if (typeof props.children === 'string') {
+                codeContent = props.children;
               }
-            });
-
-            const lines = rawCode.split('\n');
-            // Remove a última linha vazia se existir (comum em blocos de código)
-            if (lines.length > 0 && lines[lines.length - 1] === '') {
-              lines.pop();
             }
-
+            
             return (
-              <div className="relative my-6"> {/* my-6 para espaçamento em torno dos blocos de código */}
-                <div className="flex rounded-lg overflow-hidden border border-white/5 dark:border-white/10"> {/* Contêiner externo para borda e cantos arredondados */}
-                  {/* Numeração de Linhas */}
-                  <div className="line-numbers-container bg-[#282828] text-gray-500 text-right select-none py-4 pl-4 pr-3 text-[0.99em] leading-relaxed flex-shrink-0 border-r border-gray-700">
-                    {lines.map((_, index) => (
-                      <span key={index} className="block">
-                        {index + 1}
-                      </span>
-                    ))}
-                  </div>
-                  {/* Conteúdo do Código */}
-                  <div className="relative flex-1"> {/* Este div conterá o pre e o botão de copiar */}
-                    <pre className="p-4 pr-12 bg-[#333333] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed overflow-x-auto h-full">
-                      {children} {/* Este será o elemento <code> com o código realçado */}
-                    </pre>
-                    {rawCode && (
-                      <CopyCodeButton code={rawCode} />
-                    )}
-                  </div>
-                </div>
+              <div className="relative">
+                <pre className="rounded-lg p-4 pr-12 bg-[#1E1E1E] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
+                  {children}
+                </pre>
+                {codeContent && (
+                  <CopyCodeButton code={codeContent} />
+                )}
               </div>
             );
           },
