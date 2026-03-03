@@ -39,7 +39,8 @@ tros arquivos src)
 ├── package.json
 ├── pnpm-workspace.yaml
 ├── vite.config.ts
-└── ... (outros arquivos na raiz)
+└── ... (ou
+tros arquivos na raiz)
 ```
 
 ## 2. Dependências (Conteúdo de `package.json`)
@@ -297,6 +298,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 23. **Correção de Importação do Highlight.js:** Alterado o tema de `vscode-dark-plus.css` para `vs2015.css` em `src/main.tsx`.
 24. **Alteração de Cor de Fundo:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor.
 25. **Refatoração do Algoritmo:** O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
+26. **Cor do Painel Lateral:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
 
 **Próximos Passos:**
 
@@ -332,3 +334,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** Corrigido o caminho de importação do tema `vscode-dark-plus.css` em `src/main.tsx`.
 - **2024-07-31:** Corrigido erro de importação do highlight.js: alterado de vscode-dark-plus (inexistente) para vs2015.css (compatível).
 - **2024-07-31:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
+- **2024-07-31:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
