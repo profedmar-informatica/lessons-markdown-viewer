@@ -27,7 +27,11 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 │   │       ├── 001-introducao.md
 │   │       ├── 002-sobre-o-projeto.md
 │   │       ├── 003-texto.md
-│   │       └── 004-Markdown Viewer.md
+│   │       ├── 004-Markdown Viewer.md
+│   │       ├── 005-como-usar - Copia.md
+│   │       ├── 006-sobre-o-projeto - Copia.md
+│   │       ├── 007-texto - Copia.md
+│   │       └── 008-Markdown Viewer - Copia.md
 │   ├── pages/
 │   │   ├── Index.tsx
 │   │   └── NotFound.tsx
@@ -47,9 +51,9 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cp design/base_code.svg public/base_code.svg && vite",
-    "build": "cp design/base_code.svg public/base_code.svg && vite build",
-    "build:dev": "cp design/base_code.svg public/base_code.svg && vite build --mode development",
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -283,6 +287,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 13. **Correção de `@import` no CSS:** Movidas as declarações `@import` do `highlight.js` para o topo de `src/globals.css` para resolver o erro de ordem do PostCSS.
 14. **Correção de `import.meta.glob`:** Atualizado `import.meta.glob` em `src/pages/Index.tsx` para usar `query: '?raw', import: 'default'` em vez de `as: 'raw'` para resolver o aviso de depreciação.
 15. **Verificação e Correção da Cópia do Logotipo:** O caminho do `src` da imagem em `src/components/Sidebar.tsx` foi corrigido para `/base_code.svg`, permitindo que o Vite lide corretamente com o `base` path. Removido `mkdir -p public` dos scripts de build em `package.json` conforme solicitado.
+16. **Tipografia refinada para o padrão Gemini/Modern UI:** escala estabilizada em `prose-lg`, H1/H2 suavizados e entrelinhamento relaxado para leitura técnica.
 
 **Próximos Passos:**
 
@@ -309,3 +314,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
 - **2024-07-30:** Corrigida a ordem das declarações `@import` em `src/globals.css` e atualizado o uso de `import.meta.glob` em `src/pages/Index.tsx`.
 - **2024-07-30:** Verificado e corrigido o processo de cópia do logotipo, garantindo o caminho correto da imagem no `Sidebar.tsx` e removendo `mkdir -p public` dos scripts de build.
+- **2024-07-30:** Tipografia refinada para o padrão Gemini/Modern UI: escala estabilizada em prose-lg, H1/H2 suavizados e entrelinhamento relaxado para leitura técnica.
