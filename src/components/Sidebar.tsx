@@ -49,7 +49,7 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
               key={lesson.path}
               to={lesson.path}
               onClick={onClose}
-              className={`flex items-center gap-3 rounded-md px-4 py-2 text-xs text-zinc-600 hover:bg-lavender-light hover:text-lavender-dark transition-colors duration-200
+              className={`flex items-center gap-3 rounded-md px-4 py-2 text-xs text-[#374151] hover:bg-lavender-light hover:text-lavender-dark transition-colors duration-200
                 dark:text-zinc-400 dark:hover:bg-vscode-menu-active-hover dark:hover:text-white ${
                 currentCategory === category.name && currentLesson === lesson.name
                   ? 'bg-lavender-light text-lavender-dark font-medium dark:bg-vscode-menu-active-hover dark:text-white'
@@ -151,7 +151,7 @@ const Sidebar = () => {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent 
             side="left" 
-            className="p-0 w-64 h-screen flex flex-col bg-background border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg z-50
+            className="p-0 w-64 h-screen flex flex-col bg-paper-light-beige border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg z-50
                        dark:bg-vscode-bg-sidebar dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
             {sidebarHeader}
@@ -175,7 +175,7 @@ const Sidebar = () => {
 
   return (
     <aside 
-      className="w-64 h-screen flex flex-col bg-background p-4 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg z-50
+      className="w-64 h-screen flex flex-col bg-paper-light-beige p-4 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg z-50
                  dark:bg-vscode-bg-sidebar dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
     >
       {sidebarHeader}
