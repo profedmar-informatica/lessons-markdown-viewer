@@ -80,13 +80,23 @@ export default {
         'callout-exercise-border': 'hsl(240 70% 70%)', // Lavender-soft
         'callout-exercise-bg': 'hsl(240 70% 95%)',
 
-        // Cores para o tema Dark (VS Code-like)
-        'vscode-bg-global': '#1E1E1E',
-        'vscode-bg-sidebar': '#252526',
-        'vscode-border-sidebar': '#333333',
-        'vscode-text-lesson': '#D4D4D4',
-        'vscode-text-heading': '#FFFFFF', // White for headings
-        'vscode-menu-active-hover': '#37373D',
+        // Novos tokens globais para a arquitetura de 3 níveis
+        'brand-desk': {
+          light: 'hsl(0 0% 96.1%)', // #F5F5F5
+          dark: 'hsl(210 22% 25%)', // #515151
+        },
+        'brand-paper': {
+          light: 'hsl(40 100% 99%)', // #FFFBF0
+          dark: 'hsl(222 10% 10%)', // #1E1E1E
+        },
+
+        // Cores para o tema Dark (VS Code-like) - Manter para compatibilidade, mas usar brand-paper/desk onde possível
+        'vscode-bg-global': 'hsl(210 22% 25%)', // Agora brand-desk.dark
+        'vscode-bg-sidebar': 'hsl(222 10% 13%)', // #252526
+        'vscode-border-sidebar': 'hsl(222 10% 17%)', // #333333
+        'vscode-text-lesson': 'hsl(210 40% 98%)', // #D4D4D4
+        'vscode-text-heading': 'hsl(0 0% 100%)', // White for headings
+        'vscode-menu-active-hover': 'hsl(222 10% 20%)', // #37373D
         'vscode-text-blue': '#9CDCFE', // For specific blue text if needed
       },
       borderRadius: {

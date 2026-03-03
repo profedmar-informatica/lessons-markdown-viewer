@@ -7,10 +7,10 @@
 
 @layer base {
   :root {
-    --background: 40 100% 99%; /* FFFBF0 - paper-light-beige */
+    --background: var(--brand-desk-light); /* Usar o novo token */
     --foreground: 222.2 84% 4.9%; /* charcoal-dark */
 
-    --card: 40 100% 99%; /* FFFBF0 - panel-white */
+    --card: var(--brand-paper-light); /* Usar o novo token */
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
@@ -38,7 +38,7 @@
     --radius: 12px;
 
     /* Variáveis específicas da Sidebar, alinhadas com o tema */
-    --sidebar-background: 40 100% 99%; /* FFFBF0 - panel-white */
+    --sidebar-background: var(--brand-paper-light); /* Usar o novo token */
     --sidebar-foreground: 222.2 84% 4.9%; /* charcoal-dark */
     --sidebar-primary: 240 70% 70%; /* lavender-soft */
     --sidebar-primary-foreground: 0 0% 100%;
@@ -53,10 +53,10 @@
   }
 
   .dark {
-    --background: 0 0% 21%; /* #353535 para o fundo principal no modo escuro */
+    --background: var(--brand-desk-dark); /* Usar o novo token */
     --foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
 
-    --card: 222 10% 10%; /* #1E1E1E */
+    --card: var(--brand-paper-dark); /* Usar o novo token */
     --card-foreground: 210 40% 98%;
 
     --popover: 222 10% 10%;
@@ -82,7 +82,7 @@
     --ring: 212.7 26.8% 83.9%;
 
     /* Variáveis específicas da Sidebar para Dark Mode (VS Code-like) */
-    --sidebar-background: 222 10% 13%; /* #252526 */
+    --sidebar-background: var(--vscode-bg-sidebar); /* Manter por enquanto, pode ser ajustado para brand-paper-dark */
     --sidebar-foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
     --sidebar-primary: 210 40% 98%; /* White for primary elements */
     --sidebar-primary-foreground: 222.2 47.4% 11.2%;
@@ -113,31 +113,4 @@
   }
 }
 
-/* CSS para numeração de linhas e estilo de bloco de código (solução CSS puro) */
-pre {
-  counter-reset: line;
-  padding: 0 !important; /* Remove padding do container para a régua encostar na borda */
-}
-code {
-  padding: 1.25rem 1rem !important; /* Padding interno apenas para o texto */
-  width: 100%;
-  display: block; /* Garante que o código se comporte como um bloco para o counter */
-}
-/* A Régua de Números */
-.hljs-ln-line {
-  display: block;
-  position: relative;
-}
-.hljs-ln-line::before {
-  counter-increment: line;
-  content: counter(line);
-  display: inline-block;
-  width: 3.5rem; /* Largura da calha */
-  margin-right: 1.2rem;
-  text-align: right;
-  color: #858585; /* Cor de comentário/número VS Code */
-  border-right: 1px solid #454545; /* Linha vertical divisória */
-  padding-right: 1rem;
-  user-select: none;
-  background: #2d2d2d; /* Um tom levemente diferente para a calha (opcional) */
-}
+/* Removidas as regras de CSS para numeração de linhas e estilo de bloco de código */

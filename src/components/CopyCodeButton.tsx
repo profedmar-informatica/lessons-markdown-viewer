@@ -28,7 +28,7 @@ const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({ code }) => {
             variant="ghost"
             size="sm"
             onClick={handleCopy}
-            className="absolute right-2 top-2 h-8 w-8 p-0 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            className="absolute right-2 top-2 h-8 w-8 p-0 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
             aria-label="Copiar código"
           >
             {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}

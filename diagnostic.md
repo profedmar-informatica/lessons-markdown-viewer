@@ -12,6 +12,7 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 ├── src/
 │   ├── components/
 │   │   ├── Callout.tsx
+│   │   ├── CodeBlock.tsx
 │   │   ├── CopyCodeButton.tsx
 │   │   ├── MarkdownViewer.tsx
 │   │   ├── MobileSidebarToggle.tsx
@@ -303,6 +304,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 28. **Fundo da caixa de código unificado e numeração de linhas:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
 29. **Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.**
 30. **Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.**
+31. **REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.**
 
 **Próximos Passos:**
 
@@ -344,3 +346,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
 - **2024-07-31:** Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.
 - **2024-07-31:** Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.
+- **2024-07-31:** REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.
