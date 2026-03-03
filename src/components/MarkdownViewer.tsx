@@ -58,7 +58,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             
             return (
               <div className="relative">
-                <pre className="rounded-lg p-4 pr-12 bg-[#212121] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
+                <pre className="rounded-lg p-4 pr-12 bg-[#252525] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
                   {children}
                 </pre>
                 {codeContent && (
