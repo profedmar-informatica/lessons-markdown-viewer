@@ -300,6 +300,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 25. **Refatoração do Algoritmo:** O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
 26. **Cor do Painel Lateral:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
 27. **Aumento da Fonte da Caixa de Código:** A fonte da caixa de código foi aumentada para `1.1em`.
+28. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
 
 **Próximos Passos:**
 
@@ -337,3 +338,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
 - **2024-07-31:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
 - **2024-07-31:** A fonte da caixa de código foi aumentada para `1.1em`.
+- **2024-07-31:** A fonte da caixa de código foi ajustada para `0.99em`.
