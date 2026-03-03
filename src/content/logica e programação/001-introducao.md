@@ -59,11 +59,11 @@ int main() {
     *   `if (num % i == 0)`: Se `num` for divisível por `i` (o resto da divisão é 0), então `num` não é primo e a função retorna `false`.
     *   Se o laço terminar sem encontrar divisores, `num` é primo e a função retorna `true`.
 4.  **`int main()`**: Esta é a função principal onde a execução do programa começa.
-    *   `printf(...)`: Exibe mensagens no console.
-    *   `for (int i = 1; i <= 50; i++)`: Um laço que itera de 1 a 50.
-    *   `if (isPrime(i))`: Para cada número, chama a função `isPrime` para verificar se é primo.
-    *   `printf("%d\n", i)`: Se o número for primo, ele é impresso.
-    *   `return 0;`: Indica que o programa foi executado com sucesso.
+    `printf(...)`: Exibe mensagens no console.
+    `for (int i = 1; i <= 50; i++)`: Um laço que itera de 1 a 50.
+    `if (isPrime(i))`: Para cada número, chama a função `isPrime` para verificar se é primo.
+    `printf("%d\n", i)`: Se o número for primo, ele é impresso.
+    `return 0;`: Indica que o programa foi executado com sucesso.
 
 ## Como Compilar e Executar em C
 

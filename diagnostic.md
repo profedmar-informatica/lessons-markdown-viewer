@@ -307,47 +307,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 31. **REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.**
 32. **Refatoração concluída: Resolvido erro de tipagem no MarkdownViewer, isolado componente CodeBlock e unificados tokens de estilo global.**
 33. **Reestruturação Finalizada: Resolvidos erros de tipagem, implementados tokens de design (--mesa, --papel) e centralizada a lógica de código no componente CodeBlock.**
-
-**Próximos Passos:**
-
-*   Faça um novo push para o seu repositório. O workflow de deploy deverá agora executar sem o erro de "Dependencies lock file is not found" e o site deverá carregar corretamente no GitHub Pages.
-*   Monitore a execução do workflow para confirmar que todas as etapas são concluídas com sucesso e que o deploy para o GitHub Pages ocorre conforme o esperado.
-
-## Registro de Alterações
-- **2024-07-30:** Configurado `basename` e `base` path para compatibilidade com GitHub Pages, e adicionada a cópia de `index.html` para `404.html` no workflow de deploy.
-- **2024-07-30:** Corrigidos erros de compilação do TypeScript em `src/App.tsx` ao reescrever `src/pages/Index.tsx` como um componente React válido.
-- **2024-07-30:** Refatorada a lógica de exibição de conteúdo para incluir a regra da capa, filtragem de lições por Regex (001-999), exibição hierárquica no menu e ocultação de disciplinas vazias. Corrigido o caminho do logo.
-- **2024-07-30:** Ajustada a formatação dos números das lições no menu lateral para exibir '01' a '09' e '10' em diante.
-- **2024-07-30:** Corrigido o caminho de busca dos arquivos Markdown para compatibilidade com o ambiente de produção (GitHub Pages).
-- **2024-07-30:** Implementado suporte a Dark Mode com preservação do estilo skeuomorphic (Folha de Ardósia).
-- **2024-07-30:** Ajustado botão de alternância de tema para posição centralizada sob o logo e aplicada paleta Dark VS Code globalmente.
-- **2024-07-30:** Ajustado o tamanho do botão de alternância de tema para 60% menor e reposicionado abaixo do logo.
-- **2024-07-30:** Aumentado o tamanho do logotipo em 20%, diminuído o tamanho do toggle button em 30% e reduzido o espaçamento ao redor do toggle.
-- **2024-07-30:** Reduzido o padding e a margin do contêiner do ThemeSwitch para zerar o espaçamento vertical.
-- **2024-07-30:** Diminuída a escala do toggle button para 15% do tamanho original.
-- **2024-07-30:** Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
-- **2024-07-30:** Adicionado padding de 20px ao ThemeSwitch.
-- **2024-07-30:** Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.
-- **2024-07-30:** Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
-- **2024-07-30:** Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
-- **2024-07-30:** Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
-- **2024-07-30:** Corrigida a ordem das declarações `@import` em `src/globals.css` e atualizado o uso de `import.meta.glob` em `src/pages/Index.tsx`.
-- **2024-07-30:** Verificado e corrigido o processo de cópia do logotipo, garantindo o caminho correto da imagem no `Sidebar.tsx` e removendo `mkdir -p public` dos scripts de build.
-- **2024-07-30:** Tipografia refinada para o padrão Gemini/Modern UI: escala estabilizada em prose-lg, H1/H2 suavizados e entrelinhamento relaxado para leitura técnica.
-- **2024-07-30:** Tipografia sincronizada com os padrões técnicos do Gemini: corpo em 16px (#1F1F1F) e títulos reescalonados para maior equilíbrio visual em telas de notebook.
-- **2024-07-31:** O arquivo `src/content/logica e programação/001-como-usar.md` foi atualizado com um tutorial sobre como imprimir números primos de 1 a 50 em Portugol Estruturado (estilo Portugol Studio).
-- **2024-07-31:** O arquivo `src/content/logica e programação/001-como-usar.md` foi renomeado para `001-introducao.md`.
-- **2024-07-31:** Sincronizado estilo de blocos de código com VS Code Dark Plus para ambos os temas. Importado tema de realce de sintaxe via CSS global e ajustada tipografia monoespaçada.
-- **2024-07-31:** Corrigido o erro de importação do `highlight.js` movendo o `@import` de `src/globals.css` para `src/main.tsx`.
-- **2024-07-31:** Corrigido o caminho de importação do tema `vscode-dark-plus.css` em `src/main.tsx`.
-- **2024-07-31:** Corrigido erro de importação do highlight.js: alterado de vscode-dark-plus (inexistente) para vs2015.css (compatível).
-- **2024-07-31:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
-- **2024-07-31:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
-- **2024-07-31:** A fonte da caixa de código foi aumentada para `1.1em`.
-- **2024-07-31:** A fonte da caixa de código foi ajustada para `0.99em`.
-- **2024-07-31:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
-- **2024-07-31:** Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.
-- **2024-07-31:** Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.
-- **2024-07-31:** REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.
-- **2024-07-31:** Refatoração concluída: Resolvido erro de tipagem no MarkdownViewer, isolado componente CodeBlock e unificados tokens de estilo global.
-- **2024-07-31:** Reestruturação Finalizada: Resolvidos erros de tipagem, implementados tokens de design (--mesa, --papel) e centralizada a lógica de código no componente CodeBlock.
+34. **Eliminados vazamentos de cor (azul petróleo) dos blocos de código através da neutralização de estilos do highlight.js no globals.css.**

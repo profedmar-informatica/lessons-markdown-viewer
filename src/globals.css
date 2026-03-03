@@ -6,6 +6,14 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
   :root {
     --mesa: #F5F5F5; /* Light */
     --papel: #FFFBF0; /* Light */
@@ -101,22 +109,18 @@
     --text-primary-content: 210 40% 98%; /* #D4D4D4 */
     --text-heading-content: 0 0% 100%; /* White */
   }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
 
   /* Regra para garantir que o highlight.js não sobrescreva o background do pre */
   .hljs {
     background: transparent !important;
     padding: 0 !important;
   }
-}
 
-/* Removidas as regras de CSS para numeração de linhas e estilo de bloco de código */
+  /* Novas regras para eliminar vazamentos de cor nos blocos de código */
+  pre code {
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
