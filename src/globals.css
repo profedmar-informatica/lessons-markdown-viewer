@@ -7,10 +7,13 @@
 
 @layer base {
   :root {
-    --background: var(--brand-desk-light); /* Usar o novo token */
+    --mesa: #F5F5F5; /* Light */
+    --papel: #FFFBF0; /* Light */
+
+    --background: var(--mesa); /* Usar o novo token */
     --foreground: 222.2 84% 4.9%; /* charcoal-dark */
 
-    --card: var(--brand-paper-light); /* Usar o novo token */
+    --card: var(--papel); /* Usar o novo token */
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
@@ -38,7 +41,7 @@
     --radius: 12px;
 
     /* Variáveis específicas da Sidebar, alinhadas com o tema */
-    --sidebar-background: var(--brand-paper-light); /* Usar o novo token */
+    --sidebar-background: var(--papel); /* Usar o novo token */
     --sidebar-foreground: 222.2 84% 4.9%; /* charcoal-dark */
     --sidebar-primary: 240 70% 70%; /* lavender-soft */
     --sidebar-primary-foreground: 0 0% 100%;
@@ -50,19 +53,16 @@
     /* Cores de texto personalizadas para o conteúdo Markdown */
     --text-primary-content: 45 45 45; /* #2D2D2D */
     --text-heading-content: 26 26 26; /* #1A1A1A */
-
-    /* Novos tokens globais para a arquitetura de 3 níveis */
-    --mesa-light: hsl(0 0% 96.1%); /* #F5F5F5 */
-    --mesa-dark: hsl(210 22% 25%); /* #515151 */
-    --papel-light: hsl(40 100% 99%); /* #FFFBF0 */
-    --papel-dark: hsl(222 10% 10%); /* #1E1E1E */
   }
 
   .dark {
-    --background: var(--brand-desk-dark); /* Usar o novo token */
+    --mesa: #515151; /* Dark */
+    --papel: #1E1E1E; /* Dark */
+
+    --background: var(--mesa); /* Usar o novo token */
     --foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
 
-    --card: var(--brand-paper-dark); /* Usar o novo token */
+    --card: var(--papel); /* Usar o novo token */
     --card-foreground: 210 40% 98%;
 
     --popover: 222 10% 10%;
@@ -88,7 +88,7 @@
     --ring: 212.7 26.8% 83.9%;
 
     /* Variáveis específicas da Sidebar para Dark Mode (VS Code-like) */
-    --sidebar-background: var(--vscode-bg-sidebar); /* Manter por enquanto, pode ser ajustado para brand-paper-dark */
+    --sidebar-background: var(--papel); /* Usar o novo token */
     --sidebar-foreground: 210 40% 98%; /* text-slate-200, close to #D4D4D4 */
     --sidebar-primary: 210 40% 98%; /* White for primary elements */
     --sidebar-primary-foreground: 222.2 47.4% 11.2%;

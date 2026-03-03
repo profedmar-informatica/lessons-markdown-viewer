@@ -63,7 +63,7 @@ const Index: React.FC = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-background"> {/* Adicionado h-screen e overflow-hidden */}
       <Sidebar />
-      <main className="flex-1 p-8 overflow-y-auto bg-brand-desk-light dark:bg-brand-desk-dark"> {/* Fundo do main ajustado para brand-desk */}
+      <main className="flex-1 p-8 overflow-y-auto bg-[var(--mesa)]"> {/* Fundo do main ajustado para var(--mesa) */}
         <div className="max-w-4xl mx-auto">
           {loading ? (
             <div className="space-y-4">

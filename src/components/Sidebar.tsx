@@ -151,8 +151,8 @@ const Sidebar = () => {
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent 
             side="left" 
-            className="p-0 w-64 h-screen flex flex-col bg-brand-paper-light border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg z-50
-                       dark:bg-brand-paper-dark dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            className="p-0 w-64 h-screen flex flex-col bg-[var(--papel)] rounded-lg z-50 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]
+                       dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
             {sidebarHeader}
             <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}
@@ -175,8 +175,8 @@ const Sidebar = () => {
 
   return (
     <aside 
-      className="w-64 h-screen flex flex-col bg-brand-paper-light p-4 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-lg z-50
-                 dark:bg-brand-paper-dark dark:border dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+      className="w-64 h-screen flex flex-col bg-[var(--papel)] p-4 rounded-lg z-50 border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]
+                 dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
     >
       {sidebarHeader}
       <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}

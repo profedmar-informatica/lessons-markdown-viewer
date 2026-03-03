@@ -80,15 +80,15 @@ export default {
         'callout-exercise-border': 'hsl(240 70% 70%)', // Lavender-soft
         'callout-exercise-bg': 'hsl(240 70% 95%)',
 
-        // Novos tokens globais para a arquitetura de 3 níveis
-        'brand-desk': {
-          light: 'hsl(0 0% 96.1%)', // #F5F5F5
-          dark: 'hsl(210 22% 25%)', // #515151
-        },
-        'brand-paper': {
-          light: 'hsl(40 100% 99%)', // #FFFBF0
-          dark: 'hsl(222 10% 10%)', // #1E1E1E
-        },
+        // Remover: 'brand-desk' e 'brand-paper' daqui
+        // 'brand-desk': {
+        //   light: 'hsl(0 0% 96.1%)', // #F5F5F5
+        //   dark: 'hsl(210 22% 25%)', // #515151
+        // },
+        // 'brand-paper': {
+        //   light: 'hsl(40 100% 99%)', // #FFFBF0
+        //   dark: 'hsl(222 10% 10%)', // #1E1E1E',
+        // },
 
         // Cores para o tema Dark (VS Code-like) - Manter para compatibilidade, mas usar brand-paper/desk onde possível
         'vscode-bg-global': 'hsl(210 22% 25%)', // Agora brand-desk.dark
