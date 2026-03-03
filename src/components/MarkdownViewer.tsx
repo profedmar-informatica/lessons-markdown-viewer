@@ -56,19 +56,10 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
               }
             }
             
-            const lines = codeContent ? codeContent.split('\n') : [];
-
             return (
               <div className="relative">
-                <pre className="rounded-lg p-4 pr-12 bg-[#1E1E1E] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto flex">
-                  <div className="line-numbers pr-4 text-right text-gray-500 dark:text-gray-600 select-none">
-                    {lines.map((_, index) => (
-                      <span key={index} className="block leading-relaxed">{index + 1}</span>
-                    ))}
-                  </div>
-                  <code className="flex-1">
-                    {children}
-                  </code>
+                <pre className="rounded-lg p-4 pr-12 bg-[#1E1E1E] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
+                  {children}
                 </pre>
                 {codeContent && (
                   <CopyCodeButton code={codeContent} />
