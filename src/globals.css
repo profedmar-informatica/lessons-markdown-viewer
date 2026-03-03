@@ -113,33 +113,31 @@
   }
 }
 
-/* CSS para numeração de linhas (solução CSS puro) */
-pre { 
-  counter-reset: line; 
-  display: flex; 
-  padding-left: 0 !important;
+/* CSS para numeração de linhas e estilo de bloco de código (solução CSS puro) */
+pre {
+  counter-reset: line;
+  padding: 0 !important; /* Remove padding do container para a régua encostar na borda */
 }
-code { 
-  counter-reset: line; 
+code {
+  padding: 1.25rem 1rem !important; /* Padding interno apenas para o texto */
+  width: 100%;
   display: block; /* Garante que o código se comporte como um bloco para o counter */
 }
-/* Esta regra cria a linha e o número */
-/* Nota: Sem o plugin highlightjs-line-numbers.js, a classe .hljs-ln-line não será gerada.
-   Para que a numeração de linhas funcione via CSS puro, cada linha de código precisaria
-   ser um elemento HTML separado, o que não é o padrão do rehype-highlight.
-   O CSS abaixo para .hljs-ln-line::before não terá efeito sem a classe. */
-.hljs-ln-line { 
-  display: block; 
+/* A Régua de Números */
+.hljs-ln-line {
+  display: block;
+  position: relative;
 }
 .hljs-ln-line::before {
   counter-increment: line;
   content: counter(line);
   display: inline-block;
-  width: 2.5rem;
-  margin-right: 1rem;
+  width: 3.5rem; /* Largura da calha */
+  margin-right: 1.2rem;
   text-align: right;
-  color: #6e7681; /* Cor dos números */
-  border-right: 1px solid #444; /* A linha vertical divisória */
-  padding-right: 0.5rem;
-  user-select: none; /* Impede copiar os números */
+  color: #858585; /* Cor de comentário/número VS Code */
+  border-right: 1px solid #454545; /* Linha vertical divisória */
+  padding-right: 1rem;
+  user-select: none;
+  background: #2d2d2d; /* Um tom levemente diferente para a calha (opcional) */
 }

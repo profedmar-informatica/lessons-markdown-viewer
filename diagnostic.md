@@ -94,7 +94,6 @@ tros arquivos na raiz)
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "highlight.js": "^11.11.1",
-    "highlightjs-line-numbers.js": "^2.8.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.4.6",
@@ -303,6 +302,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 27. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
 28. **Fundo da caixa de código unificado e numeração de linhas:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
 29. **Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.**
+30. **Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.**
 
 **Próximos Passos:**
 
@@ -343,3 +343,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** A fonte da caixa de código foi ajustada para `0.99em`.
 - **2024-07-31:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
 - **2024-07-31:** Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.
+- **2024-07-31:** Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.

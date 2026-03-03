@@ -6,21 +6,17 @@ import Callout from './Callout';
 import CopyCodeButton from './CopyCodeButton';
 import { cn } from '@/lib/utils';
 
-// Import highlight.js (o plugin de numeração de linhas via JS foi removido)
-import hljs from 'highlight.js';
+// hljs não é mais importado diretamente aqui, pois rehypeHighlight o utiliza internamente
+// O plugin highlightjs-line-numbers.js e seu useEffect foram removidos.
 
 interface MarkdownViewerProps {
   content: string;
 }
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
-  // O useEffect para hljs.lineNumbersBlock foi removido conforme solicitado.
-  // A numeração de linhas agora será tratada via CSS puro, se a estrutura HTML permitir.
-  useEffect(() => {
-    document.querySelectorAll('pre code').forEach((block) => {
-      hljs.highlightElement(block as HTMLElement);
-    });
-  }, [content]); // Re-highlight quando o conteúdo muda
+  // O useEffect para hljs.highlightElement e hljs.lineNumbersBlock foi removido conforme solicitado.
+  // A numeração de linhas agora será tratada via CSS puro.
+  // O realce de sintaxe é feito pelo rehypeHighlight durante o processamento do Markdown.
 
   return (
     <div className={cn(
@@ -58,10 +54,11 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
           },
           pre: ({ children }) => {
             let codeContent: string | undefined;
-            const firstChild = React.Children.toArray(children)[0];
+            // children aqui é tipicamente um único elemento <code>
+            const codeElement = React.Children.toArray(children)[0];
 
-            if (React.isValidElement(firstChild)) {
-              const props = firstChild.props as { children?: string };
+            if (React.isValidElement(codeElement) && codeElement.type === 'code') {
+              const props = codeElement.props as { children?: string };
               if (typeof props.children === 'string') {
                 codeContent = props.children;
               }
@@ -69,7 +66,8 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             
             return (
               <div className="relative">
-                <pre className="rounded-lg p-4 pr-12 bg-gray-100 dark:bg-[#252525] text-charcoal-dark dark:text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
+                <pre className="bg-[#252525] text-[#D4D4D4] rounded-lg overflow-hidden flex my-6 shadow-inner">
+                  {/* O conteúdo 'children' já é o elemento <code> com o código realçado */}
                   {children}
                 </pre>
                 {codeContent && (
@@ -78,8 +76,6 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
               </div>
             );
           },
-          // A regra .hljs em globals.css já garante background: transparent !important para <code>
-          // quando highlight.js é aplicado.
         }}
       >
         {content}
