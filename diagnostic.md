@@ -289,6 +289,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 15. **Verificação e Correção da Cópia do Logotipo:** O caminho do `src` da imagem em `src/components/Sidebar.tsx` foi corrigido para `/base_code.svg`, permitindo que o Vite lide corretamente com o `base` path. Removido `mkdir -p public` dos scripts de build em `package.json` conforme solicitado.
 16. **Tipografia refinada para o padrão Gemini/Modern UI:** escala estabilizada em `prose-lg`, H1/H2 suavizados e entrelinhamento relaxado para leitura técnica.
 17. **Tipografia sincronizada com os padrões técnicos do Gemini:** corpo em 16px (#1F1F1F) e títulos reescalonados para maior equilíbrio visual em telas de notebook.
+18. **Conteúdo de Tutorial de Portugol:** O arquivo `src/content/logica e programação/001-como-usar.md` foi atualizado com um tutorial sobre como imprimir números primos de 1 a 50 em Portugol Estruturado (estilo Portugol Studio).
 
 **Próximos Passos:**
 
@@ -317,3 +318,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-30:** Verificado e corrigido o processo de cópia do logotipo, garantindo o caminho correto da imagem no `Sidebar.tsx` e removendo `mkdir -p public` dos scripts de build.
 - **2024-07-30:** Tipografia refinada para o padrão Gemini/Modern UI: escala estabilizada em prose-lg, H1/H2 suavizados e entrelinhamento relaxado para leitura técnica.
 - **2024-07-30:** Tipografia sincronizada com os padrões técnicos do Gemini: corpo em 16px (#1F1F1F) e títulos reescalonados para maior equilíbrio visual em telas de notebook.
+- **2024-07-31:** O arquivo `src/content/logica e programação/001-como-usar.md` foi atualizado com um tutorial sobre como imprimir números primos de 1 a 50 em Portugol Estruturado (estilo Portugol Studio).
