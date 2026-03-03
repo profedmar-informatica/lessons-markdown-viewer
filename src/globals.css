@@ -1,5 +1,5 @@
 /* Highlight.js themes */
-@import 'highlight.js/styles/base16/vscode-dark-plus.css';
+/* Removido: @import 'highlight.js/styles/base16/vscode-dark-plus.css'; */
 
 @tailwind base;
 @tailwind components;
@@ -26,7 +26,7 @@
     --muted-foreground: 215.4 16.3% 46.9%; /* gray-medium */
 
     --accent: 240 70% 70%; /* lavender-soft */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: 222.2 84% 4.9%; /* charcoal-dark */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;

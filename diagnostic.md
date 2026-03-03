@@ -291,6 +291,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 18. **Conteúdo de Tutorial de Portugol:** O arquivo `src/content/logica e programação/001-como-usar.md` foi atualizado com um tutorial sobre como imprimir números primos de 1 a 50 em Portugol Estruturado (estilo Portugol Studio).
 19. **Renomeação de Arquivo:** O arquivo `src/content/logica e programação/001-como-usar.md` foi renomeado para `001-introducao.md`.
 20. **Sincronizado estilo de blocos de código com VS Code Dark Plus para ambos os temas. Importado tema de realce de sintaxe via CSS global e ajustada tipografia monoespaçada.**
+21. **Correção de Erro de Importação do Highlight.js:** O `@import` do tema `highlight.js` foi movido de `src/globals.css` para `src/main.tsx` para resolver o erro `ENOENT`.
 
 **Próximos Passos:**
 
@@ -322,3 +323,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** O arquivo `src/content/logica e programação/001-como-usar.md` foi atualizado com um tutorial sobre como imprimir números primos de 1 a 50 em Portugol Estruturado (estilo Portugol Studio).
 - **2024-07-31:** O arquivo `src/content/logica e programação/001-como-usar.md` foi renomeado para `001-introducao.md`.
 - **2024-07-31:** Sincronizado estilo de blocos de código com VS Code Dark Plus para ambos os temas. Importado tema de realce de sintaxe via CSS global e ajustada tipografia monoespaçada.
+- **2024-07-31:** Corrigido o erro de importação do `highlight.js` movendo o `@import` de `src/globals.css` para `src/main.tsx`.
