@@ -11,14 +11,6 @@ interface MarkdownViewerProps {
   content: string;
 }
 
-// Definir a interface para os props que o componente 'code' do ReactMarkdown recebe
-interface CodeComponentProps extends React.HTMLAttributes<HTMLElement> {
-  node?: Node; // O nó AST, opcional
-  inline?: boolean; // Se é um bloco de código inline
-  className?: string; // Classes CSS, incluindo 'language-xyz'
-  children: React.ReactNode; // O conteúdo do código
-}
-
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
     <div className={cn(
@@ -55,14 +47,14 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             return <Callout type={type}>{props.children}</Callout>;
           },
           // Usar o novo componente CodeBlock para renderizar blocos de código
-          code({ node, inline, className, children, ...props }: CodeComponentProps) { // Usando a interface CodeComponentProps
+          code({ node, inline, className, children, ...props }: any) { // Usando 'any' para simplificar a tipagem conforme solicitado
             const match = /language-(\w+)/.exec(className || '');
-            const codeContent = String(children).replace(/\n$/, ''); // Remove trailing newline
+            const codeString = String(children).replace(/\n$/, ''); // Remove trailing newline
 
-            return !inline && match ? (
-              <CodeBlock code={codeContent} language={match[1]} />
+            return !inline ? (
+              <CodeBlock code={codeString} language={match ? match[1] : ''} />
             ) : (
-              <code className={className} {...props}>
+              <code className="bg-gray-200 dark:bg-gray-800 px-1 rounded text-pink-500 font-mono" {...props}>
                 {children}
               </code>
             );

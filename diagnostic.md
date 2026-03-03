@@ -305,6 +305,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 29. **Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.**
 30. **Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.**
 31. **REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.**
+32. **Refatoração concluída: Resolvido erro de tipagem no MarkdownViewer, isolado componente CodeBlock e unificados tokens de estilo global.**
 
 **Próximos Passos:**
 
@@ -347,3 +348,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.
 - **2024-07-31:** Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.
 - **2024-07-31:** REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.
+- **2024-07-31:** Refatoração concluída: Resolvido erro de tipagem no MarkdownViewer, isolado componente CodeBlock e unificados tokens de estilo global.

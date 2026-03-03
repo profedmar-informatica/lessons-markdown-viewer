@@ -50,6 +50,12 @@
     /* Cores de texto personalizadas para o conteúdo Markdown */
     --text-primary-content: 45 45 45; /* #2D2D2D */
     --text-heading-content: 26 26 26; /* #1A1A1A */
+
+    /* Novos tokens globais para a arquitetura de 3 níveis */
+    --mesa-light: hsl(0 0% 96.1%); /* #F5F5F5 */
+    --mesa-dark: hsl(210 22% 25%); /* #515151 */
+    --papel-light: hsl(40 100% 99%); /* #FFFBF0 */
+    --papel-dark: hsl(222 10% 10%); /* #1E1E1E */
   }
 
   .dark {
