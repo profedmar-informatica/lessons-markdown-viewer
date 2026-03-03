@@ -14,7 +14,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
     <div className={cn(
       "prose prose-base max-w-[894px] mx-auto pt-14 pb-10 px-10 rounded-lg", // Updated scale, padding, and max-width
-      "bg-[#FDFDFD] border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]", // Light mode surfaces
+      "bg-paper-light-beige border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]", // Light mode surfaces
       "dark:bg-vscode-bg-global dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]", // Dark mode surfaces
       "leading-relaxed", // Added line-height for body
       "[&_p]:text-[#1F1F1F] dark:[&_p]:text-vscode-text-lesson", // Updated p text color for light mode

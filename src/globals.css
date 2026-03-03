@@ -7,10 +7,10 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* canvas-light */
+    --background: 40 100% 99%; /* FFFBF0 - paper-light-beige */
     --foreground: 222.2 84% 4.9%; /* charcoal-dark */
 
-    --card: 0 0% 100%; /* panel-white */
+    --card: 40 100% 99%; /* FFFBF0 - panel-white */
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
@@ -38,7 +38,7 @@
     --radius: 12px;
 
     /* Variáveis específicas da Sidebar, alinhadas com o tema */
-    --sidebar-background: 0 0% 100%; /* panel-white */
+    --sidebar-background: 40 100% 99%; /* FFFBF0 - panel-white */
     --sidebar-foreground: 222.2 84% 4.9%; /* charcoal-dark */
     --sidebar-primary: 240 70% 70%; /* lavender-soft */
     --sidebar-primary-foreground: 0 0% 100%;

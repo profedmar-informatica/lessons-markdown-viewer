@@ -1,6 +1,6 @@
-# 001 - Números Primos de 1 a 50 em Portugol
+# 001 - Números Primos de 1 a 50 em C
 
-Este tutorial demonstra como encontrar e imprimir todos os números primos no intervalo de 1 a 50 usando Portugol Estruturado, com foco na sintaxe do Portugol Studio.
+Este tutorial demonstra como encontrar e imprimir todos os números primos no intervalo de 1 a 50 usando a linguagem de programação C.
 
 ## O que é um Número Primo?
 
@@ -8,79 +8,75 @@ Um número primo é um número natural maior que 1 que não possui divisores pos
 
 ## Lógica por Trás do Algoritmo
 
-Para verificar se um número é primo, precisamos testar se ele é divisível por qualquer número entre 2 e a sua raiz quadrada (ou até ele - 1, para simplificar). Se não encontrarmos nenhum divisor nesse intervalo, o número é primo.
+Para verificar se um número é primo, precisamos testar se ele é divisível por qualquer número entre 2 e a sua raiz quadrada. Se não encontrarmos nenhum divisor nesse intervalo, o número é primo. Esta otimização reduz significativamente o número de verificações necessárias.
 
-Vamos usar dois laços de repetição:
-1.  Um laço externo para iterar de 1 a 50 (os números que queremos verificar).
-2.  Um laço interno para verificar se o número atual é primo.
+Vamos usar uma função auxiliar para verificar a primalidade e um laço principal para iterar de 1 a 50.
 
-## Código em Portugol Studio
+## Código em C
 
-```portugol
-algoritmo "NumerosPrimosAte50"
-// Autor : Dyad AI
-// Data : 31/07/2024
-// Objetivo : Encontrar e imprimir números primos de 1 a 50
+```c
+#include <stdio.h>
+#include <stdbool.h> // Para usar o tipo bool
 
-var
-   numero, divisor, contadorDivisores : inteiro
+// Função para verificar se um número é primo
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false; // Números menores ou iguais a 1 não são primos
+    }
+    for (int i = 2; i * i <= num; i++) { // Otimização: verificar até a raiz quadrada
+        if (num % i == 0) {
+            return false; // Se for divisível, não é primo
+        }
+    }
+    return true; // Se não encontrou divisores, é primo
+}
 
-inicio
-   escreval("Números primos de 1 a 50:")
-   escreval("--------------------------")
+int main() {
+    printf("Números primos de 1 a 50:\n");
+    printf("--------------------------\n");
 
-   // Laço externo: itera de 1 a 50 para verificar cada número
-   para numero de 1 ate 50 faca
-      // Inicializa o contador de divisores para cada novo número
-      contadorDivisores <- 0
+    for (int i = 1; i <= 50; i++) {
+        if (isPrime(i)) {
+            printf("%d\n", i);
+        }
+    }
 
-      // Números menores ou iguais a 1 não são primos por definição
-      se numero <= 1 entao
-         // Não faz nada, apenas ignora
-      senao
-         // Laço interno: verifica divisores de 'numero' de 1 até ele mesmo
-         para divisor de 1 ate numero faca
-            // Se 'numero' é divisível por 'divisor'
-            se (numero % divisor = 0) entao
-               contadorDivisores <- contadorDivisores + 1
-            fimse
-         fimpara
+    printf("--------------------------\n");
+    printf("Fim da verificação.\n");
 
-         // Se o número tem exatamente 2 divisores (1 e ele mesmo), é primo
-         se contadorDivisores = 2 entao
-            escreval(numero)
-         fimse
-      fimse
-   fimpara
-
-   escreval("--------------------------")
-   escreval("Fim da verificação.")
-
-fimalgoritmo
+    return 0;
+}
 ```
 
 ## Explicação do Código
 
-1.  **`algoritmo "NumerosPrimosAte50"`**: Define o nome do algoritmo.
-2.  **`var`**: Declaração das variáveis:
-    *   `numero`: Armazena o número atual que está sendo verificado (de 1 a 50).
-    *   `divisor`: Usado no laço interno para testar a divisibilidade.
-    *   `contadorDivisores`: Conta quantos divisores um `numero` possui.
-3.  **`inicio` / `fimalgoritmo`**: Delimitam o bloco principal do algoritmo.
-4.  **`escreval(...)`**: Exibe mensagens na tela.
-5.  **`para numero de 1 ate 50 faca ... fimpara`**: Este é o laço principal. Ele faz com que a variável `numero` assuma valores de 1 a 50, um por vez.
-6.  **`contadorDivisores <- 0`**: A cada novo `numero`, o contador de divisores é resetado.
-7.  **`se numero <= 1 entao ... senao ... fimse`**: Condição para ignorar números menores ou iguais a 1, pois eles não são primos.
-8.  **`para divisor de 1 ate numero faca ... fimpara`**: Este laço interno verifica todos os possíveis divisores para o `numero` atual.
-9.  **`se (numero % divisor = 0) entao ... fimse`**: O operador `%` (módulo) retorna o resto da divisão. Se o resto for 0, significa que `numero` é divisível por `divisor`.
-10. **`contadorDivisores <- contadorDivisores + 1`**: Se for divisível, incrementa o contador.
-11. **`se contadorDivisores = 2 entao escreval(numero) fimse`**: Após verificar todos os divisores, se `contadorDivisores` for exatamente 2 (significando que os únicos divisores foram 1 e o próprio número), então o `numero` é primo e é impresso.
+1.  **`#include <stdio.h>`**: Inclui a biblioteca padrão de entrada e saída para funções como `printf`.
+2.  **`#include <stdbool.h>`**: Inclui a biblioteca para usar o tipo booleano (`bool`, `true`, `false`).
+3.  **`bool isPrime(int num)`**:
+    *   Esta função recebe um inteiro `num` e retorna `true` se for primo, `false` caso contrário.
+    *   `if (num <= 1)`: Números menores ou iguais a 1 não são primos por definição.
+    *   `for (int i = 2; i * i <= num; i++)`: Este laço itera de 2 até a raiz quadrada de `num`. Se `num` tiver um divisor maior que sua raiz quadrada, ele necessariamente terá um divisor menor que sua raiz quadrada.
+    *   `if (num % i == 0)`: Se `num` for divisível por `i` (o resto da divisão é 0), então `num` não é primo e a função retorna `false`.
+    *   Se o laço terminar sem encontrar divisores, `num` é primo e a função retorna `true`.
+4.  **`int main()`**: Esta é a função principal onde a execução do programa começa.
+    *   `printf(...)`: Exibe mensagens no console.
+    *   `for (int i = 1; i <= 50; i++)`: Um laço que itera de 1 a 50.
+    *   `if (isPrime(i))`: Para cada número, chama a função `isPrime` para verificar se é primo.
+    *   `printf("%d\n", i)`: Se o número for primo, ele é impresso.
+    *   `return 0;`: Indica que o programa foi executado com sucesso.
 
-## Como Executar no Portugol Studio
+## Como Compilar e Executar em C
 
-1.  Abra o Portugol Studio.
-2.  Crie um novo arquivo (`Arquivo -> Novo Arquivo`).
-3.  Copie e cole o código acima no editor.
-4.  Clique no botão "Executar" (o ícone de "play" verde).
+Para compilar e executar este código, você precisará de um compilador C (como GCC).
 
-Você verá a lista de números primos de 1 a 50 sendo impressa no console.
+1.  **Salve o código** em um arquivo chamado `primos.c`.
+2.  **Abra um terminal** ou prompt de comando.
+3.  **Compile o código** usando o GCC:
+    ```bash
+    gcc primos.c -o primos
+    ```
+4.  **Execute o programa**:
+    ```bash
+    ./primos
+    ```
+    Você verá a lista de números primos de 1 a 50 sendo impressa no console.

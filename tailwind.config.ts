@@ -68,8 +68,9 @@ export default {
         'lavender-dark': 'hsl(240 70% 40%)', // Lavanda mais escuro para texto em fundos claros
         'charcoal-dark': 'hsl(222.2 84% 4.9%)', // Cor principal para cabeçalhos/texto
         'gray-medium': 'hsl(215.4 16.3% 46.9%)', // Cor secundária/texto muted
-        'canvas-light': 'hsl(0 0% 98%)', // Fundo muito claro para o canvas/palco
-        'panel-white': 'hsl(0 0% 100%)', // Branco puro para painéis/cards
+        'paper-light-beige': '#FFFBF0', // Nova cor do papel/sidebar
+        'canvas-light': 'var(--paper-light-beige)', // Usar a nova cor para o canvas
+        'panel-white': 'var(--paper-light-beige)', // Usar a nova cor para painéis/cards
         'border-light': 'hsl(214.3 31.8% 91.4%)', // Cinza muito claro para divisores
         // Cores para Callouts
         'callout-tip-border': 'hsl(142.1 76.2% 36.3%)', // Verde suave

@@ -34,7 +34,8 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 │   ├── pages/
 │   │   ├── Index.tsx
 │   │   └── NotFound.tsx
-│   └── ... (outros arquivos src)
+│   └── ... (ou
+tros arquivos src)
 ├── package.json
 ├── pnpm-workspace.yaml
 ├── vite.config.ts
@@ -294,6 +295,8 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 21. **Correção de Erro de Importação do Highlight.js:** O `@import` do tema `highlight.js` foi movido de `src/globals.css` para `src/main.tsx` para resolver o erro `ENOENT`.
 22. **Correção do Caminho do Tema Highlight.js:** O caminho de importação do tema `vscode-dark-plus.css` foi corrigido de `highlight.js/styles/base16/vscode-dark-plus.css` para `highlight.js/styles/vscode-dark-plus.css` em `src/main.tsx`.
 23. **Correção de Importação do Highlight.js:** Alterado o tema de `vscode-dark-plus.css` para `vs2015.css` em `src/main.tsx`.
+24. **Alteração de Cor de Fundo:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor.
+25. **Refatoração do Algoritmo:** O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
 
 **Próximos Passos:**
 
@@ -328,3 +331,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** Corrigido o erro de importação do `highlight.js` movendo o `@import` de `src/globals.css` para `src/main.tsx`.
 - **2024-07-31:** Corrigido o caminho de importação do tema `vscode-dark-plus.css` em `src/main.tsx`.
 - **2024-07-31:** Corrigido erro de importação do highlight.js: alterado de vscode-dark-plus (inexistente) para vs2015.css (compatível).
+- **2024-07-31:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
