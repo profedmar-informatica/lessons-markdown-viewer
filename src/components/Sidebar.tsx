@@ -35,7 +35,7 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
         onClick={onClose}
         className={`flex items-center gap-3 rounded-md px-4 py-2 text-charcoal-dark hover:bg-lavender-light hover:text-lavender-dark transition-colors duration-200
           dark:text-vscode-text-lesson dark:hover:bg-vscode-menu-active-hover dark:hover:text-white ${
-          location.pathname === '/' ? 'bg-lavender-light text-lavender-dark font-medium dark:bg-vscode-menu-active-hover dark:text-white' : ''
+          location.pathname === '/' ? 'bg-lavender-light text-lavender-dark font-semibold dark:bg-vscode-menu-active-hover dark:text-white' : ''
         }`}
       >
         <Home className="h-5 w-5" />
