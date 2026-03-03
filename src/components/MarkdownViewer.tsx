@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import Callout from './Callout';
 import CopyCodeButton from './CopyCodeButton';
-import { cn } from '@/lib/utils'; // Importar cn para classes condicionais
+import { cn } from '@/lib/utils';
+
+// Import highlight.js e o plugin de numeração de linhas
+import hljs from 'highlight.js';
+import 'highlightjs-line-numbers.js'; // Este import registra o plugin com hljs
 
 interface MarkdownViewerProps {
   content: string;
 }
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
+  useEffect(() => {
+    // Garante que o highlight.js e o plugin de numeração de linhas sejam aplicados
+    // Isso precisa rodar depois que o ReactMarkdown renderizou os blocos de código
+    document.querySelectorAll('pre code').forEach((block) => {
+      // Verifica se a numeração de linhas já foi aplicada para evitar reaplicar
+      if (!(block as HTMLElement).classList.contains('hljs-ln-code')) {
+        hljs.highlightElement(block as HTMLElement); // Re-highlight para garantir que as classes hljs estejam presentes
+        hljs.lineNumbersBlock(block as HTMLElement);
+      }
+    });
+  }, [content]); // Reexecuta quando o conteúdo muda
+
   return (
     <div className={cn(
       "prose prose-base max-w-[894px] mx-auto pt-14 pb-10 px-10 rounded-lg", // Updated scale, padding, and max-width
@@ -58,7 +74,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             
             return (
               <div className="relative">
-                <pre className="rounded-lg p-4 pr-12 bg-[#252525] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
+                <pre className="rounded-lg p-4 pr-12 bg-gray-100 dark:bg-[#252525] text-charcoal-dark dark:text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed border border-white/5 dark:border-white/10 overflow-x-auto">
                   {children}
                 </pre>
                 {codeContent && (

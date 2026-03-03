@@ -94,6 +94,7 @@ tros arquivos na raiz)
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "highlight.js": "^11.11.1",
+    "highlightjs-line-numbers.js": "^2.8.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.4.6",
@@ -296,11 +297,11 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 21. **Correção de Erro de Importação do Highlight.js:** O `@import` do tema `highlight.js` foi movido de `src/globals.css` para `src/main.tsx` para resolver o erro `ENOENT`.
 22. **Correção do Caminho do Tema Highlight.js:** O caminho de importação do tema `vscode-dark-plus.css` foi corrigido de `highlight.js/styles/base16/vscode-dark-plus.css` para `highlight.js/styles/vscode-dark-plus.css` em `src/main.tsx`.
 23. **Correção de Importação do Highlight.js:** Alterado o tema de `vscode-dark-plus.css` para `vs2015.css` em `src/main.tsx`.
-24. **Alteração de Cor de Fundo:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor.
-25. **Refatoração do Algoritmo:** O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
-26. **Cor do Painel Lateral:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
-27. **Aumento da Fonte da Caixa de Código:** A fonte da caixa de código foi aumentada para `1.1em`.
-28. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
+24. **Alteração de Cor de Fundo:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
+25. **Cor do Painel Lateral:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
+26. **Aumento da Fonte da Caixa de Código:** A fonte da caixa de código foi aumentada para `1.1em`.
+27. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
+28. **Fundo da caixa de código unificado e numeração de linhas:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
 
 **Próximos Passos:**
 
@@ -339,3 +340,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
 - **2024-07-31:** A fonte da caixa de código foi aumentada para `1.1em`.
 - **2024-07-31:** A fonte da caixa de código foi ajustada para `0.99em`.
+- **2024-07-31:** Fundo da caixa de código unificado em #252525, área de trabalho em #515151 e implementada numeração de linhas via CSS.

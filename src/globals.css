@@ -112,3 +112,20 @@
     padding: 0 !important;
   }
 }
+
+/* CSS para numeração de linhas */
+pre { counter-reset: line; }
+code { display: block; }
+.hljs-ln-line { display: block; position: relative; padding-left: 3.5rem; }
+.hljs-ln-line::before {
+  counter-increment: line;
+  content: counter(line);
+  position: absolute;
+  left: 0;
+  width: 2.5rem;
+  text-align: right;
+  color: #6e7681;
+  border-right: 1px solid #444;
+  padding-right: 0.8rem;
+  user-select: none;
+}
