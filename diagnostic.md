@@ -302,6 +302,7 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 26. **Aumento da Fonte da Caixa de Código:** A fonte da caixa de código foi aumentada para `1.1em`.
 27. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
 28. **Fundo da caixa de código unificado e numeração de linhas:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
+29. **Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.**
 
 **Próximos Passos:**
 
@@ -340,4 +341,5 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 - **2024-07-31:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
 - **2024-07-31:** A fonte da caixa de código foi aumentada para `1.1em`.
 - **2024-07-31:** A fonte da caixa de código foi ajustada para `0.99em`.
-- **2024-07-31:** Fundo da caixa de código unificado em #252525, área de trabalho em #515151 e implementada numeração de linhas via CSS.
+- **2024-07-31:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
+- **2024-07-31:** Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.

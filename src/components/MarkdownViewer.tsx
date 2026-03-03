@@ -6,26 +6,21 @@ import Callout from './Callout';
 import CopyCodeButton from './CopyCodeButton';
 import { cn } from '@/lib/utils';
 
-// Import highlight.js e o plugin de numeração de linhas
+// Import highlight.js (o plugin de numeração de linhas via JS foi removido)
 import hljs from 'highlight.js';
-import 'highlightjs-line-numbers.js'; // Este import registra o plugin com hljs
 
 interface MarkdownViewerProps {
   content: string;
 }
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
+  // O useEffect para hljs.lineNumbersBlock foi removido conforme solicitado.
+  // A numeração de linhas agora será tratada via CSS puro, se a estrutura HTML permitir.
   useEffect(() => {
-    // Garante que o highlight.js e o plugin de numeração de linhas sejam aplicados
-    // Isso precisa rodar depois que o ReactMarkdown renderizou os blocos de código
     document.querySelectorAll('pre code').forEach((block) => {
-      // Verifica se a numeração de linhas já foi aplicada para evitar reaplicar
-      if (!(block as HTMLElement).classList.contains('hljs-ln-code')) {
-        hljs.highlightElement(block as HTMLElement); // Re-highlight para garantir que as classes hljs estejam presentes
-        hljs.lineNumbersBlock(block as HTMLElement);
-      }
+      hljs.highlightElement(block as HTMLElement);
     });
-  }, [content]); // Reexecuta quando o conteúdo muda
+  }, [content]); // Re-highlight quando o conteúdo muda
 
   return (
     <div className={cn(
@@ -83,6 +78,8 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
               </div>
             );
           },
+          // A regra .hljs em globals.css já garante background: transparent !important para <code>
+          // quando highlight.js é aplicado.
         }}
       >
         {content}
