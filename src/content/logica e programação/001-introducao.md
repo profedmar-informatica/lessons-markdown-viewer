@@ -60,7 +60,7 @@ int main() {
     *   Se o laço terminar sem encontrar divisores, `num` é primo e a função retorna `true`.
 
 4.  **Execute um teste**:
-    ``pascal
+    ```pascal
     1
     2
     3
@@ -81,7 +81,7 @@ int main() {
     18
     19
     20
-    ``
+    ```
 
 5.  **`int main()`**: Esta é a função principal onde a execução do programa começa.
     `printf(...)`: Exibe mensagens no console.
