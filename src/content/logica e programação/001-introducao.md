@@ -52,7 +52,7 @@ int main() {
 
 1.  **`#include <stdio.h>`**: Inclui a biblioteca padrão de entrada e saída para funções como `printf`.
 
-```c
+```java
 #include <stdio.h>
 int main() {
     printf("Oi!");
