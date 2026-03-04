@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
+// import rehypeHighlight from 'rehype-highlight'; // REMOVIDO
 import Callout from './Callout';
 import CodeBlock from './CodeBlock';
 import { cn } from '@/lib/utils';
@@ -31,7 +31,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
     )}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeHighlight]}
+        rehypePlugins={[]} // rehypeHighlight REMOVIDO
         components={{
           blockquote: ({ children }) => {
             const text = String(children);
@@ -45,13 +45,11 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             }
             return <Callout type={type}>{children}</Callout>;
           },
-          pre: ({ children }) => <>{children}</>, // Adicionado: Renderiza apenas os filhos da tag <pre>
+          pre: ({ children }) => <>{children}</>,
           code: ({ inline, className, children }: any) => {
             const match = /language-(\w+)/.exec(className || '');
             // Garante que o conteúdo seja transformado em string, removendo objetos indesejados
-            const codeContent = Array.isArray(children) 
-              ? children.map(child => (typeof child === 'object' ? child.props?.children || '' : child)).join('')
-              : String(children).replace(/\n$/, '');
+            const codeContent = String(children).replace(/\n$/, ''); // Normalização de string
 
             return !inline ? (
               <CodeBlock code={codeContent} language={match ? match[1] : ''} />

@@ -171,6 +171,7 @@
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 13px !important;
     line-height: 24px !important;
+    height: 24px !important; /* Adicionado para garantir altura consistente em todos os elementos de código */
     font-style: normal !important; /* Remove itálicos que alteram a largura */
   }
 

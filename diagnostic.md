@@ -317,3 +317,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 41. **Reset Atômico de Tipografia: Forçados 13px/24px com seletor de alta especificidade (html body div pre code) para anular variações de temas do highlight.js.**
 42. **Restauração Sênior: Implementada JetBrains Mono com Reset Atômico (13px/24px) para alinhamento 1:1 absoluto e suporte a scroll horizontal.**
 43. **Correção de Renderização: Implementada extração rigorosa de strings no MarkdownViewer para evitar a exibição de '[object Object]' nos blocos de código.**
+44. **Consolidação Final: Removido rehype-highlight para sanar erro de objetos e forçada métrica de 24px em todas as classes language-*.**
