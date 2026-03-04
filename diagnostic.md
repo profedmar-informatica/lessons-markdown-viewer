@@ -310,3 +310,9 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 34. **Eliminados vazamentos de cor (azul petróleo) dos blocos de código através da neutralização de estilos do highlight.js no globals.css.**
 35. **Refinamento visual: Reduzido padding vertical do CodeBlock (de p-4 para py-2) para evitar espaços excessivos em comandos curtos.**
 36. **Removida tag <pre> redundante do MarkdownViewer que causava padding extra e conflitos de cor de fundo.**
+37. **Consolidação Tipográfica Final: Implementada JetBrains Mono com line-height fixo de 24px e remoção de redundâncias de tags <pre> para alinhamento 1:1 perfeito.**
+38. **Correção de escala: Eliminada a diferença entre 13px e 0.99em, forçando herança direta da div pai para alinhamento 1:1.**
+39. **Configuração de Scroll: Mantida integridade das linhas com overflow-x-auto e white-space: pre, com scrollbars personalizadas.**
+40. **Unificação Universal: Aplicados seletores de alta especificidade no globals.css para garantir que todas as linguagens (C, ABNF, Bash, etc) compartilhem a mesma métrica 1:1.**
+41. **Reset Atômico de Tipografia: Forçados 13px/24px com seletor de alta especificidade (html body div pre code) para anular variações de temas do highlight.js.**
+42. **Restauração Sênior: Implementada JetBrains Mono com Reset Atômico (13px/24px) para alinhamento 1:1 absoluto e suporte a scroll horizontal.**

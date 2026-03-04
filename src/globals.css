@@ -1,5 +1,4 @@
-/* Highlight.js themes */
-/* Removido: @import 'highlight.js/styles/base16/vscode-dark-plus.css'; */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -109,18 +108,84 @@
     --text-primary-content: 210 40% 98%; /* #D4D4D4 */
     --text-heading-content: 0 0% 100%; /* White */
   }
+}
 
-  /* Regra para garantir que o highlight.js não sobrescreva o background do pre */
-  .hljs {
-    background: transparent !important;
-    padding: 0 !important;
+@layer base {
+  /* Reset absoluto para tipografia de código */
+  .font-mono, code, pre, .hljs, .gutter-num {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 13px !important;
+    line-height: 24px !important; /* Altura de linha fixa */
+    -webkit-font-smoothing: antialiased;
   }
+  /* Garante que negritos não alterem a altura da linha */
+  .hljs-keyword, .hljs-built_in, strong { font-weight: 700 !important; }
 
-  /* Novas regras para eliminar vazamentos de cor nos blocos de código */
+  /* Regras para eliminar vazamentos de cor nos blocos de código */
   pre code {
     background-color: transparent !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
+  }
+  .hljs {
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* Nova regra para garantir que highlight.js herde o tamanho da fonte e altura da linha */
+  code.hljs, .hljs {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    padding: 0 !important;
+  }
+
+  /* Estilização da Scrollbar para CodeBlock */
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+  }
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background: #1e1e1e;
+  }
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #3e3e3e;
+    border-radius: 4px;
+  }
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #505050;
+  }
+
+  /* Regra ultra-específica para padronizar a tipografia de todos os fragmentos de código */
+  pre code[class*="language-"], .hljs, .gutter-num div {
+    font-family: "JetBrains Mono", monospace !important;
+    font-size: 13px !important;
+    line-height: 24px !important;
+    white-space: pre !important; /* Garante que não haja quebras de linha indesejadas */
+  }
+
+  /* Seletores de altíssima especificidade para vencer o highlight.js e o Tailwind Prose */
+  html body div[data-dyad-name] pre code,
+  html body div[data-dyad-name] .hljs,
+  html body div[data-dyad-name] .gutter-num,
+  html body div[data-dyad-name] [class*="language-"] {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 13px !important;
+    line-height: 24px !important;
+    font-style: normal !important; /* Remove itálicos que alteram a largura */
+  }
+
+  /* Garante que cada número de linha tenha exatamente a altura de 24px */
+  .gutter-num div {
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding: 0 1rem !important; /* Adicionado padding lateral */
+  }
+
+  /* Remove qualquer padding interno que o highlight.js coloque no <code> */
+  .hljs {
+    padding: 0 !important;
+    background: transparent !important;
   }
 }
