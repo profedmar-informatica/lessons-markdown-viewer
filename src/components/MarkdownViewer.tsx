@@ -1,17 +1,14 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown'; // Remover 'Components' pois não é mais necessário para tipagem direta
+import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import Callout from './Callout';
 import CodeBlock from './CodeBlock';
 import { cn } from '@/lib/utils';
-// Remover: import { Node } from 'unist'; // Não é mais necessário
 
 interface MarkdownViewerProps {
   content: string;
 }
-
-// Remover: interface CodeComponentProps ... // Não é mais necessário
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
@@ -36,7 +33,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
         components={{
-          blockquote: ({ children }) => { // Remover 'node'
+          blockquote: ({ children }) => {
             const text = String(children);
             let type: 'tip' | 'warning' | 'exercise' | 'default' = 'default';
             if (text.startsWith('**Dica:**')) {
@@ -48,10 +45,10 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             }
             return <Callout type={type}>{children}</Callout>;
           },
-          // Usar a assinatura simplificada para o componente 'code'
+          pre: ({ children }) => <>{children}</>, // Adicionado: Renderiza apenas os filhos da tag <pre>
           code: ({ inline, className, children }: any) => {
             const match = /language-(\w+)/.exec(className || '');
-            const codeContent = String(children).replace(/\n$/, ''); // Remove trailing newline
+            const codeContent = String(children).replace(/\n$/, '');
 
             return !inline ? (
               <CodeBlock code={codeContent} language={match ? match[1] : ''} />

@@ -309,3 +309,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 33. **Reestruturação Finalizada: Resolvidos erros de tipagem, implementados tokens de design (--mesa, --papel) e centralizada a lógica de código no componente CodeBlock.**
 34. **Eliminados vazamentos de cor (azul petróleo) dos blocos de código através da neutralização de estilos do highlight.js no globals.css.**
 35. **Refinamento visual: Reduzido padding vertical do CodeBlock (de p-4 para py-2) para evitar espaços excessivos em comandos curtos.**
+36. **Removida tag <pre> redundante do MarkdownViewer que causava padding extra e conflitos de cor de fundo.**
