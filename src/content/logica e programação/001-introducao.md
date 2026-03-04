@@ -58,7 +58,32 @@ int main() {
     *   `for (int i = 2; i * i <= num; i++)`: Este laço itera de 2 até a raiz quadrada de `num`. Se `num` tiver um divisor maior que sua raiz quadrada, ele necessariamente terá um divisor menor que sua raiz quadrada.
     *   `if (num % i == 0)`: Se `num` for divisível por `i` (o resto da divisão é 0), então `num` não é primo e a função retorna `false`.
     *   Se o laço terminar sem encontrar divisores, `num` é primo e a função retorna `true`.
-4.  **`int main()`**: Esta é a função principal onde a execução do programa começa.
+
+4.  **Execute um teste**:
+    ```pascal
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+    16
+    17
+    18
+    19
+    20
+    ```
+
+5.  **`int main()`**: Esta é a função principal onde a execução do programa começa.
     `printf(...)`: Exibe mensagens no console.
     `for (int i = 1; i <= 50; i++)`: Um laço que itera de 1 a 50.
     `if (isPrime(i))`: Para cada número, chama a função `isPrime` para verificar se é primo.
@@ -79,4 +104,6 @@ Para compilar e executar este código, você precisará de um compilador C (como
     ```bash
     ./primos
     ```
+
+
     Você verá a lista de números primos de 1 a 50 sendo impressa no console.
