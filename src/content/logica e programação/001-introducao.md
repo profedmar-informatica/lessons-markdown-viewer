@@ -51,6 +51,14 @@ int main() {
 ## Explicação do Código
 
 1.  **`#include <stdio.h>`**: Inclui a biblioteca padrão de entrada e saída para funções como `printf`.
+
+```c
+#include <stdio.h>
+int main() {
+    printf("Oi!");
+}
+```
+
 2.  **`#include <stdbool.h>`**: Inclui a biblioteca para usar o tipo booleano (`bool`, `true`, `false`).
 3.  **`bool isPrime(int num)`**:
     *   Esta função recebe um inteiro `num` e retorna `true` se for primo, `false` caso contrário.
