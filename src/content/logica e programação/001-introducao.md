@@ -115,4 +115,7 @@ Para compilar e executar este código, você precisará de um compilador C (como
     ```
 
 
+
+
+
     Você verá a lista de números primos de 1 a 50 sendo impressa no console.
