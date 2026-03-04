@@ -52,6 +52,7 @@ int main() {
 
 1.  **`#include <stdio.h>`**: Inclui a biblioteca padrão de entrada e saída para funções como `printf`.
 
+# Exemplo:
 ```c
 #include <stdio.h>
 int main() {
