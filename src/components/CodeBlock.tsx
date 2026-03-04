@@ -28,13 +28,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
         {/* Coluna da esquerda para números de linha (Gutter) */}
         <div className="gutter-num bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 py-4 text-right select-none flex-shrink-0">
           {lineNumbers.map((num) => (
-            <div key={num} className="gutter-row"> {/* Removido h-[24px] flex items-center justify-end px-4, agora controlado pelo CSS global */}
+            <div key={num} className="gutter-row">
               {num}
             </div>
           ))}
         </div>
         {/* Coluna da direita para o código */}
-        <div className="flex-1 py-4 overflow-x-auto min-w-0">
+        <div className="flex-1 py-4 overflow-x-auto overflow-y-hidden min-w-0"> {/* Adicionado overflow-y-hidden */}
           <code ref={codeRef} className={cn("bg-transparent code-row", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre', display: 'block' }}>
             {code}
           </code>
