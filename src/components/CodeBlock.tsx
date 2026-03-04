@@ -33,7 +33,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
         </div>
         {/* Coluna da direita para o código */}
         <div className="flex-1 py-2 px-4 overflow-x-auto">
-          <code ref={codeRef} className={cn("bg-transparent dark:bg-[#37373D]", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre' }}>
+          <code ref={codeRef} className={cn("bg-transparent ", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre' }}>
             {code}
           </code>
         </div>
