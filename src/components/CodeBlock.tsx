@@ -17,39 +17,44 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
     }
   }, [code, language]);
 
-  // Divide o código em linhas para garantir que o mapeamento seja idêntico
+  // 1. Dividimos o código em linhas para contar e mapear
   const lines = code.split('\n');
+  
+  // 2. Definimos uma constante de altura de linha para garantir o 1:1
+  // 'leading-6' no Tailwind é exatamente 24px.
+  const lineHeightClass = "leading-6"; 
 
   return (
-    <div className="relative my-6 rounded-lg shadow-inner overflow-hidden border border-white/5 dark:border-white/10 bg-[#252525]">
-      <div className="flex font-mono text-[14px] leading-[1.5rem]"> 
-        {/* IMPORTANTE: 
-            1. Forçamos uma altura de linha fixa (leading-[1.5rem] = 24px) 
-            2. Forçamos a mesma fonte em ambas as colunas
-        */}
+    <div className="relative my-6 rounded-lg shadow-2xl overflow-hidden border border-white/10 bg-[#252525]">
+      <div className="flex bg-[#252525] font-mono text-[13px] antialiased">
         
-        {/* Coluna da Esquerda: Gutter (Números) */}
+        {/* COLUNA DE NÚMEROS (GUTTER) */}
         <div 
-          className="bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 py-4 text-right select-none flex-shrink-0"
-          style={{ userSelect: 'none' }}
+          className={cn(
+            "bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 py-4 text-right select-none flex-shrink-0",
+            lineHeightClass
+          )}
         >
-          {lines.map((_, index) => (
-            <div key={index} className="px-4">
-              {index + 1}
+          {lines.map((_, i) => (
+            <div key={i} className="px-4">
+              {i + 1}
             </div>
           ))}
         </div>
 
-        {/* Coluna da Direita: Código */}
-        <div className="flex-1 py-4 overflow-x-auto bg-[#252525]">
-          <pre className="m-0 p-0 bg-transparent border-none">
+        {/* COLUNA DE CÓDIGO */}
+        <div className={cn("flex-1 py-4 overflow-x-auto min-w-0", lineHeightClass)}>
+          <pre className="m-0 p-0 bg-transparent overflow-visible">
             <code 
               ref={codeRef} 
-              className={cn("bg-transparent px-4 block hljs", language ? `language-${language}` : '')}
+              className={cn(
+                "block bg-transparent px-4 hljs", 
+                language ? `language-${language}` : '',
+                lineHeightClass
+              )}
               style={{ 
                 whiteSpace: 'pre',
-                fontFamily: 'inherit', // Força a mesma fonte da div pai
-                lineHeight: 'inherit'  // Força a mesma altura de linha da div pai
+                fontFamily: 'inherit' // Garante que highlight.js não mude a fonte
               }}
             >
               {code}
@@ -57,9 +62,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
           </pre>
         </div>
       </div>
-      
-      {/* Botão de Cópia */}
-      <div className="absolute top-2 right-2">
+
+      <div className="absolute top-2 right-2 z-10">
         <CopyCodeButton code={code} />
       </div>
     </div>
