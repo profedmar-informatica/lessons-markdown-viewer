@@ -114,7 +114,7 @@ Para compilar e executar este código, você precisará de um compilador C (como
     ./primos
     ```
 5. Mais um:
-```
+```[3]
 printf("Oi, mundo!");
 ```
 
