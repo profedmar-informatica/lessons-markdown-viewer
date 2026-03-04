@@ -316,3 +316,4 @@ O erro "Dependencies lock file is not found" foi abordado com uma estratégia ma
 40. **Unificação Universal: Aplicados seletores de alta especificidade no globals.css para garantir que todas as linguagens (C, ABNF, Bash, etc) compartilhem a mesma métrica 1:1.**
 41. **Ajuste de Fluxo: Restaurada altura dinâmica dos blocos de código com preservação de alinhamento 1:1 e scroll apenas horizontal.**
 42. **Higienização de Caracteres: Implementada regex para remover delimitadores residuais (`, ´) sem quebrar a estrutura de Code Block do Markdown.**
+43. **Higienização Profunda: Implementada remoção de delimitadores e espaços residuais nas extremidades para evitar artefatos visuais no CodeBlock.**

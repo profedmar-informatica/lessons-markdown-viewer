@@ -189,4 +189,12 @@
     padding: 0 !important;
     background: transparent !important;
   }
+
+  /* Regras para eliminar pseudo-elementos que adicionam conteúdo indesejado */
+  code::before, code::after {
+    content: "" !important;
+  }
+  pre code::before, pre code::after {
+    content: none !important;
+  }
 }
