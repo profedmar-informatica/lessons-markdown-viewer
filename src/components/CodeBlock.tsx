@@ -17,28 +17,51 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
     }
   }, [code, language]);
 
-  // Gerar números de linha
-  const lineNumbers = code.split('\n').map((_, index) => index + 1);
+  // Divide o código em linhas para garantir que o mapeamento seja idêntico
+  const lines = code.split('\n');
 
-  return ( /* bg-[#252525]*/
-    <div className="relative my-6 rounded-lg shadow-inner overflow-hidden border border-white/5 dark:border-white/10">
-      <div className="flex  bg-[#37373D] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed">
-        {/* Coluna da esquerda para números de linha */}
-        <div className="bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 py-2 px-4 text-right select-none flex-shrink-0">
-          {lineNumbers.map((num) => (
-            <div key={num} className="h-[1.25rem] leading-relaxed">
-              {num}
+  return (
+    <div className="relative my-6 rounded-lg shadow-inner overflow-hidden border border-white/5 dark:border-white/10 bg-[#252525]">
+      <div className="flex font-mono text-[14px] leading-[1.5rem]"> 
+        {/* IMPORTANTE: 
+            1. Forçamos uma altura de linha fixa (leading-[1.5rem] = 24px) 
+            2. Forçamos a mesma fonte em ambas as colunas
+        */}
+        
+        {/* Coluna da Esquerda: Gutter (Números) */}
+        <div 
+          className="bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 py-4 text-right select-none flex-shrink-0"
+          style={{ userSelect: 'none' }}
+        >
+          {lines.map((_, index) => (
+            <div key={index} className="px-4">
+              {index + 1}
             </div>
           ))}
         </div>
-        {/* Coluna da direita para o código */}
-        <div className="flex-1 py-2 px-4 overflow-x-auto">
-          <code ref={codeRef} className={cn("bg-transparent", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre' }}>
-            {code}
-          </code>
+
+        {/* Coluna da Direita: Código */}
+        <div className="flex-1 py-4 overflow-x-auto bg-[#252525]">
+          <pre className="m-0 p-0 bg-transparent border-none">
+            <code 
+              ref={codeRef} 
+              className={cn("bg-transparent px-4 block hljs", language ? `language-${language}` : '')}
+              style={{ 
+                whiteSpace: 'pre',
+                fontFamily: 'inherit', // Força a mesma fonte da div pai
+                lineHeight: 'inherit'  // Força a mesma altura de linha da div pai
+              }}
+            >
+              {code}
+            </code>
+          </pre>
         </div>
       </div>
-      <CopyCodeButton code={code} />
+      
+      {/* Botão de Cópia */}
+      <div className="absolute top-2 right-2">
+        <CopyCodeButton code={code} />
+      </div>
     </div>
   );
 };
