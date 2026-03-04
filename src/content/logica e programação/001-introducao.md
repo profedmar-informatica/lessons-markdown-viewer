@@ -61,8 +61,7 @@ int main() {
 
 4.  **Execute um teste**:
     ```pascal
-    
-    1
+        1
     2
     3
     4
