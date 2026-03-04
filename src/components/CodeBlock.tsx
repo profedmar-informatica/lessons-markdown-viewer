@@ -9,6 +9,8 @@ interface CodeBlockProps {
 }
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
+  if (typeof code !== 'string') return null; // Verificação de segurança
+
   const codeRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
