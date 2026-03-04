@@ -48,8 +48,8 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
           pre: ({ children }) => <>{children}</>,
           code: ({ inline, className, children }: any) => {
             const match = /language-(\w+)/.exec(className || '');
-            // Garante que o conteúdo seja transformado em string, removendo objetos indesejados
-            const codeContent = String(children).replace(/\n$/, ''); // Normalização de string
+            // Garante que o conteúdo seja transformado em string pura
+            const codeContent = String(children); // Simplificado para string pura
 
             return !inline ? (
               <CodeBlock code={codeContent} language={match ? match[1] : ''} />

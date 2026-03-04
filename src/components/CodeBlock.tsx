@@ -13,14 +13,20 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
 
   const codeRef = useRef<HTMLElement>(null);
 
+  // Limpa crases/acentos que podem ter vazado do parser Markdown
+  const cleanCode = code
+    .trim()
+    .replace(/^[`´]+|[`´]+$/g, "") // Remove crases/acentos apenas no início e fim
+    .trim();
+
   useEffect(() => {
     if (codeRef.current) {
       hljs.highlightElement(codeRef.current);
     }
-  }, [code, language]);
+  }, [cleanCode, language]); // Dependência atualizada para cleanCode
 
   // Gerar números de linha
-  const lineNumbers = code.split('\n').map((_, index) => index + 1);
+  const lineNumbers = cleanCode.split('\n').map((_, index) => index + 1);
 
   return (
     <div className="relative my-6 rounded-lg shadow-inner overflow-hidden border border-white/5 dark:border-white/10">
@@ -34,13 +40,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
           ))}
         </div>
         {/* Coluna da direita para o código */}
-        <div className="flex-1 py-4 overflow-x-auto overflow-y-hidden min-w-0"> {/* Adicionado overflow-y-hidden */}
+        <div className="flex-1 py-4 overflow-x-auto overflow-y-hidden min-w-0">
           <code ref={codeRef} className={cn("bg-transparent code-row", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre', display: 'block' }}>
-            {code}
+            {cleanCode} {/* Usando cleanCode aqui */}
           </code>
         </div>
       </div>
-      <CopyCodeButton code={code} />
+      <CopyCodeButton code={cleanCode} /> {/* Usando cleanCode para o botão de cópia */}
     </div>
   );
 };
