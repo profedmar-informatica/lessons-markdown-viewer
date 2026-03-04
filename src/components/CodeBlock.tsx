@@ -24,7 +24,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
     <div className="relative my-6 rounded-lg shadow-inner overflow-hidden border border-white/5 dark:border-white/10">
       <div className="flex bg-[#252525] text-[#D4D4D4] font-mono text-[0.99em] leading-relaxed">
         {/* Coluna da esquerda para números de linha */}
-        <div className="bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 p-4 text-right select-none flex-shrink-0">
+        <div className="bg-[#1e1e1e] text-gray-500 min-w-[3.5rem] border-r border-white/5 py-2 px-4 text-right select-none flex-shrink-0">
           {lineNumbers.map((num) => (
             <div key={num} className="h-[1.25rem] leading-relaxed">
               {num}
@@ -32,7 +32,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
           ))}
         </div>
         {/* Coluna da direita para o código */}
-        <div className="flex-1 p-4 overflow-x-auto">
+        <div className="flex-1 py-2 px-4 overflow-x-auto">
           <code ref={codeRef} className={cn("bg-transparent", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre' }}>
             {code}
           </code>
