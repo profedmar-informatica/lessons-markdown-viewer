@@ -60,7 +60,7 @@ int main() {
     *   Se o laço terminar sem encontrar divisores, `num` é primo e a função retorna `true`.
 
 4.  **Execute um teste**:
-    ```portugol
+    ```php
     1
     2
     3
