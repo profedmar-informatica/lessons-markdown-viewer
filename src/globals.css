@@ -15,7 +15,7 @@
 
   :root {
     /*--mesa: #F5F5F5; /* Light */
-    --mesa: #c45757; /* Light */
+    --mesa: #F5F5F5; /* Light */
     --papel: #FFFBF0; /* Light */
 
     --background: var(--mesa); /* Usar o novo token */
