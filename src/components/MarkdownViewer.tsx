@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-// import rehypeHighlight from 'rehype-highlight'; // REMOVIDO
 import Callout from './Callout';
 import CodeBlock from './CodeBlock';
 import { cn } from '@/lib/utils';
@@ -13,7 +12,8 @@ interface MarkdownViewerProps {
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
     <div className={cn(
-      "prose prose-base max-w-[894px] mx-auto pt-14 pb-10 px-10 rounded-lg", // Updated scale, padding, and max-width
+      "prose prose-base max-w-full mx-auto py-6 px-4 rounded-lg", // Responsive padding and max-width for mobile
+      "lg:max-w-[894px] lg:pt-14 lg:pb-10 lg:px-10", // Desktop specific padding and max-width
       "bg-[var(--papel)] border border-[#E0D8C7] shadow-[0_5px_15px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)]", // Light mode surfaces using var(--papel)
       "dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]", // Dark mode surfaces
       "leading-relaxed", // Added line-height for body
@@ -31,7 +31,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
     )}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[]} // rehypeHighlight REMOVIDO
+        rehypePlugins={[]}
         components={{
           blockquote: ({ children }) => {
             const text = String(children);
