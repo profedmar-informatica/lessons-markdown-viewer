@@ -62,7 +62,7 @@
     --text-heading-content: 26 26 26; /* #1A1A1A */
 
     /* Cor do polegar (bolinha) do Switch */
-    --switch-thumb-color: 240 69% 90%;/* 0 0% 100%; /* White */
+    --switch-thumb-color: 240 5% 23%;/* 0 0% 100%; /* White */
   }
 
   .dark {
