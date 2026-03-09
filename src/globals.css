@@ -14,7 +14,6 @@
   }
 
   :root {
-    /*--mesa: #F5F5F5; /* Light */
     --mesa: #F5F5F5; /* Light */
     --papel: #FFFBF0; /* Light */
 
@@ -27,8 +26,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /*--primary: 240 70% 70%; /* lavender-soft */
-    --primary: #ce2929; /* lavender-soft */    
+    --primary: 240 70% 70%; /* lavender-soft */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
