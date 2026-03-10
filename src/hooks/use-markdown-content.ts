@@ -43,21 +43,27 @@ export const useMarkdownContent = () => {
         }
 
         const lessonNumberStr = match[1];
-        const lessonNum = parseInt(lessonNumberStr, 10);
-        const formattedLessonNumber = lessonNum >= 1 && lessonNum <= 9 ? `0${lessonNum}` : String(lessonNum);
         const lessonTitleSlug = match[2];
         const fileName = `${lessonNumberStr}-${lessonTitleSlug}`;
 
-        const displayTitle = `${formattedLessonNumber} - ${lessonTitleSlug
+        // Format lesson display title: remove number prefix and hyphen, capitalize each word
+        const lessonDisplayTitle = lessonTitleSlug
           .replace(/-/g, ' ')
           .split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ')}`;
+          .join(' ');
 
         if (!loadedCategories[categoryName]) {
+          // Format category display title: capitalize each word
+          const categoryDisplayTitle = categoryName
+            .replace(/-/g, ' ') // Replace hyphens with spaces if any
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+
           loadedCategories[categoryName] = {
             name: categoryName,
-            displayTitle: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+            displayTitle: categoryDisplayTitle,
             lessons: [],
           };
         }
@@ -65,7 +71,7 @@ export const useMarkdownContent = () => {
         loadedCategories[categoryName].lessons.push({
           path: `/${categoryName}/${fileName}`,
           name: fileName,
-          displayTitle: displayTitle,
+          displayTitle: lessonDisplayTitle,
         });
         newContentMap[`${categoryName}/${fileName}`] = allMarkdownModules[path] as () => Promise<string>;
       }
