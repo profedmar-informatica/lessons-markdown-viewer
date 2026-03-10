@@ -1,4 +1,4 @@
-# Diagnóstico Técnico Detalhado: Erro "Dependencies lock file is not found" no GitHub Actions
+# Diagnóstico Técnico Detalhado
 
 ## 1. Estrutura de Pastas Relevante (Inferida)
 
@@ -35,13 +35,11 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 │   ├── pages/
 │   │   ├── Index.tsx
 │   │   └── NotFound.tsx
-│   └── ... (ou
-tros arquivos src)
+│   └── ... (outros arquivos src)
 ├── package.json
 ├── pnpm-workspace.yaml
 ├── vite.config.ts
-└── ... (ou
-tros arquivos na raiz)
+└── ... (outros arquivos na raiz)
 ```
 
 ## 2. Dependências (Conteúdo de `package.json`)
@@ -140,9 +138,7 @@ tros arquivos na raiz)
 
 Com base no `pnpm-workspace.yaml` e no comando `pnpm install` no seu workflow, o gerenciador de pacotes utilizado é o `pnpm`. Portanto, o arquivo de lock esperado na raiz do seu repositório é o `pnpm-lock.yaml`.
 
-O erro "Dependencies lock file is not found... Supported file patterns: package-lock.json, npm-shrinkwrap.json, yarn.lock" indica que a ação `actions/setup-node` não está encontrando ou reconhecendo o `pnpm-lock.yaml` no contexto em que está sendo executada. Para contornar isso e garantir que o build passe, vamos ajustar a configuração do workflow.
-
-## 4. Configuração de Deploy (Conteúdo de `.github/workflows/deploy.yml` - **Atualizado**)
+## 4. Configuração de Deploy (Conteúdo de `.github/workflows/deploy.yml`)
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -205,7 +201,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-## 5. Configuração do Vite (Conteúdo de `vite.config.ts` - **Atualizado**)
+## 5. Configuração do Vite (Conteúdo de `vite.config.ts`)
 
 ```typescript
 import { defineConfig } from "vite";
@@ -235,7 +231,7 @@ As aulas são importadas dinamicamente usando `import.meta.glob`.
 
 *   Em `src/components/Sidebar.tsx`, o código utiliza `import.meta.glob('../content/**/*.md', { eager: true })` para descobrir todos os arquivos Markdown e construir o menu lateral.
 *   Em `src/pages/Index.tsx`, o conteúdo de uma aula específica é carregado dinamicamente com `await import(`../content/${category}/${lesson}.md?raw`)` com base nos parâmetros da URL.
-*   **Atualização:** O `BrowserRouter` em `src/App.tsx` agora inclui `basename="/lessons-markdown-viewer"` para roteamento correto em subdiretórios.
+*   O `BrowserRouter` em `src/App.tsx` inclui `basename="/lessons-markdown-viewer"` para roteamento correto em subdiretórios.
 
 ## Sistema de Hierarquia V2
 
@@ -258,62 +254,35 @@ Este sistema implementa uma nova lógica para a organização e exibição do co
     *   Os números das lições são exibidos com um zero à esquerda para dígitos únicos (ex: "01", "02", ..., "09").
     *   Para números de 10 em diante, apenas o número é exibido (ex: "10", "11", ..., "100").
 
-## Diagnóstico e Recomendações (Revisado)
+## Diagnóstico e Recomendações (Atualizado)
 
-O erro "Dependencies lock file is not found" foi abordado com uma estratégia mais robusta para o `pnpm` no GitHub Actions. O problema de 404 no GitHub Pages foi corrigido ajustando o `base` do Vite e o `basename` do React Router.
+O build e o deploy do projeto no GitHub Pages estão funcionando corretamente. As configurações do `pnpm` no workflow do GitHub Actions, o `base` do Vite e o `basename` do React Router estão devidamente configurados para o deploy em subdiretórios.
 
-**Mudanças Implementadas:**
+**Mudanças Implementadas (e confirmadas como funcionando):**
 
-1.  **Instalação Explícita do pnpm:** Adicionamos a action `pnpm/action-setup@v4` para garantir que o `pnpm` esteja disponível e na versão especificada (v10) antes de qualquer outra operação de Node.js.
-2.  **Desativação do Cache de `setup-node`:** Removemos as configurações `cache: 'pnpm'` e `cache-dependency-path` do `actions/setup-node@v4`. Isso evita que a ação procure por um arquivo de lock que pode não estar presente ou não ser reconhecido, garantindo que as dependências sejam instaladas do zero a cada execução, se necessário.
-3.  **Instalação Forçada de Dependências:** O comando `pnpm install --no-frozen-lockfile` foi mantido para permitir a instalação mesmo sem um `pnpm-lock.yaml` existente ou atualizado, o que é útil em ambientes de CI/CD onde o lockfile pode não ser sempre commitado ou pode precisar ser regenerado.
-4.  **Uso Consistente do pnpm para Build:** O comando de build foi alterado para `pnpm run build` para garantir que o `pnpm` seja o gerenciador de pacotes utilizado em todas as etapas relevantes.
-5.  **Configuração de Base do Vite:** O `base` em `vite.config.ts` foi alterado para `"/lessons-markdown-viewer/"` para corresponder ao subdiretório do GitHub Pages.
-6.  **Configuração de Basename do React Router:** O `BrowserRouter` em `src/App.tsx` agora usa `basename="/lessons-markdown-viewer"` para roteamento correto.
-7.  **Geração de 404.html:** Um passo foi adicionado ao workflow de deploy para copiar `dist/index.html` para `dist/404.html`, permitindo que o GitHub Pages lide com o roteamento de SPA.
-8.  **Correção do Componente Index:** O arquivo `src/pages/Index.tsx` foi reescrito para ser um componente React válido, resolvendo os erros de compilação e implementando a lógica da capa.
-9.  **Refatoração da Sidebar:** O componente `src/components/Sidebar.tsx` foi atualizado para filtrar lições usando a Regex `^(\d{3})-(.*)\.md$`, exibir títulos formatados como "001 - Título da Lição", e remover categorias que não contêm lições válidas. O caminho do logo também foi corrigido.
-10. **Correção de Carregamento de Markdown em Produção:** O `src/pages/Index.tsx` foi atualizado para usar `import.meta.glob` com `eager: true, query: '?raw', import: 'default'` para carregar o conteúdo Markdown, garantindo que os arquivos sejam incluídos no bundle e acessíveis em produção sem problemas de caminho.
-11. **Implementação de Dark Mode:** Suporte a Dark Mode implementado usando `next-themes` e `shadcn/ui`.
-12. **Ajustes de Layout:**
-    *   Aumentado o tamanho do logotipo em 20%.
-    *   Diminuído o tamanho do toggle button em 30%.
-    *   Reduzido o espaçamento ao redor do toggle para zerar o padding e a margin vertical.
-    *   Diminuída a escala do toggle button para 15% do tamanho original.
-    *   Reduzido o ThemeSwitch em 50% (scale 0.5) para um visual mais sutil e minimalista na Sidebar.
-    *   Adicionado padding de 20px ao ThemeSwitch.
-    *   Cor de fundo da área de trabalho no modo escuro definida para `#353535` através da variável `--background` em `globals.css`.
-    *   Aplicado `bg-background` ao elemento `<main>` em `src/pages/Index.tsx`.
-    *   Aplicado `bg-background` ao `div` principal em `src/pages/Index.tsx`.
-    *   Adicionada sombra ao sidebar para corresponder ao estilo das folhas de papel.
-13. **Correção de `@import` no CSS:** Movidas as declarações `@import` do `highlight.js` para o topo de `src/globals.css` para resolver o erro de ordem do PostCSS.
-14. **Correção de `import.meta.glob`:** Atualizado `import.meta.glob` em `src/pages/Index.tsx` para usar `query: '?raw', import: 'default'` em vez de `as: 'raw'` para resolver o aviso de depreciação.
-15. **Verificação e Correção da Cópia do Logotipo:** O caminho do `src` da imagem em `src/components/Sidebar.tsx` foi corrigido para `/base_code.svg`, permitindo que o Vite lide corretamente com o `base` path. Removido `mkdir -p public` dos scripts de build em `package.json` conforme solicitado.
-16. **Tipografia refinada para o padrão Gemini/Modern UI:** escala estabilizada em `prose-lg`, H1/H2 suavizados e entrelinhamento relaxado para leitura técnica.
-17. **Tipografia sincronizada com os padrões técnicos do Gemini:** corpo em 16px (#1F1F1F) e títulos reescalonados para maior equilíbrio visual em telas de notebook.
-18. **Conteúdo de Tutorial de Portugol:** O arquivo `src/content/logica e programação/001-como-usar.md` foi atualizado com um tutorial sobre como imprimir números primos de 1 a 50 em Portugol Estruturado (estilo Portugol Studio).
-19. **Renomeação de Arquivo:** O arquivo `src/content/logica e programação/001-como-usar.md` foi renomeado para `001-introducao.md`.
-20. **Sincronizado estilo de blocos de código com VS Code Dark Plus para ambos os temas. Importado tema de realce de sintaxe via CSS global e ajustada tipografia monoespaçada.**
-21. **Correção de Erro de Importação do Highlight.js:** O `@import` do tema `highlight.js` foi movido de `src/globals.css` para `src/main.tsx` para resolver o erro `ENOENT`.
-22. **Correção do Caminho do Tema Highlight.js:** O caminho de importação do tema `vscode-dark-plus.css` foi corrigido de `highlight.js/styles/base16/vscode-dark-plus.css` para `highlight.js/styles/vscode-dark-plus.css` em `src/main.tsx`.
-23. **Correção de Importação do Highlight.js:** Alterado o tema de `vscode-dark-plus.css` para `vs2015.css` em `src/main.tsx`.
-24. **Alteração de Cor de Fundo:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
-25. **Cor do Painel Lateral:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
-26. **Aumento da Fonte da Caixa de Código:** A fonte da caixa de código foi aumentada para `1.1em`.
-27. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
-28. **Fundo da caixa de código unificado e numeração de linhas:** Fundo da caixa de código unificado em `bg-gray-100 dark:bg-[#252525]`, cor do texto ajustada para `text-charcoal-dark dark:text-[#D4D4D4]`, área de trabalho em `dark:bg-[#515151]` e implementada numeração de linhas via CSS e `highlightjs-line-numbers.js`.
-29. **Removida dependência de JS para numeração de linhas; implementada solução via CSS Counters para evitar erro de função não encontrada e unificar fundo em #252525.**
-30. **Unificado fundo da caixa de código em #252525 (fixo), corrigida numeração via CSS Counters com padding lateral e resolvido aviso de segurança de HTML não escapado.**
-31. **REESTRUTURAÇÃO COMPLETA: Implementada arquitetura de 3 níveis de estilo. Isolado componente CodeBlock com numeração nativa. Unificadas cores de 'mesa' e 'papel' em todo o projeto.**
-32. **Refatoração concluída: Resolvido erro de tipagem no MarkdownViewer, isolado componente CodeBlock e unificados tokens de estilo global.**
-33. **Reestruturação Finalizada: Resolvidos erros de tipagem, implementados tokens de design (--mesa, --papel) e centralizada a lógica de código no componente CodeBlock.**
-34. **Eliminados vazamentos de cor (azul petróleo) dos blocos de código através da neutralização de estilos do highlight.js no globals.css.**
-35. **Refinamento visual: Reduzido padding vertical do CodeBlock (de p-4 para py-2) para evitar espaços excessivos em comandos curtos.**
-36. **Removida tag <pre> redundante do MarkdownViewer que causava padding extra e conflitos de cor de fundo.**
-37. **Consolidação Tipográfica Final: Implementada JetBrains Mono com line-height fixo de 24px e remoção de redundâncias de tags <pre> para alinhamento 1:1 perfeito.**
-38. **Correção de escala: Eliminada a diferença entre 13px e 0.99em, forçando herança direta da div pai para alinhamento 1:1.**
-39. **Configuração de Scroll: Mantida integridade das linhas com overflow-x-auto e white-space: pre, com scrollbars personalizadas.**
-40. **Unificação Universal: Aplicados seletores de alta especificidade no globals.css para garantir que todas as linguagens (C, ABNF, Bash, etc) compartilhem a mesma métrica 1:1.**
-41. **Ajuste de Fluxo: Restaurada altura dinâmica dos blocos de código com preservação de alinhamento 1:1 e scroll apenas horizontal.**
-42. **Higienização de Caracteres: Implementada regex para remover delimitadores residuais (`, ´) sem quebrar a estrutura de Code Block do Markdown.**
-43. **Higienização Profunda: Implementada remoção de delimitadores e espaços residuais nas extremidades para evitar artefatos visuais no CodeBlock.**
+1.  **Instalação Explícita do pnpm:** A ação `pnpm/action-setup@v4` garante que o `pnpm` esteja disponível e na versão especificada (v10).
+2.  **Instalação de Dependências:** O comando `pnpm install --no-frozen-lockfile` é utilizado para instalar as dependências.
+3.  **Configuração de Base do Vite:** O `base` em `vite.config.ts` está definido como `"/lessons-markdown-viewer/"`.
+4.  **Configuração de Basename do React Router:** O `BrowserRouter` em `src/App.tsx` usa `basename="/lessons-markdown-viewer"`.
+5.  **Geração de 404.html:** Um passo no workflow copia `dist/index.html` para `dist/404.html` para roteamento de SPA no GitHub Pages.
+6.  **Componente Index:** O arquivo `src/pages/Index.tsx` é um componente React válido com a lógica da capa e carregamento de conteúdo.
+7.  **Refatoração da Sidebar:** O componente `src/components/Sidebar.tsx` filtra lições usando a Regex `^(\d{3})-(.*)\.md$`, exibe títulos formatados e remove categorias vazias. O caminho do logo também foi corrigido.
+8.  **Carregamento de Markdown em Produção:** `src/pages/Index.tsx` usa `import.meta.glob` com `eager: true, query: '?raw', import: 'default'` para carregar o conteúdo Markdown.
+9.  **Implementação de Dark Mode:** Suporte a Dark Mode implementado usando `next-themes` e `shadcn/ui`.
+10. **Ajustes de Layout:** Vários ajustes de tamanho e espaçamento para logo, toggle button e ThemeSwitch, além de cores de fundo para o modo escuro.
+11. **Correção de Importação do Highlight.js:** O `@import` do tema `highlight.js` foi movido para `src/main.tsx` e o tema `vs2015.css` está sendo usado.
+12. **Alteração de Cor de Fundo:** A cor de fundo do "papel" e da "sidebar" foi alterada para `#FFFBF0` (bege claro) no tema claro, e o `MarkdownViewer` foi atualizado para usar essa nova cor. O algoritmo de números primos no arquivo `001-introducao.md` foi refatorado para a versão em C puro.
+13. **Cor do Painel Lateral:** O painel do menu lateral foi ajustado para usar a mesma cor de fundo do papel (`bg-background`).
+14. **Ajuste da Fonte da Caixa de Código:** A fonte da caixa de código foi ajustada para `0.99em`.
+15. **REESTRUTURAÇÃO COMPLETA:** Arquitetura de 3 níveis de estilo implementada, componente CodeBlock isolado com numeração nativa, e cores de 'mesa' e 'papel' unificadas.
+16. **Eliminados vazamentos de cor (azul petróleo) dos blocos de código através da neutralização de estilos do highlight.js no globals.css.**
+17. **Refinamento visual: Reduzido padding vertical do CodeBlock (de p-4 para py-2) para evitar espaços excessivos em comandos curtos.**
+18. **Removida tag <pre> redundante do MarkdownViewer que causava padding extra e conflitos de cor de fundo.**
+19. **Consolidação Tipográfica Final: Implementada JetBrains Mono com line-height fixo de 24px e remoção de redundâncias de tags <pre> para alinhamento 1:1 perfeito.**
+20. **Correção de escala: Eliminada a diferença entre 13px e 0.99em, forçando herança direta da div pai para alinhamento 1:1.**
+21. **Configuração de Scroll: Mantida integridade das linhas com overflow-x-auto e white-space: pre, com scrollbars personalizadas.**
+22. **Unificação Universal: Aplicados seletores de alta especificidade no globals.css para garantir que todas as linguagens (C, ABNF, Bash, etc) compartilhem a mesma métrica 1:1.**
+23. **Ajuste de Fluxo: Restaurada altura dinâmica dos blocos de código com preservação de alinhamento 1:1 e scroll apenas horizontal.**
+24. **Higienização de Caracteres: Implementada regex para remover delimitadores residuais (`, ´) sem quebrar a estrutura de Code Block do Markdown.**
+25. **Higienização Profunda: Implementada remoção de delimitadores e espaços residuais nas extremidades para evitar artefatos visuais no CodeBlock.**
+26. **Variável CSS para cor do polegar do Switch:** Adicionada `--switch-thumb-color` em `src/globals.css` e utilizada em `src/components/ui/switch.tsx`.
