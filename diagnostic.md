@@ -87,6 +87,7 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@tanstack/react-query": "^5.56.2",
+    "@types/unist": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -286,3 +287,4 @@ O build e o deploy do projeto no GitHub Pages estão funcionando corretamente. A
 24. **Higienização de Caracteres: Implementada regex para remover delimitadores residuais (`, ´) sem quebrar a estrutura de Code Block do Markdown.**
 25. **Higienização Profunda: Implementada remoção de delimitadores e espaços residuais nas extremidades para evitar artefatos visuais no CodeBlock.**
 26. **Variável CSS para cor do polegar do Switch:** Adicionada `--switch-thumb-color` em `src/globals.css` e utilizada em `src/components/ui/switch.tsx`.
+27. **Correção de Tokenização Portugol:** A gramática Portugol em `src/utils/highlight-languages/portugol.ts` foi refatorada para usar modos explícitos com `hljs.regex.lookahead(/\b/)` e alta relevância para palavras-chave, built-ins, tipos e literais. Isso garante que os tokens sejam capturados como palavras completas, resolvendo o problema de cores bipartidas. O `GENERIC_IDENTIFIER` atua como fallback com baixa relevância.

@@ -2,21 +2,7 @@ import type { HLJSApi, LanguageFn } from 'highlight.js';
 
 const portugol: LanguageFn = (hljs: HLJSApi) => {
   // Regex para identificadores que suportam caracteres acentuados e usam word boundaries
-  const ACCENTED_IDENTIFIER_RE = /\b[a-zA-ZÀ-ÿ_][a-zA-Z0-9À-ÿ_]*\b/;
-
-  const KEYWORDS = {
-    keyword:
-      'se senao entao escolha caso interrompa para enquanto faca pare retorne funcao inicio fimalgoritmo ' +
-      'procedimento fimfuncao fimprocedimento var const tipo fimtipo registro fimregistro ' +
-      'vetor matriz passo ate de e ou nao div mod',
-    built_in:
-      'escreva leia limpa leia_inteiro escreva_linha abs int real logico cadeia caractere ' +
-      'aleatorio arredonda cos exp fat log logn rad seno raiz tan',
-    type:
-      'inteiro real logico cadeia caractere',
-    literal:
-      'verdadeiro falso nulo'
-  };
+  const ACCENTED_IDENTIFIER_RE = /\b[a-zA-Z_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][a-zA-Z0-9_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ]*\b/;
 
   const COMMENTS = {
     className: 'comment',
@@ -41,48 +27,92 @@ const portugol: LanguageFn = (hljs: HLJSApi) => {
     ]
   };
 
-  const IDENTIFIER = {
+  // Listas de palavras-chave para os modos explícitos
+  const KEYWORD_LIST = 'se senao entao escolha caso interrompa para enquanto faca pare retorne funcao inicio fimalgoritmo procedimento fimfuncao fimprocedimento var const tipo fimtipo registro fimregistro vetor matriz passo ate de e ou nao div mod';
+  const BUILT_IN_LIST = 'escreva leia limpa leia_inteiro escreva_linha abs int real logico cadeia caractere aleatorio arredonda cos exp fat log logn rad seno raiz tan';
+  const TYPE_LIST = 'inteiro real logico cadeia caractere';
+  const LITERAL_LIST = 'verdadeiro falso nulo';
+
+  // Modos explícitos para keywords, built-ins, types e literals com alta relevância
+  const KEYWORD_MODE = {
+    className: 'keyword',
+    begin: hljs.regex.lookahead(/\b/), // Garante word boundary
+    keywords: KEYWORD_LIST,
+    relevance: 10
+  };
+
+  const BUILT_IN_MODE = {
+    className: 'built_in',
+    begin: hljs.regex.lookahead(/\b/), // Garante word boundary
+    keywords: BUILT_IN_LIST,
+    relevance: 10
+  };
+
+  const TYPE_MODE = {
+    className: 'type',
+    begin: hljs.regex.lookahead(/\b/), // Garante word boundary
+    keywords: TYPE_LIST,
+    relevance: 10
+  };
+
+  const LITERAL_MODE = {
+    className: 'literal',
+    begin: hljs.regex.lookahead(/\b/), // Garante word boundary
+    keywords: LITERAL_LIST,
+    relevance: 10
+  };
+
+  // Definição de função/procedimento
+  const FUNCTION_DEFINITION = {
+    className: 'title.function',
+    begin: /(funcao|procedimento)\s+/, // Captura "funcao " ou "procedimento "
+    end: /fimfuncao|fimprocedimento/,
+    keywords: 'funcao procedimento', // Realça "funcao" e "procedimento" dentro do bloco
+    contains: [
+      {
+        className: 'title',
+        begin: ACCENTED_IDENTIFIER_RE, // O nome real da função
+        starts: {
+          className: 'params',
+          begin: /\(/,
+          end: /\)/,
+          excludeBegin: true,
+          excludeEnd: true,
+          contains: [
+            COMMENTS,
+            STRINGS,
+            NUMBERS,
+            // Parâmetros podem ser variáveis, então inclui um identificador genérico aqui
+            { className: 'variable', begin: ACCENTED_IDENTIFIER_RE }
+          ]
+        }
+      },
+      COMMENTS
+    ]
+  };
+
+  // Identificador genérico (fallback para variáveis)
+  const GENERIC_IDENTIFIER = {
     className: 'variable',
-    begin: ACCENTED_IDENTIFIER_RE
+    begin: ACCENTED_IDENTIFIER_RE,
+    relevance: 0 // Baixa relevância, atua como fallback
   };
 
   return {
     name: 'Portugol',
     aliases: ['algoritmo', 'pt-br'],
     case_insensitive: true,
-    disableAutodetect: true, // Desativa a auto-detecção para evitar interferências
-    keywords: KEYWORDS,
+    disableAutodetect: true,
     contains: [
       COMMENTS,
       STRINGS,
       NUMBERS,
-      {
-        className: 'title.function',
-        beginKeywords: 'funcao procedimento',
-        end: /fimfuncao|fimprocedimento/,
-        contains: [
-          {
-            className: 'title',
-            begin: ACCENTED_IDENTIFIER_RE, // Usar regex acentuada aqui também
-            starts: {
-              className: 'params',
-              begin: /\(/,
-              end: /\)/,
-              excludeBegin: true,
-              excludeEnd: true,
-              keywords: KEYWORDS,
-              contains: [
-                STRINGS,
-                NUMBERS,
-                COMMENTS,
-                IDENTIFIER
-              ]
-            }
-          },
-          COMMENTS
-        ]
-      },
-      IDENTIFIER
+      KEYWORD_MODE,
+      BUILT_IN_MODE,
+      TYPE_MODE,
+      LITERAL_MODE,
+      FUNCTION_DEFINITION,
+      GENERIC_IDENTIFIER // Deve capturar todos os outros identificadores
     ]
   };
 };
