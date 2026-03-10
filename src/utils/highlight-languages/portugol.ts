@@ -1,8 +1,8 @@
 import type { HLJSApi, LanguageFn } from 'highlight.js';
 
 const portugol: LanguageFn = (hljs: HLJSApi) => {
-  // Regex para identificadores que suportam caracteres acentuados
-  const ACCENTED_IDENTIFIER_RE = /[a-zA-Z_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][a-zA-Z0-9_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ]*/;
+  // Regex para identificadores que suportam caracteres acentuados e usam word boundaries
+  const ACCENTED_IDENTIFIER_RE = /\b[a-zA-Z_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][a-zA-Z0-9_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ]*\b/;
 
   const KEYWORDS = {
     keyword:
@@ -50,6 +50,7 @@ const portugol: LanguageFn = (hljs: HLJSApi) => {
     name: 'Portugol',
     aliases: ['algoritmo', 'pt-br'],
     case_insensitive: true,
+    disableAutodetect: true, // Desativa a auto-detecção para evitar interferências
     keywords: KEYWORDS,
     contains: [
       COMMENTS,

@@ -133,6 +133,7 @@ programa
         }
     }
 }
+```
 
 ## Como Compilar e Executar em C
 

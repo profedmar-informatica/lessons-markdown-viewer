@@ -228,6 +228,11 @@
   .hljs-comment {
     color: var(--code-comment) !important;
   }
+  /* Adicionado para garantir que variáveis e títulos não sejam quebrados */
+  .hljs-keyword, .hljs-built_in, .hljs-variable, .hljs-title {
+    display: inline-block;
+    white-space: pre;
+  }
   /* General highlight.js classes for other elements not explicitly mapped by Portugol prompt */
   .hljs-string {
     color: #a5c261 !important; /* Default green for strings */
