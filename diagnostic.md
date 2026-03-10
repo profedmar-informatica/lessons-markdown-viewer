@@ -205,24 +205,76 @@ jobs:
 ## 5. Configuração do Vite (Conteúdo de `vite.config.ts`)
 
 ```typescript
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import dyadComponentTagger from "@dyad-sh/react-vite-component-tagger";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
+// Custom Vite plugin for Markdown sanitization
+function markdownSanitizerPlugin(): Plugin {
+  return {
+    name: "markdown-sanitizer",
+    transform(code, id) {
+      if (id.endsWith(".md")) {
+        // 1. Split the content into parts: code blocks and non-code blocks
+        // This regex captures code blocks (```...```) including the fences.
+        const codeBlockRegex = /(```[\s\S]*?```)/g;
+        const parts = code.split(codeBlockRegex);
+
+        let sanitizedCode = "";
+        for (let i = 0; i < parts.length; i++) {
+          const part = parts[i];
+          if (i % 2 === 0) { // Non-code block part
+            let cleanedPart = part;
+
+            // Remove residual code delimiters (`, ´, ˆ)
+            cleanedPart = cleanedPart.replace(/[`´ˆ]/g, '');
+
+            // Normalize multiple newlines to at most two, especially after headings
+            // This ensures no more than two newlines appear consecutively.
+            cleanedPart = cleanedPart.replace(/\n{3,}/g, '\n\n');
+            
+            // Trim leading/trailing whitespace for this specific non-code part
+            cleanedPart = cleanedPart.trim();
+
+            sanitizedCode += cleanedPart;
+          } else { // Code block part - keep as is
+            sanitizedCode += part;
+          }
+        }
+
+        // Ensure overall file is trimmed after reassembly
+        sanitizedCode = sanitizedCode.trim();
+
+        // For UTF-8 normalization, JavaScript strings are inherently UTF-8.
+        // If there are specific Unicode composition issues (e.g., combining characters),
+        // String.prototype.normalize('NFC') could be used, but it's generally not needed
+        // for standard text and might have unintended side effects if not carefully applied.
+        // Assuming the main concern is visual artifacts from delimiters and spacing.
+
+        return {
+          code: sanitizedCode,
+          map: null, // No source map for transformations like this
+        };
+      }
+      return null; // Not a markdown file, do nothing
+    },
+  };
+}
+
 export default defineConfig(() => ({
-  base: "/lessons-markdown-viewer/", // Alterado para o subdiretório do GitHub Pages
+  base: "/lessons-markdown-viewer/",
   server: {
     host: "::",
     port: 8080,
   },
-  plugins: [dyadComponentTagger(), react()],
+  plugins: [dyadComponentTagger(), react(), markdownSanitizerPlugin()], // Add the new plugin
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  assetsInclude: ['**/*.md'], // Garante que arquivos .md sejam tratados como assets
+  assetsInclude: ['**/*.md'],
 }));
 ```
 
@@ -289,3 +341,4 @@ O build e o deploy do projeto no GitHub Pages estão funcionando corretamente. A
 26. **Variável CSS para cor do polegar do Switch:** Adicionada `--switch-thumb-color` em `src/globals.css` e utilizada em `src/components/ui/switch.tsx`.
 27. **Correção de Tokenização Portugol:** A gramática Portugol em `src/utils/highlight-languages/portugol.ts` foi refatorada para usar modos explícitos com `hljs.regex.lookahead(/\b/)` e alta relevância para palavras-chave, built-ins, tipos e literais. Isso garante que os tokens sejam capturados como palavras completas, resolvendo o problema de cores bipartidas. O `GENERIC_IDENTIFIER` atua como fallback com baixa relevância.
 28. **Estabilização de Tokenização Portugol (Atual):** A gramática Portugol em `src/utils/highlight-languages/portugol.ts` foi simplificada para confiar na propriedade `keywords` do `highlight.js` para lidar com word boundaries, removendo `hljs.regex.lookahead(/\b/)` dos modos explícitos. Isso garante que palavras-chave, built-ins, tipos e literais sejam tokenizados atomicamente, resolvendo o problema de cores partidas. O `GENERIC_IDENTIFIER` continua a atuar como um fallback de baixa relevância.
+29. **Otimização de Processamento em Build-Time:** Implementado um plugin Vite (`markdownSanitizerPlugin`) em `vite.config.ts` para pré-processar arquivos Markdown. Este plugin remove delimitadores residuais (`, ´, ˆ), normaliza quebras de linha (`\n{3,}` para `\n\n`) e apara espaços em branco excessivos, preservando a integridade dos blocos de código. A lógica de higienização correspondente foi removida dos componentes `CodeBlock.tsx` e `MarkdownViewer.tsx`.

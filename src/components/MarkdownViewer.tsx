@@ -48,9 +48,8 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
           pre: ({ children }) => <>{children}</>,
           code: ({ inline, className, children }: any) => {
             const match = /language-(\w+)/.exec(className || '');
-            // Garante que o conteúdo seja transformado em string pura e limpo de delimitadores/espaços nas extremidades
-            const rawContent = String(children);
-            const codeContent = rawContent.replace(/^[`´\s]+|[`´\s]+$/g, ""); // Limpeza de crases, acentos e espaços
+            // O conteúdo agora é pré-higienizado pelo plugin Vite, então não precisamos mais dessas operações aqui.
+            const codeContent = String(children);
 
             return !inline ? (
               <CodeBlock code={codeContent} language={match ? match[1] : ''} />

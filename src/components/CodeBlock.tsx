@@ -15,11 +15,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
   const codeRef = useRef<HTMLElement>(null);
   const [registered, setRegistered] = useState(false);
 
-  // Limpa crases/acentos e espaços que podem ter vazado do parser Markdown
-  const finalCode = code
-    .trim()
-    .replace(/^[`´\s]+|[`´\s]+$/g, "") // Remove crases/acentos e espaços apenas no início e fim
-    .trim();
+  // O código agora é pré-higienizado pelo plugin Vite, então não precisamos mais dessas operações aqui.
+  const finalCode = code;
 
   useEffect(() => {
     const registerPortugol = async () => {
