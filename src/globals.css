@@ -230,8 +230,9 @@
   }
   /* Adicionado para garantir que variáveis e títulos não sejam quebrados */
   .hljs-keyword, .hljs-built_in, .hljs-variable, .hljs-title {
-    display: inline-block;
+    display: inline; /* Alterado de inline-block para inline */
     white-space: pre;
+    color: inherit !important; /* Adicionado color: inherit */
   }
   /* General highlight.js classes for other elements not explicitly mapped by Portugol prompt */
   .hljs-string {

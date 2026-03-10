@@ -2,7 +2,7 @@ import type { HLJSApi, LanguageFn } from 'highlight.js';
 
 const portugol: LanguageFn = (hljs: HLJSApi) => {
   // Regex para identificadores que suportam caracteres acentuados e usam word boundaries
-  const ACCENTED_IDENTIFIER_RE = /\b[a-zA-Z_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][a-zA-Z0-9_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ]*\b/;
+  const ACCENTED_IDENTIFIER_RE = /\b[a-zA-ZÀ-ÿ_][a-zA-Z0-9À-ÿ_]*\b/;
 
   const KEYWORDS = {
     keyword:
