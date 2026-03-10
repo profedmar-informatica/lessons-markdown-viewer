@@ -69,7 +69,7 @@ int main() {
     *   Se o laço terminar sem encontrar divisores, `num` é primo e a função retorna `true`.
 
 4.  **Execute um teste**:
-    ```pascal
+    ```text
     1
     2
     3
@@ -150,9 +150,9 @@ Para compilar e executar este código, você precisará de um compilador C (como
     ./primos
     ```
 5. Mais um: 
-``[3]
+```c
 printf("Oi, mundo!");
-``
+```
 
 
 
