@@ -60,7 +60,13 @@
     --text-heading-content: 26 26 26; /* #1A1A1A */
 
     /* Cor do polegar (bolinha) do Switch */
-    --switch-thumb-color: 240 7% 58%;/* 0 0% 100%; /* White */
+    --switch-thumb-color: 240 7% 58%;
+
+    /* Novas variáveis para cores de código */
+    --code-keyword: var(--primary); /* lavender-soft */
+    --code-function: var(--callout-tip-border); /* tip green */
+    --code-type: var(--callout-warning-border); /* warning orange */
+    --code-comment: var(--muted-foreground); /* gray-medium */
   }
 
   .dark {
@@ -110,7 +116,13 @@
     --text-heading-content: 0 0% 100%; /* White */
 
     /* Cor do polegar (bolinha) do Switch */
-    --switch-thumb-color: 240 5% 23%;/*210 40% 98%; /* Light gray */
+    --switch-thumb-color: 240 5% 23%;
+
+    /* Novas variáveis para cores de código */
+    --code-keyword: var(--primary); /* White for keywords in dark mode */
+    --code-function: #9CDCFE; /* A distinct blue for functions in dark mode */
+    --code-type: #DCDCAA; /* A distinct yellow for types in dark mode */
+    --code-comment: var(--muted-foreground); /* gray-medium */
   }
 }
 
@@ -203,17 +215,18 @@
   }
 
   /* Highlight.js specific styling for Portugol and other languages */
-  .hljs-keyword {
-    color: var(--primary) !important; /* lavender-soft */
+  .hljs-keyword, .hljs-selector-tag {
+    color: var(--code-keyword) !important;
+    font-weight: bold !important;
   }
-  .hljs-built_in { /* For 'escreva', 'leia', 'limpa' */
-    color: var(--callout-tip-border) !important; /* tip green */
+  .hljs-built_in, .hljs-title.function_ { /* .hljs-title.function_ is a common alias for function names */
+    color: var(--code-function) !important;
   }
-  .hljs-type, .hljs-literal { /* For 'inteiro', 'real', 'verdadeiro', 'falso' */
-    color: var(--callout-warning-border) !important; /* warning orange */
+  .hljs-type, .hljs-literal {
+    color: var(--code-type) !important;
   }
   .hljs-comment {
-    color: var(--muted-foreground) !important; /* gray-medium */
+    color: var(--code-comment) !important;
   }
   /* General highlight.js classes for other elements not explicitly mapped by Portugol prompt */
   .hljs-string {
@@ -225,8 +238,8 @@
   .hljs-variable { /* For general identifiers */
     color: inherit !important; /* Inherit from parent, usually foreground */
   }
-  .hljs-title.function { /* For function names */
-    color: #ffc66d !important; /* A distinct color for function names */
+  .hljs-title.function { /* For function names, if not caught by .hljs-title.function_ */
+    color: var(--code-function) !important;
   }
   .hljs-params { /* For function parameters */
     color: inherit !important;

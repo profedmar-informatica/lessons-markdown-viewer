@@ -1,14 +1,17 @@
 import type { HLJSApi, LanguageFn } from 'highlight.js';
 
 const portugol: LanguageFn = (hljs: HLJSApi) => {
+  // Regex para identificadores que suportam caracteres acentuados
+  const ACCENTED_IDENTIFIER_RE = /[a-zA-Z_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][a-zA-Z0-9_áàâãéèêíìîóòôõúùûçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ]*/;
+
   const KEYWORDS = {
     keyword:
-      'inicio fimalgoritmo se entao senao para enquanto escolha caso interrompa retorne ' +
-      'funcao fimfuncao procedimento fimprocedimento var const tipo fimtipo registro fimregistro ' +
-      'vetor matriz passo faca ate de para e ou nao div mod',
-    built_in: // Comandos de E/S e outras funções comuns
-      'escreva leia limpa abs int real logico cadeia caractere ' + // Funções comuns
-      'aleatorio arredonda cos exp fat log logn rad seno raiz tan', // Funções matemáticas
+      'se senao entao escolha caso interrompa para enquanto faca pare retorne funcao inicio fimalgoritmo ' +
+      'procedimento fimfuncao fimprocedimento var const tipo fimtipo registro fimregistro ' +
+      'vetor matriz passo ate de e ou nao div mod',
+    built_in:
+      'escreva leia limpa leia_inteiro escreva_linha abs int real logico cadeia caractere ' +
+      'aleatorio arredonda cos exp fat log logn rad seno raiz tan',
     type:
       'inteiro real logico cadeia caractere',
     literal:
@@ -26,8 +29,8 @@ const portugol: LanguageFn = (hljs: HLJSApi) => {
   const STRINGS = {
     className: 'string',
     variants: [
-      hljs.QUOTE_STRING_MODE, // Corrigido: Usando QUOTE_STRING_MODE para aspas duplas
-      { begin: /'/, end: /'/ } // Mantido para aspas simples
+      hljs.QUOTE_STRING_MODE,
+      { begin: /'/, end: /'/ }
     ]
   };
 
@@ -39,8 +42,8 @@ const portugol: LanguageFn = (hljs: HLJSApi) => {
   };
 
   const IDENTIFIER = {
-    className: 'variable', // Usando 'variable' para identificadores gerais
-    begin: /[a-zA-Z_][a-zA-Z0-9_]*/
+    className: 'variable',
+    begin: ACCENTED_IDENTIFIER_RE
   };
 
   return {
@@ -53,13 +56,13 @@ const portugol: LanguageFn = (hljs: HLJSApi) => {
       STRINGS,
       NUMBERS,
       {
-        className: 'title.function', // Classe específica para nomes de função
+        className: 'title.function',
         beginKeywords: 'funcao procedimento',
         end: /fimfuncao|fimprocedimento/,
         contains: [
           {
             className: 'title',
-            begin: IDENTIFIER.begin,
+            begin: ACCENTED_IDENTIFIER_RE, // Usar regex acentuada aqui também
             starts: {
               className: 'params',
               begin: /\(/,
@@ -78,7 +81,7 @@ const portugol: LanguageFn = (hljs: HLJSApi) => {
           COMMENTS
         ]
       },
-      IDENTIFIER // Identificadores gerais
+      IDENTIFIER
     ]
   };
 };
