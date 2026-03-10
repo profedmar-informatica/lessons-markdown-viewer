@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import hljs from 'highlight.js';
 import CopyCodeButton from './CopyCodeButton';
 import { cn } from '@/lib/utils';
+import type { LanguageFn } from 'highlight.js'; // Importar LanguageFn
 
 interface CodeBlockProps {
   code: string;
@@ -12,6 +13,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
   if (typeof code !== 'string') return null; // Verificação de segurança
 
   const codeRef = useRef<HTMLElement>(null);
+  const [registered, setRegistered] = useState(false);
 
   // Limpa crases/acentos e espaços que podem ter vazado do parser Markdown
   const finalCode = code
@@ -20,10 +22,36 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
     .trim();
 
   useEffect(() => {
-    if (codeRef.current) {
+    const registerPortugol = async () => {
+      const portugolAliases = ['portugol', 'algoritmo', 'pt-br'];
+      if (language && portugolAliases.includes(language) && !hljs.getLanguage('portugol')) {
+        try {
+          // Corrigido: Importa o módulo e acessa a propriedade 'default', aplicando a asserção de tipo.
+          const portugolModule = await import('@/utils/highlight-languages/portugol');
+          const portugolLang: LanguageFn = portugolModule.default;
+          hljs.registerLanguage('portugol', portugolLang);
+          setRegistered(true);
+        } catch (error) {
+          console.error('Failed to load Portugol language for highlight.js', error);
+          setRegistered(true); // Continue even if registration fails, highlight.js will try auto-detect
+        }
+      } else if (language && hljs.getLanguage(language)) {
+        setRegistered(true); // Language already registered or is a standard one
+      } else if (!language) {
+        setRegistered(true); // No specific language, let highlight.js auto-detect or use plaintext
+      } else {
+        setRegistered(true); // For any other language not specifically handled here
+      }
+    };
+
+    registerPortugol();
+  }, [language]);
+
+  useEffect(() => {
+    if (codeRef.current && registered) {
       hljs.highlightElement(codeRef.current);
     }
-  }, [finalCode, language]); // Dependência atualizada para finalCode
+  }, [finalCode, language, registered]); // Dependência atualizada para finalCode
 
   // Gerar números de linha
   const lineNumbers = finalCode.split('\n').map((_, index) => index + 1);

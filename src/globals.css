@@ -45,8 +45,6 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 240 70% 70%; /* lavender-soft */
 
-    --radius: 12px;
-
     /* Variáveis específicas da Sidebar, alinhadas com o tema */
     --sidebar-background: var(--papel); /* Usar o novo token */
     --sidebar-foreground: 222.2 84% 4.9%; /* charcoal-dark */
@@ -202,5 +200,35 @@
   }
   pre code::before, pre code::after {
     content: none !important;
+  }
+
+  /* Highlight.js specific styling for Portugol and other languages */
+  .hljs-keyword {
+    color: var(--primary) !important; /* lavender-soft */
+  }
+  .hljs-built_in { /* For 'escreva', 'leia', 'limpa' */
+    color: var(--callout-tip-border) !important; /* tip green */
+  }
+  .hljs-type, .hljs-literal { /* For 'inteiro', 'real', 'verdadeiro', 'falso' */
+    color: var(--callout-warning-border) !important; /* warning orange */
+  }
+  .hljs-comment {
+    color: var(--muted-foreground) !important; /* gray-medium */
+  }
+  /* General highlight.js classes for other elements not explicitly mapped by Portugol prompt */
+  .hljs-string {
+    color: #a5c261 !important; /* Default green for strings */
+  }
+  .hljs-number {
+    color: #cc7832 !important; /* Default orange for numbers */
+  }
+  .hljs-variable { /* For general identifiers */
+    color: inherit !important; /* Inherit from parent, usually foreground */
+  }
+  .hljs-title.function { /* For function names */
+    color: #ffc66d !important; /* A distinct color for function names */
+  }
+  .hljs-params { /* For function parameters */
+    color: inherit !important;
   }
 }
