@@ -9,13 +9,12 @@ interface CodeBlockProps {
   language?: string;
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
+const CodeBlock: React.FC<CodeBlockProps> = React.memo(({ code, language }) => {
   if (typeof code !== 'string') return null; // Verificação de segurança
 
   const codeRef = useRef<HTMLElement>(null);
   const [registered, setRegistered] = useState(false);
 
-  // O código agora é pré-higienizado pelo plugin Vite, então não precisamos mais dessas operações aqui.
   const finalCode = code;
 
   useEffect(() => {
@@ -23,7 +22,6 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
       const portugolAliases = ['portugol', 'algoritmo', 'pt-br'];
       if (language && portugolAliases.includes(language) && !hljs.getLanguage('portugol')) {
         try {
-          // Corrigido: Importa o módulo e acessa a propriedade 'default', aplicando a asserção de tipo.
           const portugolModule = await import('@/utils/highlight-languages/portugol');
           const portugolLang: LanguageFn = portugolModule.default;
           hljs.registerLanguage('portugol', portugolLang);
@@ -48,7 +46,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
     if (codeRef.current && registered) {
       hljs.highlightElement(codeRef.current);
     }
-  }, [finalCode, language, registered]); // Dependência atualizada para finalCode
+  }, [finalCode, language, registered]);
 
   // Gerar números de linha
   const lineNumbers = finalCode.split('\n').map((_, index) => index + 1);
@@ -67,13 +65,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language }) => {
         {/* Coluna da direita para o código */}
         <div className="flex-1 py-4 overflow-x-auto overflow-y-hidden min-w-0">
           <code ref={codeRef} className={cn("bg-transparent code-row", language ? `language-${language}` : '')} style={{ whiteSpace: 'pre', display: 'block' }}>
-            {finalCode} {/* Usando finalCode aqui */}
+            {finalCode}
           </code>
         </div>
       </div>
-      <CopyCodeButton code={finalCode} /> {/* Usando finalCode para o botão de cópia */}
+      <CopyCodeButton code={finalCode} />
     </div>
   );
-};
+});
 
 export default CodeBlock;

@@ -9,7 +9,7 @@ interface MarkdownViewerProps {
   content: string;
 }
 
-const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
+const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content }) => {
   return (
     <div className={cn(
       "prose prose-base max-w-full mx-auto py-6 px-4 rounded-lg", // Responsive padding and max-width for mobile
@@ -48,7 +48,6 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
           pre: ({ children }) => <>{children}</>,
           code: ({ inline, className, children }: any) => {
             const match = /language-(\w+)/.exec(className || '');
-            // O conteúdo agora é pré-higienizado pelo plugin Vite, então não precisamos mais dessas operações aqui.
             const codeContent = String(children);
 
             return !inline ? (
@@ -65,6 +64,6 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
       </ReactMarkdown>
     </div>
   );
-};
+});
 
 export default MarkdownViewer;
