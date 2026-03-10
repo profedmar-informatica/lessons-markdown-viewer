@@ -93,11 +93,46 @@ int main() {
     ```
 
 5.  **`int main()`**: Esta é a função principal onde a execução do programa começa.
-    `printf(...)`: Exibe mensagens no console.
-    `for (int i = 1; i <= 50; i++)`: Um laço que itera de 1 a 50.
-    `if (isPrime(i))`: Para cada número, chama a função `isPrime` para verificar se é primo.
-    `printf("%d\n", i)`: Se o número for primo, ele é impresso.
-    `return 0;`: Indica que o programa foi executado com sucesso.
+
+```portugol
+programa
+{
+    funcao inicio()
+    {
+        inteiro a, b
+        inteiro tempA, tempB
+        inteiro resto, mdc, mmc
+
+        escreva("Digite o primeiro número inteiro positivo: ")
+        leia(a)
+        escreva("Digite o segundo número inteiro positivo: ")
+        leia(b)
+
+        se (a <= 0 ou b <= 0)
+        {
+            escreva("Erro: Os números devem ser positivos.\n")
+        }
+        senao
+        {
+            tempA = a
+            tempB = b
+
+            enquanto (b != 0)
+            {
+                resto = a % b
+                a = b
+                b = resto
+            }
+            mdc = a
+
+            mmc = (tempA * tempB) / mdc
+
+            escreva("\nResultado:\n")
+            escreva("MDC: ", mdc, "\n")
+            escreva("MMC: ", mmc, "\n")
+        }
+    }
+}
 
 ## Como Compilar e Executar em C
 
