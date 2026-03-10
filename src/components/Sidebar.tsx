@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Home, BookOpen } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileSidebarToggle from './MobileSidebarToggle';
 import { MadeWithDyad } from './made-with-dyad';
-import { ThemeSwitch } from './ThemeSwitch'; // Importar ThemeSwitch
-import { BASE_PATH } from '@/lib/constants'; // Importar BASE_PATH
+import { ThemeSwitch } from './ThemeSwitch';
+import { BASE_PATH } from '@/lib/constants';
+import { useMarkdownContent } from '@/hooks/use-markdown-content'; // Import the new hook
 
 interface Lesson {
   path: string;
@@ -20,6 +21,7 @@ interface Category {
   lessons: Lesson[];
 }
 
+// SidebarContent now receives categories as a prop
 const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: string; currentLesson?: string; onClose?: () => void }> = ({
   categories,
   currentCategory,
@@ -43,7 +45,7 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
       </Link>
       {categories.map((category) => (
         <div key={category.name} className="pt-2">
-          <h2 className="text-[15px] font-medium text-gray-medium px-4 mb-2 dark:text-gray-400">{category.displayTitle}</h2> {/* Aumentado para 15px */}
+          <h2 className="text-[15px] font-medium text-gray-medium px-4 mb-2 dark:text-gray-400">{category.displayTitle}</h2>
           {category.lessons.map((lesson) => (
             <Link
               key={lesson.path}
@@ -67,80 +69,15 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
 };
 
 const Sidebar = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
   const { category: currentCategory, lesson: currentLesson } = useParams<{ category?: string; lesson?: string }>();
   const isMobile = useIsMobile();
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  useEffect(() => {
-    const loadContent = async () => {
-      const modules = import.meta.glob('../content/**/*.md', { eager: true, query: '?raw', import: 'default' });
-      const loadedCategories: { [key: string]: Category } = {};
-      const lessonFileRegex = /^(\d{3})-(.*)\.md$/; // Regex para 001-999-titulo.md
-
-      for (const path in modules) {
-        const parts = path.split('/');
-        const categoryName = parts[parts.length - 2];
-        const fileNameWithExt = parts[parts.length - 1];
-        
-        const match = fileNameWithExt.match(lessonFileRegex);
-        if (!match) {
-          continue; // Ignora arquivos que não correspondem ao padrão 001-999-titulo.md
-        }
-
-        const lessonNumberStr = match[1]; // Ex: "001", "010", "100"
-        const lessonNum = parseInt(lessonNumberStr, 10); // Ex: 1, 10, 100
-        let formattedLessonNumber: string;
-
-        if (lessonNum >= 1 && lessonNum <= 9) {
-          formattedLessonNumber = `0${lessonNum}`; // "01", "02", ..., "09"
-        } else {
-          formattedLessonNumber = String(lessonNum); // "10", "11", ..., "99", "100", ...
-        }
-
-        const lessonTitleSlug = match[2]; // Ex: "introducao"
-        const fileName = `${lessonNumberStr}-${lessonTitleSlug}`; // Reconstroi o nome do arquivo sem a extensão
-
-        const displayTitle = `${formattedLessonNumber} - ${lessonTitleSlug
-          .replace(/-/g, ' ')
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ')}`;
-
-        if (!loadedCategories[categoryName]) {
-          loadedCategories[categoryName] = {
-            name: categoryName,
-            displayTitle: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
-            lessons: [],
-          };
-        }
-
-        loadedCategories[categoryName].lessons.push({
-          path: `/${categoryName}/${fileName}`,
-          name: fileName,
-          displayTitle: displayTitle,
-        });
-      }
-
-      // Filtra categorias que não possuem nenhuma lição válida
-      const filteredCategories = Object.values(loadedCategories).filter(
-        (cat) => cat.lessons.length > 0
-      );
-
-      filteredCategories.forEach(cat => {
-        cat.lessons.sort((a, b) => a.name.localeCompare(b.name));
-      });
-
-      const sortedCategories = filteredCategories.sort((a, b) => a.name.localeCompare(b.name));
-      setCategories(sortedCategories);
-    };
-
-    loadContent();
-  }, []);
+  const { categories } = useMarkdownContent(); // Use the new hook to get categories
 
   const sidebarHeader = (
-    <div className="flex flex-col items-center justify-center h-auto border-b border-border-light pb-4 mb-2 px-4 dark:border-vscode-border-sidebar"> {/* mb-2 para reduzir espaçamento */}
-      <img src={`${BASE_PATH}base_code.svg`} alt="base_code Logo" className="h-14 object-contain mb-2" /> {/* h-14 para aumentar o logo */}
+    <div className="flex flex-col items-center justify-center h-auto border-b border-border-light pb-4 mb-2 px-4 dark:border-vscode-border-sidebar">
+      <img src={`${BASE_PATH}base_code.svg`} alt="base_code Logo" className="h-14 object-contain mb-2" />
     </div>
   );
 
@@ -155,11 +92,11 @@ const Sidebar = () => {
                        dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
             {sidebarHeader}
-            <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}
-              <ThemeSwitch scale={0.5} /> {/* Reduzir a escala para 50% */}
+            <div className="flex justify-center -my-4">
+              <ThemeSwitch scale={0.5} />
             </div>
             <SidebarContent
-              categories={categories}
+              categories={categories} // Pass categories from the hook
               currentCategory={currentCategory}
               currentLesson={currentLesson}
               onClose={() => setSheetOpen(false)}
@@ -179,11 +116,11 @@ const Sidebar = () => {
                  dark:border-vscode-border-sidebar dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
     >
       {sidebarHeader}
-      <div className="flex justify-center -my-4"> {/* Margem negativa para compensar o espaço */}
-        <ThemeSwitch scale={0.5} /> {/* Reduzir a escala para 50% */}
+      <div className="flex justify-center -my-4">
+        <ThemeSwitch scale={0.5} />
       </div>
       <SidebarContent
-        categories={categories}
+        categories={categories} // Pass categories from the hook
         currentCategory={currentCategory}
         currentLesson={currentLesson}
       />

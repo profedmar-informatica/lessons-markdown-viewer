@@ -1,59 +1,55 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar';
 import MarkdownViewer from '@/components/MarkdownViewer';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
-
-// Use import.meta.glob para carregar todos os arquivos Markdown de forma lazy (eager: false).
-// Isso garante que o conteúdo seja carregado apenas quando necessário, reduzindo o bundle inicial.
-const allMarkdownModules = import.meta.glob('../content/**/*.md', { eager: false, query: '?raw', import: 'default' });
+import { useMarkdownContent } from '@/hooks/use-markdown-content'; // Import the new hook
 
 const Index: React.FC = () => {
   const { category, lesson } = useParams<{ category?: string; lesson?: string }>();
   const [markdownContent, setMarkdownContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [prefetchedContent, setPrefetchedContent] = useState<Map<string, string>>(new Map()); // Cache for prefetched content
 
-  // Mapeia os caminhos dos módulos para chaves mais fáceis de usar (ex: 'categoria/001-titulo')
-  // O map agora armazena funções que retornam Promises do conteúdo.
-  const contentMap = useMemo(() => {
-    const map: Record<string, () => Promise<string>> = {};
-    for (const path in allMarkdownModules) {
-      // Normaliza o caminho para corresponder ao que seria gerado pelos parâmetros da URL
-      // Exemplo: '../content/logica e programação/001-como-usar.md' -> 'logica e programação/001-como-usar'
-      const normalizedPath = path
-        .replace('../content/', '')
-        .replace('.md', '');
-      map[normalizedPath] = allMarkdownModules[path] as () => Promise<string>;
-    }
-    return map;
-  }, []);
+  const { categories, contentMap } = useMarkdownContent(); // Use the new hook
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setLoading(true);
-      setMarkdownContent(''); // Limpa o conteúdo enquanto carrega
+      setMarkdownContent(''); // Clear content while loading
 
       let targetContentKey = '';
       let isCoverPage = false;
 
       if (!category && !lesson) {
-        targetContentKey = 'capa'; // Chave para capa.md
+        targetContentKey = 'capa'; // Key for capa.md
         isCoverPage = true;
       } else if (category && lesson) {
         targetContentKey = `${category}/${lesson}`;
       } else {
-        // Fallback para o caso de rota malformada, exibe a capa
+        // Fallback for malformed route, show cover page
         targetContentKey = 'capa';
         isCoverPage = true;
+      }
+
+      // Check pre-fetch cache first
+      if (prefetchedContent.has(targetContentKey)) {
+        setMarkdownContent(prefetchedContent.get(targetContentKey)!);
+        setLoading(false);
+        // Trigger pre-fetch for new neighbors even if current is cached
+        triggerPreFetch(targetContentKey);
+        return;
       }
 
       const loadModule = contentMap[targetContentKey];
 
       if (loadModule) {
         try {
-          const content = await loadModule(); // Aguarda a resolução da Promise para obter o conteúdo
+          const content = await loadModule(); // Await the Promise to get the content
           setMarkdownContent(content);
+          // Add to pre-fetch cache for future use
+          setPrefetchedContent(prev => new Map(prev).set(targetContentKey, content));
         } catch (error) {
           console.error(`Erro ao carregar o conteúdo Markdown para a chave: ${targetContentKey}`, error);
           toast.error('Não foi possível carregar o conteúdo do documento.');
@@ -69,14 +65,70 @@ const Index: React.FC = () => {
         }
       }
       setLoading(false);
+
+      // Trigger pre-fetching for neighbors after current content is loaded
+      triggerPreFetch(targetContentKey);
     };
 
-    loadMarkdown();
-  }, [category, lesson, contentMap]); // Recarrega o conteúdo sempre que a categoria ou a lição mudam
+    const triggerPreFetch = (currentKey: string) => {
+      // Only pre-fetch if categories data is available and we are on a lesson page
+      if (categories.length === 0 || !category || !lesson) {
+        return; // No categories loaded yet or on cover page, no neighbors to pre-fetch
+      }
+
+      // Defer pre-fetching to avoid blocking main thread
+      // Use requestIdleCallback if available, otherwise setTimeout
+      const deferPreFetch = window.requestIdleCallback || ((cb) => setTimeout(cb, 0));
+
+      deferPreFetch(() => {
+        const currentCategoryName = currentKey.split('/')[0];
+        const currentLessonName = currentKey.split('/')[1];
+
+        const currentCategoryObj = categories.find(cat => cat.name === currentCategoryName);
+
+        if (currentCategoryObj) {
+          const currentLessonIndex = currentCategoryObj.lessons.findIndex(
+            lessonItem => lessonItem.name === currentLessonName
+          );
+
+          const neighborsToPreFetch: string[] = [];
+
+          // Previous lesson
+          if (currentLessonIndex > 0) {
+            const prevLesson = currentCategoryObj.lessons[currentLessonIndex - 1];
+            neighborsToPreFetch.push(`${currentCategoryName}/${prevLesson.name}`);
+          }
+
+          // Next lesson
+          if (currentLessonIndex < currentCategoryObj.lessons.length - 1) {
+            const nextLesson = currentCategoryObj.lessons[currentLessonIndex + 1];
+            neighborsToPreFetch.push(`${currentCategoryName}/${nextLesson.name}`);
+          }
+
+          neighborsToPreFetch.forEach(async (key) => {
+            if (!prefetchedContent.has(key) && contentMap[key]) {
+              try {
+                const content = await contentMap[key]();
+                setPrefetchedContent(prev => new Map(prev).set(key, content));
+                console.log(`Pre-fetched: ${key}`);
+              } catch (error) {
+                console.warn(`Failed to pre-fetch ${key}:`, error);
+              }
+            }
+          });
+        }
+      });
+    };
+
+    // Only load markdown if categories are loaded or if it's the cover page (which doesn't depend on categories for its initial load)
+    if (categories.length > 0 || (!category && !lesson)) {
+      loadMarkdown();
+    }
+  }, [category, lesson, contentMap, categories, prefetchedContent]); // Dependencies for useEffect
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar />
+      <Sidebar /> {/* Removed categories prop */}
       <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-[var(--mesa)]">
         <div className="max-w-4xl mx-auto">
           {loading ? (
