@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { GripVertical } from "lucide-react";
-import { PanelResizeHandle, PanelGroup, Panel, PanelResizeHandleProps as BasePanelResizeHandleProps } from "react-resizable-panels";
+import { PanelResizeHandle, PanelGroup, Panel } from "react-resizable-panels";
 
 import { cn } from "@/lib/utils";
 
@@ -10,15 +10,15 @@ const ResizablePanelGroup = PanelGroup;
 const ResizablePanel = Panel;
 
 // Define as props para o componente ResizableHandle
-// Estende as props base de PanelResizeHandle e adiciona 'withHandle'
-interface ResizableHandleProps extends BasePanelResizeHandleProps {
+// Usa ComponentPropsWithRef para incluir a propriedade 'ref' corretamente tipada
+interface ResizableHandleProps extends React.ComponentPropsWithRef<typeof PanelResizeHandle> {
   withHandle?: boolean;
 }
 
 const ResizableHandle = React.forwardRef<
-  HTMLDivElement, // O tipo do elemento DOM subjacente que o ref aponta
+  React.ElementRef<typeof PanelResizeHandle>, // O tipo do elemento DOM subjacente que o ref aponta
   ResizableHandleProps // O tipo das props do nosso componente ResizableHandle
->(({ className, withHandle, ...props }, ref: React.Ref<HTMLDivElement>) => { // Explicitamente tipar 'ref' aqui
+>(({ className, withHandle, ...props }, ref) => {
   return (
     <PanelResizeHandle
       ref={ref} // Passa o ref do forwardRef diretamente

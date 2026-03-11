@@ -22,16 +22,18 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
 │   │   └── ... (outros componentes UI)
 │   ├── content/
 │   │   ├── informática/
-│   │   │   └── 000-como-usar.md
-│   │   └── logica e programação/
-│   │       ├── 001-introducao.md
-│   │       ├── 002-sobre-o-projeto.md
-│   │       ├── 003-texto.md
-│   │       ├── 004-Markdown Viewer.md
-│   │       ├── 005-como-usar - Copia.md
-│   │       ├── 006-sobre-o-projeto - Copia.md
-│   │       ├── 007-texto - Copia.md
-│   │       └── 008-Markdown Viewer - Copia.md
+│   │   │   └── 001-Fundamentos e Bits.md
+│   │   ├── logica e programação/
+│   │   │   ├── 001-introducao.md
+│   │   │   ├── 002-sobre-o-projeto.md
+│   │   │   ├── 003-texto.md
+│   │   │   ├── 004-Markdown Viewer.md
+│   │   │   ├── 005-como-usar - Copia.md
+│   │   │   ├── 006-sobre-o-projeto - Copia.md
+│   │   │   ├── 007-texto - Copia.md
+│   │   │   ├── 008-Markdown Viewer - Copia.md
+│   │   │   └── base_code.svg
+│   │   └── capa.md
 │   ├── pages/
 │   │   ├── Index.tsx
 │   │   └── NotFound.tsx
