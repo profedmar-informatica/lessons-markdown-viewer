@@ -88,11 +88,13 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
     "@radix-ui/react-tooltip": "^1.1.4",
     "@tanstack/react-query": "^5.56.2",
     "@types/unist": "^3.0.3",
+    "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
+    "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
@@ -209,6 +211,8 @@ import { defineConfig, Plugin } from "vite";
 import dyadComponentTagger from "@dyad-sh/react-vite-component-tagger";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 
 // Custom Vite plugin for Markdown sanitization
 function markdownSanitizerPlugin(): Plugin {
@@ -272,6 +276,24 @@ export default defineConfig(() => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Adicionar alias para 'buffer'
+      'buffer': 'buffer/',
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis',
+      },
+      // Enable esbuild polyfill plugins
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          process: true,
+          buffer: true,
+        }),
+        NodeModulesPolyfillPlugin(),
+      ],
     },
   },
   assetsInclude: ['**/*.md'],
@@ -343,3 +365,4 @@ O build e o deploy do projeto no GitHub Pages estão funcionando corretamente. A
 28. **Estabilização de Tokenização Portugol (Atual):** A gramática Portugol em `src/utils/highlight-languages/portugol.ts` foi simplificada para confiar na propriedade `keywords` do `highlight.js` para lidar com word boundaries, removendo `hljs.regex.lookahead(/\b/)` dos modos explícitos. Isso garante que palavras-chave, built-ins, tipos e literais sejam tokenizados atomicamente, resolvendo o problema de cores partidas. O `GENERIC_IDENTIFIER` continua a atuar como um fallback de baixa relevância.
 29. **Otimização de Processamento em Build-Time:** Implementado um plugin Vite (`markdownSanitizerPlugin`) em `vite.config.ts` para pré-processar arquivos Markdown. Este plugin remove delimitadores residuais (`, ´, ˆ), normaliza quebras de linha (`\n{3,}` para `\n\n`) e apara espaços em branco excessivos, preservando a integridade dos blocos de código. A lógica de higienização correspondente foi removida dos componentes `CodeBlock.tsx` e `MarkdownViewer.tsx`.
 30. **Memoização de Componentes:** Os componentes `CodeBlock.tsx` e `MarkdownViewer.tsx` foram envolvidos em `React.memo()` para otimizar as re-renderizações.
+31. **Correção de Tipagem em ResizableHandle:** O erro de compilação `TS2322` em `src/components/ui/resizable.tsx` foi resolvido ajustando a interface `ResizableHandleProps` para estender `BasePanelResizeHandleProps` e explicitamente tipando a propriedade `ref` como `React.Ref<HTMLDivElement>` no `React.forwardRef`.
