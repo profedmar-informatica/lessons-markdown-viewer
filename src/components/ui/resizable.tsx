@@ -10,18 +10,18 @@ const ResizablePanelGroup = PanelGroup;
 const ResizablePanel = Panel;
 
 // Define as props para o componente ResizableHandle
-// Usa ComponentPropsWithoutRef para garantir que 'ref' não esteja em 'props'
-interface ResizableHandleProps extends React.ComponentPropsWithoutRef<typeof PanelResizeHandle> {
+// Estende as props base de PanelResizeHandle e adiciona 'withHandle'
+interface ResizableHandleProps extends BasePanelResizeHandleProps {
   withHandle?: boolean;
 }
 
 const ResizableHandle = React.forwardRef<
-  HTMLDivElement, // Alterado para HTMLDivElement, assumindo que PanelResizeHandle renderiza um div
-  ResizableHandleHandleProps // Tipo das props do componente ResizableHandle
+  HTMLDivElement, // O tipo do elemento DOM subjacente que o ref aponta
+  ResizableHandleProps // O tipo das props do nosso componente ResizableHandle
 >(({ className, withHandle, ...props }, ref) => {
   return (
     <PanelResizeHandle
-      ref={ref} // Passa o ref do forwardRef diretamente
+      ref={ref as React.Ref<HTMLDivElement>} // Explicitamente tipar o ref para HTMLDivElement
       className={cn(
         "relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0",
         className
