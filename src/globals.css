@@ -146,29 +146,14 @@
   }
   .hljs {
     background: transparent !important;
-    padding: 0 !important;
+    padding: 0 !important; /* Removido qualquer padding interno */
   }
 
   /* Nova regra para garantir que highlight.js herde o tamanho da fonte e altura da linha */
   code.hljs, .hljs {
     font-size: inherit !important;
     line-height: inherit !important;
-    padding: 0 !important;
-  }
-
-  /* Estilização da Scrollbar para CodeBlock */
-  .overflow-x-auto::-webkit-scrollbar {
-    height: 8px;
-  }
-  .overflow-x-auto::-webkit-scrollbar-track {
-    background: #1e1e1e;
-  }
-  .overflow-x-auto::-webkit-scrollbar-thumb {
-    background: #3e3e3e;
-    border-radius: 4px;
-  }
-  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
-    background: #505050;
+    padding: 0 !important; /* Removido qualquer padding interno */
   }
 
   /* Regra ultra-específica para padronizar a tipografia de todos os fragmentos de código */
