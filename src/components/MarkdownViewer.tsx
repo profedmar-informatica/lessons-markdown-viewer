@@ -9,9 +9,10 @@ interface MarkdownViewerProps {
   content: string;
   resolvedImageMap: Record<string, string>;
   currentCategory?: string;
+  pageTitle: string; // New prop for the main page title
 }
 
-const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content, resolvedImageMap, currentCategory }) => {
+const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content, resolvedImageMap, currentCategory, pageTitle }) => {
   const CustomImage = ({ src, alt }: { src?: string; alt?: string }) => {
     if (!src) return null;
 
@@ -43,7 +44,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content, res
       "leading-relaxed", // Added line-height for body
       "[&_p]:text-[#374151] dark:[&_p]:text-vscode-text-lesson", // Updated p text color for light mode
       "[&_li]:text-[#374151] dark:[&_li]:text-vscode-text-lesson", // Updated li text color for light mode
-      // H1 styles
+      // H1 styles (now controlled by pageTitle prop)
       "[&_h1]:text-[1.75rem] [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:mb-6 [&_h1]:text-[#374151] dark:[&_h1]:text-vscode-text-heading",
       // H2 styles
       "[&_h2]:text-[1.4rem] [&_h2]:font-semibold [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:border-b [&_h2]:border-slate-200 [&_h2]:dark:border-slate-800 [&_h2]:pb-2 [&_h2]:text-[#374151] dark:[&_h2]:text-vscode-text-heading",
@@ -53,10 +54,16 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content, res
       "[&_h5]:text-slate-900 dark:[&_h5]:text-vscode-text-heading",
       "[&_h6]:text-slate-900 dark:[&_h6]:text-vscode-text-heading"
     )}>
+      {/* Render the main page title from frontmatter */}
+      <h1 className="text-[1.75rem] font-bold tracking-tight mb-6 text-[#374151] dark:text-vscode-text-heading">
+        {pageTitle}
+      </h1>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[]}
         components={{
+          // Override h1 to render nothing, as the main title is handled above
+          h1: () => null, 
           blockquote: ({ children }) => {
             const text = String(children);
             let type: 'tip' | 'warning' | 'exercise' | 'default' = 'default';

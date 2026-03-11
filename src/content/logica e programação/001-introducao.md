@@ -1,5 +1,3 @@
-![Logotipol](./base_code.svg)
-
 # 001 - Números Primos de 1 a 50 em C
 
 Este tutorial demonstra como encontrar e imprimir todos os números primos no intervalo de 1 a 50 usando a linguagem de programação C.

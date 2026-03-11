@@ -9,8 +9,9 @@ import { useMarkdownContent } from '@/hooks/use-markdown-content'; // Import the
 const Index: React.FC = () => {
   const { category, lesson } = useParams<{ category?: string; lesson?: string }>();
   const [markdownContent, setMarkdownContent] = useState<string>('');
+  const [pageTitle, setPageTitle] = useState<string>(''); // New state for page title
   const [loading, setLoading] = useState<boolean>(true);
-  const [prefetchedContent, setPrefetchedContent] = useState<Map<string, string>>(new Map()); // Cache for prefetched content
+  const [prefetchedContent, setPrefetchedContent] = useState<Map<string, { content: string; pageTitle: string; }>>(new Map()); // Cache for prefetched content
 
   const { categories, contentMap, resolvedImageMap } = useMarkdownContent(); // Use the new hook
 
@@ -18,6 +19,7 @@ const Index: React.FC = () => {
     const loadMarkdown = async () => {
       setLoading(true);
       setMarkdownContent(''); // Clear content while loading
+      setPageTitle(''); // Clear page title while loading
 
       let targetContentKey = '';
       let isCoverPage = false;
@@ -35,7 +37,9 @@ const Index: React.FC = () => {
 
       // Check pre-fetch cache first
       if (prefetchedContent.has(targetContentKey)) {
-        setMarkdownContent(prefetchedContent.get(targetContentKey)!);
+        const cached = prefetchedContent.get(targetContentKey)!;
+        setMarkdownContent(cached.content);
+        setPageTitle(cached.pageTitle);
         setLoading(false);
         // Trigger pre-fetch for new neighbors even if current is cached
         triggerPreFetch(targetContentKey);
@@ -46,22 +50,26 @@ const Index: React.FC = () => {
 
       if (loadModule) {
         try {
-          const content = await loadModule(); // Await the Promise to get the content
+          const { content, pageTitle: fetchedPageTitle } = await loadModule(); // Await the Promise to get the content and title
           setMarkdownContent(content);
+          setPageTitle(fetchedPageTitle);
           // Add to pre-fetch cache for future use
-          setPrefetchedContent(prev => new Map(prev).set(targetContentKey, content));
+          setPrefetchedContent(prev => new Map(prev).set(targetContentKey, { content, pageTitle: fetchedPageTitle }));
         } catch (error) {
           console.error(`Erro ao carregar o conteúdo Markdown para a chave: ${targetContentKey}`, error);
           toast.error('Não foi possível carregar o conteúdo do documento.');
           setMarkdownContent('# Erro ao carregar\n\nOcorreu um erro ao tentar carregar o conteúdo. Por favor, tente novamente.');
+          setPageTitle('Erro de Carregamento');
         }
       } else {
         console.error(`Conteúdo Markdown não encontrado para a chave: ${targetContentKey}`);
         if (isCoverPage) {
-          setMarkdownContent('# Bem-vindo!\n\nNenhum arquivo `capa.md` encontrado ou acessível. Por favor, crie um para a página inicial.');
+          setMarkdownContent('Nenhum arquivo `capa.md` encontrado ou acessível. Por favor, crie um para a página inicial.');
+          setPageTitle('Bem-vindo!');
         } else {
           toast.error('Documento não encontrado.');
-          setMarkdownContent('# Documento não encontrado\n\nO documento que você tentou acessar não existe.');
+          setMarkdownContent('O documento que você tentou acessar não existe.');
+          setPageTitle('Documento Não Encontrado');
         }
       }
       setLoading(false);
@@ -108,8 +116,8 @@ const Index: React.FC = () => {
           neighborsToPreFetch.forEach(async (key) => {
             if (!prefetchedContent.has(key) && contentMap[key]) {
               try {
-                const content = await contentMap[key]();
-                setPrefetchedContent(prev => new Map(prev).set(key, content));
+                const { content, pageTitle: fetchedPageTitle } = await contentMap[key]();
+                setPrefetchedContent(prev => new Map(prev).set(key, { content, pageTitle: fetchedPageTitle }));
                 console.log(`Pre-fetched: ${key}`);
               } catch (error) {
                 console.warn(`Failed to pre-fetch ${key}:`, error);
@@ -144,6 +152,7 @@ const Index: React.FC = () => {
               content={markdownContent} 
               resolvedImageMap={resolvedImageMap} 
               currentCategory={category} 
+              pageTitle={pageTitle} // Pass the pageTitle
             />
           )}
         </div>

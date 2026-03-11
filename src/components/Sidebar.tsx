@@ -56,7 +56,8 @@ const SidebarContent: React.FC<{ categories: Category[]; currentCategory?: strin
                 currentCategory === category.name && currentLesson === lesson.name
                   ? 'bg-lavender-light text-lavender-dark font-medium dark:bg-vscode-menu-active-hover dark:text-white'
                   : ''
-              }`}
+              }
+              whitespace-nowrap overflow-hidden text-ellipsis`} {/* Added truncation styles */}
             >
               <BookOpen className="h-3.5 w-3.5" />
               {lesson.displayTitle}

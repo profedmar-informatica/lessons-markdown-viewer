@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import matter from 'gray-matter'; // Import gray-matter
 
 interface Lesson {
   path: string; // Full path for React Router
@@ -20,13 +21,13 @@ const allImageModules = import.meta.glob('../content/**/*.{png,jpg,jpeg,gif,svg,
 
 export const useMarkdownContent = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [contentMap, setContentMap] = useState<Record<string, () => Promise<string>>>({});
+  const [contentMap, setContentMap] = useState<Record<string, () => Promise<{ content: string; pageTitle: string; }>>>({}); // Updated contentMap type
   const [resolvedImageMap, setResolvedImageMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const loadContentMetadata = async () => {
       const loadedCategories: { [key: string]: Category } = {};
-      const newContentMap: Record<string, () => Promise<string>> = {};
+      const newContentMap: Record<string, () => Promise<{ content: string; pageTitle: string; }>> = {}; // Updated contentMap type
       const lessonFileRegex = /^(\d{3})-(.*)\.md$/;
 
       // Process Markdown files
@@ -35,14 +36,39 @@ export const useMarkdownContent = () => {
         const categoryName = parts[parts.length - 2];
         const fileNameWithExt = parts[parts.length - 1];
         
-        const match = fileNameWithExt.match(lessonFileRegex);
-        
+        // Function to process and store content
+        const processAndStoreContent = async (key: string, rawModule: () => Promise<string>) => {
+          const rawMarkdownString = await rawModule();
+          const { data, content: markdownBody } = matter(rawMarkdownString);
+
+          let pageTitle = data.title || '';
+          let processedContent = markdownBody;
+
+          // If frontmatter title exists, remove the first H1 from the markdown body
+          if (pageTitle) {
+            processedContent = markdownBody.replace(/^#\s.*?\n/, '');
+          } else {
+            // If no frontmatter title, try to extract from the first H1 in the markdown body
+            const firstH1Match = markdownBody.match(/^#\s*(.*)\n/);
+            if (firstH1Match && firstH1Match[1]) {
+              pageTitle = firstH1Match[1];
+              processedContent = markdownBody.replace(/^#\s.*?\n/, ''); // Remove it after extraction
+            } else {
+              // Fallback if no frontmatter title and no H1 in content
+              pageTitle = key.split('/').pop()?.replace(/^(\d{3})-/, '').replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') || 'Título Não Encontrado';
+            }
+          }
+          return { content: processedContent, pageTitle };
+        };
+
         // Handle 'capa.md' separately
         if (fileNameWithExt === 'capa.md') {
-          newContentMap['capa'] = allMarkdownModules[path] as () => Promise<string>;
+          newContentMap['capa'] = () => processAndStoreContent('capa', allMarkdownModules[path] as () => Promise<string>);
           continue; // Skip to next file
         }
 
+        const match = fileNameWithExt.match(lessonFileRegex);
+        
         if (!match) {
           continue; // Ignore other files that don't match lesson pattern
         }
@@ -51,8 +77,12 @@ export const useMarkdownContent = () => {
         const lessonTitleSlug = match[2];
         const fileName = `${lessonNumberStr}-${lessonTitleSlug}`;
 
-        // Format lesson display title: remove number prefix and hyphen, capitalize each word
-        const lessonDisplayTitle = lessonTitleSlug
+        // Get raw markdown to parse frontmatter for menuTitle
+        const rawMarkdownStringForMenu = await (allMarkdownModules[path] as () => Promise<string>)();
+        const { data: menuFrontmatter } = matter(rawMarkdownStringForMenu);
+
+        // Determine displayTitle for sidebar
+        const lessonDisplayTitle = menuFrontmatter.menuTitle || lessonTitleSlug
           .replace(/-/g, ' ')
           .split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -78,7 +108,7 @@ export const useMarkdownContent = () => {
           name: fileName,
           displayTitle: lessonDisplayTitle,
         });
-        newContentMap[`${categoryName}/${fileName}`] = allMarkdownModules[path] as () => Promise<string>;
+        newContentMap[`${categoryName}/${fileName}`] = () => processAndStoreContent(`${categoryName}/${fileName}`, allMarkdownModules[path] as () => Promise<string>);
       }
 
       const filteredCategories = Object.values(loadedCategories).filter(

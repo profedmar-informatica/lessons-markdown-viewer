@@ -1,3 +1,5 @@
+![Logotipol](./base_code.svg)
+
 # base_code: O centro de aprendizado em programação
 
 ## 1. Introdução ao Mundo do Texto Dummy
