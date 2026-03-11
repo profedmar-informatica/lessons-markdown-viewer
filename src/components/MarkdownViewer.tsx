@@ -64,6 +64,21 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content, res
         components={{
           // Override h1 to render nothing, as the main title is handled above
           h1: () => null, 
+          // Custom p renderer to prevent block-level elements from being wrapped by <p>
+          p: ({ children }) => {
+            // Check if any child is a React element (not just a string/number)
+            const hasReactElementChild = React.Children.toArray(children).some(
+              (child) => React.isValidElement(child)
+            );
+
+            if (hasReactElementChild) {
+              // If there's a React element child, render children directly
+              // This prevents <p> wrapping components like CodeBlock or Callout
+              return <>{children}</>;
+            }
+            // Otherwise, it's a regular paragraph
+            return <p>{children}</p>;
+          },
           blockquote: ({ children }) => {
             const text = String(children);
             let type: 'tip' | 'warning' | 'exercise' | 'default' = 'default';
