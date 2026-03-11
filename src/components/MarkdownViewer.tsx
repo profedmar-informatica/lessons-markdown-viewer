@@ -7,9 +7,33 @@ import { cn } from '@/lib/utils';
 
 interface MarkdownViewerProps {
   content: string;
+  resolvedImageMap: Record<string, string>;
+  currentCategory?: string;
 }
 
-const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content }) => {
+const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content, resolvedImageMap, currentCategory }) => {
+  const CustomImage = ({ src, alt }: { src?: string; alt?: string }) => {
+    if (!src) return null;
+
+    let finalSrc = src;
+
+    // If the src is a relative path (e.g., './image.svg'), try to resolve it using the map
+    if (src.startsWith('./') && currentCategory) {
+      const imageKey = `${currentCategory}/${src.replace('./', '')}`;
+      if (resolvedImageMap[imageKey]) {
+        finalSrc = resolvedImageMap[imageKey];
+      }
+    } else if (src.startsWith('/')) { // Handle absolute paths from content root if any
+      const imageKey = src.substring(1); // Remove leading slash
+      if (resolvedImageMap[imageKey]) {
+        finalSrc = resolvedImageMap[imageKey];
+      }
+    }
+    // If it's an external URL or couldn't be resolved, use the original src
+
+    return <img src={finalSrc} alt={alt || ''} className="markdown-image" />;
+  };
+
   return (
     <div className={cn(
       "prose prose-base max-w-full mx-auto py-6 px-4 rounded-lg", // Responsive padding and max-width for mobile
@@ -58,6 +82,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = React.memo(({ content }) =
               </code>
             );
           },
+          img: CustomImage, // Use o componente de imagem customizado
         }}
       >
         {content}

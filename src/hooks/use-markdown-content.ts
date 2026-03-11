@@ -12,12 +12,16 @@ interface Category {
   lessons: Lesson[];
 }
 
-// Use import.meta.glob para lazy loading
+// Use import.meta.glob para lazy loading de markdown
 const allMarkdownModules = import.meta.glob('../content/**/*.md', { eager: false, query: '?raw', import: 'default' });
+
+// Use import.meta.glob para eager loading de URLs de imagens
+const allImageModules = import.meta.glob('../content/**/*.{png,jpg,jpeg,gif,svg,webp}', { eager: true, query: '?url', import: 'default' });
 
 export const useMarkdownContent = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [contentMap, setContentMap] = useState<Record<string, () => Promise<string>>>({});
+  const [resolvedImageMap, setResolvedImageMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const loadContentMetadata = async () => {
@@ -25,6 +29,7 @@ export const useMarkdownContent = () => {
       const newContentMap: Record<string, () => Promise<string>> = {};
       const lessonFileRegex = /^(\d{3})-(.*)\.md$/;
 
+      // Process Markdown files
       for (const path in allMarkdownModules) {
         const parts = path.split('/');
         const categoryName = parts[parts.length - 2];
@@ -87,10 +92,20 @@ export const useMarkdownContent = () => {
       const sortedCategories = filteredCategories.sort((a, b) => a.name.localeCompare(b.name));
       setCategories(sortedCategories);
       setContentMap(newContentMap);
+
+      // Process Image files
+      const newResolvedImageMap: Record<string, string> = {};
+      for (const path in allImageModules) {
+        // Example path: "../content/logica e programação/base_code.svg"
+        // We want key: "logica e programação/base_code.svg"
+        const contentRelativePath = path.replace('../content/', '');
+        newResolvedImageMap[contentRelativePath] = allImageModules[path] as string;
+      }
+      setResolvedImageMap(newResolvedImageMap);
     };
 
     loadContentMetadata();
   }, []); // Empty dependency array to run once on mount
 
-  return { categories, contentMap };
+  return { categories, contentMap, resolvedImageMap };
 };

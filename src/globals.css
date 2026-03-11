@@ -235,4 +235,12 @@
   .hljs-params { /* For function parameters */
     color: inherit !important;
   }
+
+  /* Estilos globais para imagens dentro do MarkdownViewer */
+  .markdown-image {
+    display: block;
+    margin: 2rem auto;
+    max-width: 100%;
+    height: auto; /* Garante que a altura seja ajustada proporcionalmente */
+  }
 }

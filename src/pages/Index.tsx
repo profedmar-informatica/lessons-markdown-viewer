@@ -12,7 +12,7 @@ const Index: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [prefetchedContent, setPrefetchedContent] = useState<Map<string, string>>(new Map()); // Cache for prefetched content
 
-  const { categories, contentMap } = useMarkdownContent(); // Use the new hook
+  const { categories, contentMap, resolvedImageMap } = useMarkdownContent(); // Use the new hook
 
   useEffect(() => {
     const loadMarkdown = async () => {
@@ -128,7 +128,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
-      <Sidebar /> {/* Removed categories prop */}
+      <Sidebar />
       <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-[var(--mesa)]">
         <div className="max-w-4xl mx-auto">
           {loading ? (
@@ -140,7 +140,11 @@ const Index: React.FC = () => {
               <Skeleton className="h-64 w-full bg-gray-200 rounded-md" />
             </div>
           ) : (
-            <MarkdownViewer content={markdownContent} />
+            <MarkdownViewer 
+              content={markdownContent} 
+              resolvedImageMap={resolvedImageMap} 
+              currentCategory={category} 
+            />
           )}
         </div>
       </main>
