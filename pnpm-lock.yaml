@@ -180,6 +180,12 @@ importers:
       '@dyad-sh/react-vite-component-tagger':
         specifier: ^0.8.0
         version: 0.8.0(vite@6.4.1(@types/node@22.19.13)(jiti@1.21.7))
+      '@esbuild-plugins/node-globals-polyfill':
+        specifier: ^0.2.3
+        version: 0.2.3(esbuild@0.25.12)
+      '@esbuild-plugins/node-modules-polyfill':
+        specifier: ^0.2.2
+        version: 0.2.2(esbuild@0.25.12)
       '@eslint/js':
         specifier: ^9.9.0
         version: 9.39.3
@@ -263,6 +269,16 @@ packages:
     resolution: {integrity: sha512-97DrCLm4+kpy5fp90cLfuhjhLlhi5/p0nzCU9/pU4V9/aIpQCb+RQ/E3BJdzpMOcoieR81zPZTEiLTW5CYKgSQ==}
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
+
+  '@esbuild-plugins/node-globals-polyfill@0.2.3':
+    resolution: {integrity: sha512-r3MIryXDeXDOZh7ih1l/yE9ZLORCd5e8vWg02azWRGj5SPTuoh69A2AIyn0Z31V/kHBfZ4HgWJ+OK3GTTwLmnw==}
+    peerDependencies:
+      esbuild: '*'
+
+  '@esbuild-plugins/node-modules-polyfill@0.2.2':
+    resolution: {integrity: sha512-LXV7QsWJxRuMYvKbiznh+U1ilIop3g2TeKRzUxOG5X3YITc8JyyTa90BmLwqqv0YnX4v32CSlG+vsziZp9dMvA==}
+    peerDependencies:
+      esbuild: '*'
 
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
@@ -1876,6 +1892,9 @@ packages:
   estree-util-is-identifier-name@3.0.0:
     resolution: {integrity: sha512-hFtqIDZTIUZ9BXLb8y4pYGyk6+wekIivNVTcmvk8NoOh+VeRn5y6cEHzbURrWbfp1fIqdVipilzj+lfaadNZmg==}
 
+  estree-walker@0.6.1:
+    resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
+
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
@@ -2144,6 +2163,9 @@ packages:
     resolution: {integrity: sha512-NTL7EbAao9IFtuSivSZgrAh4fZd09Lr+6MTkqIxuHaH2nnYiYIzXPo06cOxHg9wKLdj6LL8TByG4qpePqwgx/g==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+
+  magic-string@0.25.9:
+    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -2586,6 +2608,16 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  rollup-plugin-inject@3.0.2:
+    resolution: {integrity: sha512-ptg9PQwzs3orn4jkgXJ74bfs5vYz1NCZlSQMBUA0wKcGp5i5pA1AO3fOUEte8enhGUC+iapTCzEWw2jEFFUO/w==}
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-inject.
+
+  rollup-plugin-node-polyfills@0.2.1:
+    resolution: {integrity: sha512-4kCrKPTJ6sK4/gLL/U5QzVT8cxJcofO0OU74tnB19F40cmuAKSzH5/siithxlofFEjwvw1YAhPmbvGNA6jEroA==}
+
+  rollup-pluginutils@2.8.2:
+    resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
+
   rollup@4.59.0:
     resolution: {integrity: sha512-2oMpl67a3zCH9H79LeMcbDhXW/UmWG/y2zuqnF2jQq5uq9TbM9TVyXvA4+t+ne2IIkBdrLpAaRQAvo7YI/Yyeg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -2623,6 +2655,10 @@ packages:
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
+
+  sourcemap-codec@1.4.8:
+    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
 
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
@@ -2887,6 +2923,16 @@ snapshots:
       estree-walker: 2.0.2
       magic-string: 0.30.21
       vite: 6.4.1(@types/node@22.19.13)(jiti@1.21.7)
+
+  '@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.25.12)':
+    dependencies:
+      esbuild: 0.25.12
+
+  '@esbuild-plugins/node-modules-polyfill@0.2.2(esbuild@0.25.12)':
+    dependencies:
+      esbuild: 0.25.12
+      escape-string-regexp: 4.0.0
+      rollup-plugin-node-polyfills: 0.2.1
 
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
@@ -4431,6 +4477,8 @@ snapshots:
 
   estree-util-is-identifier-name@3.0.0: {}
 
+  estree-walker@0.6.1: {}
+
   estree-walker@2.0.2: {}
 
   esutils@2.0.3: {}
@@ -4672,6 +4720,10 @@ snapshots:
   lucide-react@0.462.0(react@19.2.4):
     dependencies:
       react: 19.2.4
+
+  magic-string@0.25.9:
+    dependencies:
+      sourcemap-codec: 1.4.8
 
   magic-string@0.30.21:
     dependencies:
@@ -5345,6 +5397,20 @@ snapshots:
 
   reusify@1.1.0: {}
 
+  rollup-plugin-inject@3.0.2:
+    dependencies:
+      estree-walker: 0.6.1
+      magic-string: 0.25.9
+      rollup-pluginutils: 2.8.2
+
+  rollup-plugin-node-polyfills@0.2.1:
+    dependencies:
+      rollup-plugin-inject: 3.0.2
+
+  rollup-pluginutils@2.8.2:
+    dependencies:
+      estree-walker: 0.6.1
+
   rollup@4.59.0:
     dependencies:
       '@types/estree': 1.0.8
@@ -5401,6 +5467,8 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
 
   source-map-js@1.2.1: {}
+
+  sourcemap-codec@1.4.8: {}
 
   space-separated-tokens@2.0.2: {}
 

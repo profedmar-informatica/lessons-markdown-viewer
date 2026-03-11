@@ -117,6 +117,8 @@ A estrutura de pastas do seu projeto, focando nas áreas relevantes para o deplo
   },
   "devDependencies": {
     "@dyad-sh/react-vite-component-tagger": "^0.8.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@eslint/js": "^9.9.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.5.5",
@@ -221,7 +223,7 @@ function markdownSanitizerPlugin(): Plugin {
     transform(code, id) {
       if (id.endsWith(".md")) {
         // 1. Split the content into parts: code blocks and non-code blocks
-        // This regex captures code blocks (```...```) including the fences.
+        // This regex captures code blocks (```[\s\S]*?```) including the fences.
         const codeBlockRegex = /(```[\s\S]*?```)/g;
         const parts = code.split(codeBlockRegex);
 
@@ -366,3 +368,4 @@ O build e o deploy do projeto no GitHub Pages estão funcionando corretamente. A
 29. **Otimização de Processamento em Build-Time:** Implementado um plugin Vite (`markdownSanitizerPlugin`) em `vite.config.ts` para pré-processar arquivos Markdown. Este plugin remove delimitadores residuais (`, ´, ˆ), normaliza quebras de linha (`\n{3,}` para `\n\n`) e apara espaços em branco excessivos, preservando a integridade dos blocos de código. A lógica de higienização correspondente foi removida dos componentes `CodeBlock.tsx` e `MarkdownViewer.tsx`.
 30. **Memoização de Componentes:** Os componentes `CodeBlock.tsx` e `MarkdownViewer.tsx` foram envolvidos em `React.memo()` para otimizar as re-renderizações.
 31. **Correção de Tipagem em ResizableHandle:** O erro de compilação `TS2322` em `src/components/ui/resizable.tsx` foi resolvido ajustando a interface `ResizableHandleProps` para estender `BasePanelResizeHandleProps` e explicitamente tipando a propriedade `ref` como `React.Ref<HTMLDivElement>` no `React.forwardRef`.
+32. **Ativação de Sidebar Inteligente (Frontmatter):** A lógica para ler `menuTitle` e `title` do frontmatter de arquivos Markdown, exibir `menuTitle` na sidebar, `title` como H1 principal na página, ignorar arquivos que falham na regex de lições e carregar `capa.md` para a rota raiz já está totalmente implementada no hook `useMarkdownContent.ts` e nos componentes `Sidebar.tsx`, `Index.tsx` e `MarkdownViewer.tsx`.
