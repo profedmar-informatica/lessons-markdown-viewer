@@ -55,16 +55,39 @@ Como professor, reforço que você deve distinguir estes dois conceitos:
 
 Embora ainda não estejamos codificando sistemas complexos, veja como a lógica binária (Verdadeiro/Falso) já aparece na estrutura de um programa em Portugol:
 
-```portugol
-programa {
-  funcao inicio() {
-    // Representação lógica (Booleana) baseada em bits
-    logico temEnergia = verdadeiro 
-    
-    se (temEnergia) {
-      escreva("O sistema digital está operando (Bit 1).")
-    } senao {
-      escreva("O sistema está desligado (Bit 0).")
+```c
+#include <stdio.h>
+#include <stdbool.h> // Para usar o tipo bool
+
+// Função para verificar se um número é primo
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false; // Números menores ou iguais a 1 não são primos
     }
-  }
+    for (int i = 2; i * i <= num; i++) { // Otimização: verificar até a raiz quadrada
+        if (num % i == 0) {
+            return false; // Se for divisível, não é primo
+        }
+    }
+    return true; // Se não encontrou divisores, é primo
 }
+
+int main() {
+    printf("Números primos de 1 a 50:\n");
+    printf("--------------------------\n");
+
+    for (int i = 1; i <= 50; i++) {
+        if (isPrime(i)) {
+            printf("%d\n", i);
+        }
+    }
+
+    printf("--------------------------\n");
+    printf("Fim da verificação.\n");
+
+    return 0;
+}
+```
+## Terminou aqui
+
+Um teste

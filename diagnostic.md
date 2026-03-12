@@ -333,6 +333,41 @@ Este sistema implementa uma nova lógica para a organização e exibição do co
     *   Os números das lições são exibidos com um zero à esquerda para dígitos únicos (ex: "01", "02", ..., "09").
     *   Para números de 10 em diante, apenas o número é exibido (ex: "10", "11", ..., "100").
 
+## Recursos de Formatação e Exibição de Código
+
+O aplicativo utiliza uma combinação de bibliotecas, componentes customizados e estilos CSS globais para oferecer uma experiência rica e consistente na visualização de blocos de código, com destaque para a sintaxe, numeração de linhas e responsividade.
+
+1.  **`CodeBlock.tsx` (Componente Principal de Renderização de Código)**
+    *   **Sintaxe Destacada (`highlight.js`)**: Este componente é o ponto central para a aplicação de destaque de sintaxe. Ele recebe o código e a linguagem (ex: `c`, `portugol`, `bash`) e utiliza a biblioteca `highlight.js` para colorir o código de acordo com as regras da linguagem.
+    *   **Registro Dinâmico de Linguagens**: Para linguagens não padrão do `highlight.js` (como Portugol), o `CodeBlock` carrega e registra dinamicamente a definição da linguagem (ex: `src/utils/highlight-languages/portugol.ts`) apenas quando necessário, otimizando o carregamento.
+    *   **Numeração de Linhas (Gutter)**: Uma coluna à esquerda exibe números de linha para cada linha de código. A implementação garante um alinhamento perfeito de 1:1 entre o número da linha e a linha de código correspondente, mesmo com rolagem horizontal.
+    *   **Botão de Copiar Código (`CopyCodeButton.tsx`)**: Integrado diretamente ao bloco de código, oferece um botão para copiar o conteúdo do código para a área de transferência, com feedback visual de sucesso.
+    *   **Otimização de Performance**: O componente é envolvido em `React.memo` para evitar re-renderizações desnecessárias, melhorando a performance da aplicação.
+
+2.  **`highlight.js` (Biblioteca de Destaque de Sintaxe)**
+    *   **Core Highlighting**: É a biblioteca de terceiros responsável por analisar o código e aplicar classes CSS para o destaque de sintaxe.
+    *   **Tema Visual**: O tema `vs2015.css` do `highlight.js` é importado globalmente em `src/main.tsx`, fornecendo a base visual para o destaque.
+
+3.  **`src/utils/highlight-languages/portugol.ts` (Definição de Linguagem Customizada)**
+    *   **Gramática Portugol**: Este arquivo define as regras de tokenização para a linguagem Portugol, incluindo palavras-chave (`se`, `senao`), funções embutidas (`escreva`, `leia`), tipos (`inteiro`, `real`), literais (`verdadeiro`, `falso`), comentários, strings e números.
+    *   **Estabilização de Tokenização**: A gramática foi cuidadosamente ajustada para garantir que os tokens sejam capturados como palavras completas, resolvendo problemas de cores partidas e garantindo um destaque preciso.
+
+4.  **`src/globals.css` (Estilos Globais para Código)**
+    *   **Fonte Monospace Consistente**: Define a fonte `JetBrains Mono` para todos os elementos de código (`font-mono`, `code`, `pre`, `.hljs`, `.gutter-num`), garantindo uma tipografia uniforme e legível.
+    *   **Alinhamento 1:1 Perfeito**: Impõe uma `line-height` fixa de `24px` para o código e os números de linha, o que é crucial para o alinhamento visual preciso entre o conteúdo e o gutter.
+    *   **Neutralização de Estilos do `highlight.js`**: Contém seletores CSS de alta especificidade para sobrescrever os estilos padrão do `highlight.js`, eliminando "vazamentos de cor" e garantindo que o fundo e o padding dos blocos de código sejam controlados pelo tema da aplicação.
+    *   **Cores de Sintaxe Temáticas**: Utiliza variáveis CSS (ex: `--code-keyword`, `--code-function`, `--code-type`, `--code-comment`) para definir as cores de destaque de sintaxe. Essas variáveis são ajustadas para se integrarem perfeitamente tanto no tema claro (Soft Lavender Productivity) quanto no tema escuro (VS Code-like).
+    *   **Rolagem Horizontal**: Garante que linhas de código longas possam ser roladas horizontalmente (`overflow-x: auto`) sem quebrar a integridade visual das linhas ou dos números.
+
+5.  **`src/components/MarkdownViewer.tsx` (Integração com Markdown)**
+    *   **Renderização Customizada de `code`**: O `react-markdown` é configurado para usar o componente `CodeBlock` sempre que um bloco de código (cercado por ```` ````) é encontrado no Markdown.
+    *   **Tratamento de `p` para Hidratação**: Uma lógica customizada para a tag `p` garante que elementos de bloco (como o `CodeBlock`, que é uma `div`) não sejam aninhados dentro de tags `<p>`, prevenindo erros de hidratação no console.
+    *   **Código Inline**: Lida com código inline (cercado por `` ` ``) aplicando um estilo básico com fundo `muted` e cor de texto `pink-500`.
+
+6.  **`vite.config.ts` (`markdownSanitizerPlugin`) (Pré-processamento em Build-Time)**
+    *   **Limpeza de Markdown**: Este plugin customizado do Vite pré-processa os arquivos Markdown durante o build. Ele remove delimitadores de código residuais (`` ` ``, `´`, `ˆ`) e normaliza quebras de linha e espaços em branco excessivos em partes *não-código* do Markdown.
+    *   **Melhora da Qualidade da Entrada**: Embora não atue diretamente nos blocos de código, essa limpeza garante que o `react-markdown` receba um conteúdo mais limpo e bem formatado, o que indiretamente contribui para uma renderização mais estável e previsível, incluindo a dos blocos de código.
+
 ## Diagnóstico e Recomendações (Atualizado)
 
 O build e o deploy do projeto no GitHub Pages estão funcionando corretamente. As configurações do `pnpm` no workflow do GitHub Actions, o `base` do Vite e o `basename` do React Router estão devidamente configurados para o deploy em subdiretórios.
